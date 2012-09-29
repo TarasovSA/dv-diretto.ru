@@ -17,9 +17,9 @@ include_once ('engine/auxiliaryFunctions.php');
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/themes/ui-lightness/jquery.ui.all.css">
-    <script type="text/javascript" language="javascript" src="style_js.js"></script>
+    <script type="text/javascript" language="javascript" src="js/style_js.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jquery.ui.datepicker-ru.js"></script>

@@ -3,7 +3,7 @@ body{
 margin:0px;
 padding:0px;
 font-family:Verdana, Arial, Helvetica, sans-serif;
-background:url(images/bg.jpg) repeat-x bottom left;
+background:url(../images/bg.jpg) repeat-x bottom left;
 font-size:10pt;
 }
 
@@ -29,7 +29,7 @@ padding:10px;
 padding-left:30px;
 padding-right:0px;
 margin-bottom:15px;
-background:url(images/warning.jpg) no-repeat left top;
+background:url(../images/warning.jpg) no-repeat left top;
 font-size:12pt;
 font-weight:normal;
 text-align:right;
@@ -64,63 +64,63 @@ text-decoration:none;
 }
 
 .p_visa{
-background-image:url(images/visa.jpg);
+background-image:url(../images/visa.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_visa:hover{
-background-image:url(images/visa_color.jpg);
+background-image:url(../images/visa_color.jpg);
 }
 
 .p_master_card{
-background-image:url(images/master_card.jpg);
+background-image:url(../images/master_card.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_master_card:hover{
-background-image:url(images/master_card_color.jpg);
+background-image:url(../images/master_card_color.jpg);
 }
 
 .p_web_money{
-background-image:url(images/web_money.jpg);
+background-image:url(../images/web_money.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_web_money:hover{
-background-image:url(images/web_money_color.jpg);
+background-image:url(../images/web_money_color.jpg);
 }
 
 .p_yandex{
-background-image:url(images/yandex.jpg);
+background-image:url(../images/yandex.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_yandex:hover{
-background-image:url(images/yandex_color.jpg);
+background-image:url(../images/yandex_color.jpg);
 }
 
 .p_qiwi{
-background-image:url(images/qiwi.jpg);
+background-image:url(../images/qiwi.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_qiwi:hover{
-background-image:url(images/qiwi_color.jpg);
+background-image:url(../images/qiwi_color.jpg);
 }
 
 .p_sms{
-background-image:url(images/sms.jpg);
+background-image:url(../images/sms.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 }
 
 .p_sms:hover{
-background-image:url(images/sms_color.jpg);
+background-image:url(../images/sms_color.jpg);
 }
 
 #main{
@@ -129,7 +129,7 @@ height:800px;
 }
 
 .top_menu_bg{
-background:url(images/top_menu_bg.jpg) repeat-x left top;
+background:url(../images/top_menu_bg.jpg) repeat-x left top;
 }
 
 #logo_td{
@@ -169,7 +169,7 @@ font-weight:bold;
 }
 
 #top_menu .activ{
-background:url(images/top_menu_activ.png) no-repeat top left;
+background:url(../images/top_menu_activ.png) no-repeat top left;
 }
 
 #top_menu .activ a:hover{
@@ -183,7 +183,7 @@ width:100%;
 position:absolute;
 height:80px;
 z-index:-100;
-background:url(images/top_bg.jpg) repeat-x left top;
+background:url(../images/top_bg.jpg) repeat-x left top;
 top:0;
 left:0;
 }
@@ -198,31 +198,31 @@ padding-bottom:85px;
 }
 
 .content_bg{
-background-image:url("images/content_bg.jpg");
+background-image:url("../images/content_bg.jpg");
 background-repeat:no-repeat;
 background-position:bottom center;
 }
 
 .content_bg_villagio{
-background-image:url("images/content_bg_villagio.jpg");
+background-image:url("../images/content_bg_villagio.jpg");
 background-repeat:no-repeat;
 background-position:bottom center;
 }
 
 .content_bg_bellissimo{
-background-image:url("images/content_bg_bellissimo.jpg");
+background-image:url("../images/content_bg_bellissimo.jpg");
 background-repeat:no-repeat;
 background-position:bottom center;
 }
 
 .content_bg_felicecitta{
-background-image:url("images/content_bg_felicecitta.jpg");
+background-image:url("../images/content_bg_felicecitta.jpg");
 background-repeat:no-repeat;
 background-position:bottom center;
 }
 
 .content_bg_bellavita{
-background-image:url("images/content_bg_bellavita.jpg");
+background-image:url("../images/content_bg_bellavita.jpg");
 background-repeat:no-repeat;
 background-position:bottom center;
 }
@@ -286,7 +286,7 @@ float:right;
 }
 
 input.next{
-background:url(images/arrow.png) no-repeat right center;
+background:url(../images/arrow.png) no-repeat right center;
 }
 
 input.btn_next:hover{
@@ -338,14 +338,14 @@ cursor:pointer;
 /* Стиль для обертки отмеченного checkbox'а */
 div.boxChecked 
 {
-    background: url("images/boxChecked.jpg") no-repeat left bottom;
+    background: url("../images/boxChecked.jpg") no-repeat left bottom;
 	color:#f37326;
 }
 
 /* Стиль для обертки неотмеченного checkbox'а */
 div.boxUnchecked 
 {
-    background: url("images/boxUnchecked.jpg") no-repeat left bottom;
+    background: url("../images/boxUnchecked.jpg") no-repeat left bottom;
 } 
 
 /* Прозрачный стиль для checkbox'а */
@@ -367,14 +367,14 @@ div.boxChecked input, div.boxUnchecked input
 /* Стиль для обертки отмеченного checkbox'а */
 div.boxRadioChecked 
 {
-    background:url("images/radioChecked.png") no-repeat left bottom;
+    background:url("../images/radioChecked.png") no-repeat left bottom;
 	color:#f37326;
 }
 
 /* Стиль для обертки неотмеченного checkbox'а */
 div.boxRadioUnchecked 
 {
-    background: url("images/radioUnchecked.png") no-repeat left bottom;
+    background: url("../images/radioUnchecked.png") no-repeat left bottom;
 }
 
 /* Прозрачный стиль для checkbox'а */
@@ -407,7 +407,7 @@ width:515px;
 /* ------ TEST ----- */
 .grid{
 width:910px;
-background:url(images/table_bg.png);
+background:url(../images/table_bg.png);
 -webkit-border-radius: 7px;
 -moz-border-radius: 7px;
 border-radius: 7px;
@@ -539,7 +539,7 @@ padding-right:120px;
 
 .total_table .t_last{
 padding-left:120px;
-background:url(images/total_corner_picture.png) no-repeat right bottom;
+background:url(../images/total_corner_picture.png) no-repeat right bottom;
 padding-top:0px;
 }
 
@@ -595,7 +595,7 @@ border:1px solid #8b8b8b;
 -moz-border-radius: 7px;
 border-radius: 7px;
 line-height:22px;
-background:url(images/down_arrow.jpg) no-repeat 94% center;
+background:url(../images/down_arrow.jpg) no-repeat 94% center;
 cursor:default;
 z-index:1;
 }
