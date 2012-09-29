@@ -20,4 +20,5 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['ru']);
+    $.datepicker.setDefaults({yearRange: 'c-80:c+10'});
 });
