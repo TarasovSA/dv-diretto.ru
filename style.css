@@ -1,0 +1,601 @@
+/* CSS Document */
+body{
+margin:0px;
+padding:0px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+background:url(images/bg.jpg) repeat-x bottom left;
+font-size:10pt;
+}
+
+/* ALL */
+a{
+color:#fb7d00;
+text-decoration:none;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+a .small_link{
+font-size:9pt;
+}
+
+
+b.warning{
+display:block;
+float:left;
+padding:10px;
+padding-left:30px;
+padding-right:0px;
+margin-bottom:15px;
+background:url(images/warning.jpg) no-repeat left top;
+font-size:12pt;
+font-weight:normal;
+text-align:right;
+border-bottom:1px solid #fe7817;
+}
+
+.italic{
+font-style:italic;
+}
+
+.orange{
+color:#fb7d00;
+}
+
+/* Payment */
+.p_visa, .p_master_card, .p_web_money, .p_yandex, .p_qiwi, .p_sms{
+display:block;
+float:left;
+margin:13px;
+width:118px;
+height:80px;
+border:1px solid #bdbbbb;
+-webkit-border-radius: 7px;
+-moz-border-radius: 7px;
+border-radius: 7px;
+background-color:white;
+}
+
+.p_visa:hover, .p_master_card:hover, .p_web_money:hover, .p_yandex:hover, .p_qiwi:hover, .p_sms:hover{
+border:1px solid #fb8720;
+text-decoration:none;
+}
+
+.p_visa{
+background-image:url(images/visa.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_visa:hover{
+background-image:url(images/visa_color.jpg);
+}
+
+.p_master_card{
+background-image:url(images/master_card.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_master_card:hover{
+background-image:url(images/master_card_color.jpg);
+}
+
+.p_web_money{
+background-image:url(images/web_money.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_web_money:hover{
+background-image:url(images/web_money_color.jpg);
+}
+
+.p_yandex{
+background-image:url(images/yandex.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_yandex:hover{
+background-image:url(images/yandex_color.jpg);
+}
+
+.p_qiwi{
+background-image:url(images/qiwi.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_qiwi:hover{
+background-image:url(images/qiwi_color.jpg);
+}
+
+.p_sms{
+background-image:url(images/sms.jpg);
+background-repeat:no-repeat;
+background-position:center center;
+}
+
+.p_sms:hover{
+background-image:url(images/sms_color.jpg);
+}
+
+#main{
+width:960px;
+height:800px;
+}
+
+.top_menu_bg{
+background:url(images/top_menu_bg.jpg) repeat-x left top;
+}
+
+#logo_td{
+height:91px;
+width:220px;
+}
+
+#logo_td img{
+margin-left:30px;
+margin-top:4px;
+}
+
+#top_menu{
+padding:0px;
+margin:0px;
+margin-top:38px;
+height:47px;
+}
+
+#top_menu li{
+float:left;
+list-style-type:none;
+line-height:40px;
+height:40px;
+width:140px;
+text-align:center;
+}
+
+#top_menu li a{
+color:white;
+text-decoration:none;
+}
+
+#top_menu li a:hover{
+color:#fb7d00;
+font-weight:bold;
+}
+
+#top_menu .activ{
+background:url(images/top_menu_activ.png) no-repeat top left;
+}
+
+#top_menu .activ a:hover{
+color:white;
+text-decoration:underline;
+font-weight:normal;
+}
+
+#top_bg{
+width:100%;
+position:absolute;
+height:80px;
+z-index:-100;
+background:url(images/top_bg.jpg) repeat-x left top;
+top:0;
+left:0;
+}
+
+#content_td{
+background-color:white;
+-webkit-box-shadow: 1px 2px 8px 0.2px;
+box-shadow: 1px 2px 8px 0.2px; 
+height:600px;
+padding:25px;
+padding-bottom:85px;
+}
+
+.content_bg{
+background-image:url("images/content_bg.jpg");
+background-repeat:no-repeat;
+background-position:bottom center;
+}
+
+.content_bg_villagio{
+background-image:url("images/content_bg_villagio.jpg");
+background-repeat:no-repeat;
+background-position:bottom center;
+}
+
+.content_bg_bellissimo{
+background-image:url("images/content_bg_bellissimo.jpg");
+background-repeat:no-repeat;
+background-position:bottom center;
+}
+
+.content_bg_felicecitta{
+background-image:url("images/content_bg_felicecitta.jpg");
+background-repeat:no-repeat;
+background-position:bottom center;
+}
+
+.content_bg_bellavita{
+background-image:url("images/content_bg_bellavita.jpg");
+background-repeat:no-repeat;
+background-position:bottom center;
+}
+
+#clear_td{
+height:40px;
+}
+
+#bottom_td{
+height:105px;
+}
+
+.select_table{
+width:820px;
+height:520px;
+margin-top:10px;
+}
+
+#bottom_menu{
+padding:0px;
+margin:0px;
+margin-top:15px;
+height:47px;
+width:500px;
+}
+
+#bottom_menu li{
+float:left;
+list-style-type:none;
+line-height:40px;
+height:40px;
+width:140px;
+text-align:center;
+}
+
+#bottom_menu li a{
+color:white;
+text-decoration:none;
+}
+
+#bottom_menu li a:hover{
+text-decoration:underline;
+}
+
+.copy_right{
+float:right;
+padding:15px;
+color:white;
+font-size:10pt;
+}
+
+/* FORMS */
+input.btn{
+border:none;
+height:26px;
+padding-right:30px;
+color:#f17729;
+font-weight:bold;
+cursor:pointer;
+float:right;
+}
+
+input.next{
+background:url(images/arrow.png) no-repeat right center;
+}
+
+input.btn_next:hover{
+text-decoration:underline;
+}
+
+.arrow_input{
+border-top:1px solid #8b8b8b;
+border-bottom:1px solid #e3e3e3;
+border-left:none;
+border-right:none;
+height:17px;
+text-align:center;
+background:#FFFFFF;
+color:black;
+width:100px;
+padding-left:10px;
+padding-right:10px;
+}
+
+.text_input{
+height:20px;
+background:#FFFFFF;
+color:black;
+border:1px solid #8b8b8b;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+width:142px;
+padding-left:10px;
+padding-right:10px;
+font-style:italic;
+}
+
+.text_input:focus{
+-webkit-box-shadow:  0px 0px 5px 0.1px #fdac55;
+box-shadow:  0px 0px 5px 0.1px #fdac55;
+backgrou nd-color:#FF9933;
+} 
+
+.arrows_button{
+width:21px;
+height:21px;
+cursor:pointer;
+}
+
+/* ---------------------- Стиль CheckBox ------------------------------- */
+
+/* Стиль для обертки отмеченного checkbox'а */
+div.boxChecked 
+{
+    background: url("images/boxChecked.jpg") no-repeat left bottom;
+	color:#f37326;
+}
+
+/* Стиль для обертки неотмеченного checkbox'а */
+div.boxUnchecked 
+{
+    background: url("images/boxUnchecked.jpg") no-repeat left bottom;
+} 
+
+/* Прозрачный стиль для checkbox'а */
+div.boxChecked input, div.boxUnchecked input 
+{
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+    width: 21px;
+	height:21px;
+    opacity: 0;
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+/* -------------------------  Стиль Radio -----------------------------*/
+
+/* Стиль для обертки отмеченного checkbox'а */
+div.boxRadioChecked 
+{
+    background:url("images/radioChecked.png") no-repeat left bottom;
+	color:#f37326;
+}
+
+/* Стиль для обертки неотмеченного checkbox'а */
+div.boxRadioUnchecked 
+{
+    background: url("images/radioUnchecked.png") no-repeat left bottom;
+}
+
+/* Прозрачный стиль для checkbox'а */
+div.boxRadioChecked input, div.boxRadioUnchecked input 
+{
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+    width: 21px;
+	height:21px;
+    opacity: 0;
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	margin-right:6px;
+}
+
+input.short{
+width:140px;
+}
+
+input.double{
+width:328px;
+}
+
+input.long{
+width:515px;
+}
+
+/* ------ TEST ----- */
+.grid{
+width:910px;
+background:url(images/table_bg.png);
+-webkit-border-radius: 7px;
+-moz-border-radius: 7px;
+border-radius: 7px;
+border:1px solid #dddddd;
+margin-bottom:30px;
+}
+
+.g_none{
+border:none;
+background:none;
+}
+
+.g_left{
+float:left;
+width:450px;
+}
+
+.g_right{
+float:right;
+width:450px;
+}
+
+.grid_title, .grid_label, .r1, .r2, .r3, .r4, .r2_5{
+text-align:left;
+padding:5px;
+margin:2px;
+min-height:24px;
+float:left;
+bo rder:1px solid red;
+}
+
+.grid_title{
+width:885px;
+font-weight:bold;
+font-size:12pt;
+}
+
+.grid_label{
+width:240px;
+}
+
+.r1{
+width:170px;
+}
+
+.r2{
+width:395px;
+}
+
+.r2_5{
+width:240px;
+}
+
+.r3{
+width:623px;
+}
+
+.r4{
+width:890px;
+}
+
+/* TOTAL TABLE -------------------------------------------------------------------------------------------------------------------- */
+.total_table{
+width:100%;
+margin-bottom:25px;
+border:1px solid #c4c4c4;
+-webkit-border-radius: 7px;
+-webkit-border-top-right-radius: 0;
+-moz-border-radius: 7px;
+-moz-border-radius-topright: 0;
+border-radius: 7px;
+border-top-right-radius: 0;
+background: #efefef; /* Old browsers */
+background: -moz-linear-gradient(top,  #efefef 0%, #ffffff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efefef), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #efefef 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #efefef 0%,#ffffff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #efefef 0%,#ffffff 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #efefef 0%,#ffffff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+opacity:0.85;
+filter:alpha(opacity=85);
+}
+
+.total_table caption{
+height:30px;
+line-height:30px;
+}
+
+.total_table caption span{
+display:block;
+float:right;
+height:30px;
+line-height:30px;
+text-transform:uppercase;
+color:white;
+text-align:center;
+padding-right:45px;
+padding-left:45px;
+background-color:#fb7d00;
+font-weight:bold;
+font-size:11pt;
+-webkit-border-top-left-radius: 7px;
+-webkit-border-top-right-radius: 7px;
+-moz-border-radius-topleft: 7px;
+-moz-border-radius-topright: 7px;
+border-top-left-radius: 7px;
+border-top-right-radius: 7px;
+}
+
+.total_table td{
+padding:25px;
+}
+
+.total_table td{
+padding:25px;
+}
+
+.total_table .t_lable{
+text-align:left;
+padding-left:120px;
+font-weight:bold;
+}
+
+.total_table .t_input{
+text-align:left;
+padding-right:120px;
+}
+
+.total_table .t_last{
+padding-left:120px;
+background:url(images/total_corner_picture.png) no-repeat right bottom;
+padding-top:0px;
+}
+
+/* INFO TABLE ------------------------------------------------------------------------------ */
+.info_table{
+min-width:620px;
+border-collapse:collapse;
+margin-bottom:25px;
+}
+
+.info_table, .info_table td, .info_table th
+{
+border:1px solid #c4c4c4;
+}
+
+.info_table th{
+background:#e9e9e9;
+text-align:center;
+}
+
+.info_table td{
+text-align:left;
+}
+
+.info_table td:last-child{
+text-align:center;
+}
+
+/* FORMS SELECT ------------------------------------------------------------------------------ */
+div.select{
+position:relative;
+} 
+
+select.select{
+position:relative;
+z-index:10;
+width:170px !important;
+height:24px !important;
+line-height:22px;
+}
+
+span.select{
+position:absolute;
+bottom:0;
+float:left;
+left:0;
+width:162px;
+height:24px;
+line-height:26px;
+text-indent:10px;
+border:1px solid #8b8b8b;
+-webkit-border-radius: 7px;
+-moz-border-radius: 7px;
+border-radius: 7px;
+line-height:22px;
+background:url(images/down_arrow.jpg) no-repeat 94% center;
+cursor:default;
+z-index:1;
+}
