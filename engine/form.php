@@ -127,28 +127,28 @@ class input
                 break;
             case 'dataPicker':
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
-                echo "<div class=\"r$this->divWidth\"><input type=\"text\" name=\"$this->name\" value=\"$this->value\"  class=\"$this->class\" id=\"".str_replace(array("[", "]"),'',$this->name)."\" onClick=\"this.value='';\"></div>
-                    <script type=\"text/javascript\">
-                        $(function(){
+                echo "<script type=\"text/javascript\">
+                            $(function(){
 
-                            // Datepicker
-                            $('#".str_replace(array("[", "]"),'',$this->name)."').datepicker({
-                                inline: true,
-                                changeMonth: true,
-                                changeYear: true
-                            });
+                                // Datepicker
+                                $('#".str_replace(array("[", "]"),'',$this->name)."').datepicker({
+                                    inline: true,
+                                    changeMonth: true,
+                                    changeYear: true
+                                });
 
-                            $( \"".str_replace(array("[", "]"),'',$this->name)."\" ).datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );
+                                $( \"".str_replace(array("[", "]"),'',$this->name)."\" ).datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );
 
-                            $( \"".str_replace(array("[", "]"),'',$this->name)."\" ).datepicker( $.datepicker.regional[ \"ru\" ] );
-                            //hover states on the static widgets
-                            $('#dialog_link, ul#icons li').hover(
-                                function() { $(this).addClass('ui-state-hover'); },
-                                function() { $(this).removeClass('ui-state-hover'); }
-                            );
+                                $( \"".str_replace(array("[", "]"),'',$this->name)."\" ).datepicker( $.datepicker.regional[ \"ru\" ] );
+                                //hover states on the static widgets
+                                $('#dialog_link, ul#icons li').hover(
+                                    function() { $(this).addClass('ui-state-hover'); },
+                                    function() { $(this).removeClass('ui-state-hover'); }
+                                );
 
-                    });
-                    </script>";
+                        });
+                        </script>";
+                echo "<div class=\"r$this->divWidth\"><input type=\"text\" name=\"$this->name\" value=\"$this->value\"  class=\"$this->class\" id=\"".str_replace(array("[", "]"),'',$this->name)."\" onClick=\"this.value='';\"></div>";
                 break;
             case 'select':
                 {
