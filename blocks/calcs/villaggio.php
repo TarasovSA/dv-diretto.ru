@@ -8,7 +8,6 @@ else
 
 
 
-
 switch ($step)
 {
     case 1:
@@ -24,15 +23,15 @@ switch ($step)
         //block insurant
         $villaggioForm->putNewBlock('Основная информация', 'grid g_left g_none');
 
-        $villaggioForm->addInput(new input('villaggio[constructionEl]', 'isSlider', 'Конструктивные элементы', $formData['constructionEl'], '', 1));
+        $villaggioForm->addInput(new input('villaggio[constructionEl]', 'slider', 'Конструктивные элементы', $formData['constructionEl'], '', 1));
         $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
-        $villaggioForm->addInput(new input('villaggio[exteriorTrim]', 'isSlider', 'Внешняя отделка', $formData['exteriorTrim'], '', 1));
-        $villaggioForm->addInput(new input('villaggio[interiorTrim]', 'isSlider', 'Внутренняя отделка', $formData['interiorTrim'], '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isExteriorTrim]', 'slider' => 'villaggio[exteriorTrim]'), 'isSlider', 'Внешняя отделка', array('checkbox' => $formData['isExteriorTrim'], 'slider' => $formData['exteriorTrim']), '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isInteriorTrim]', 'slider' => 'villaggio[interiorTrim]'), 'isSlider', 'Внутренняя отделка', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['interiorTrim']), '', 1));
 
-        $villaggioForm->addInput(new input('villaggio[engineeringSystems]', 'isSlider', 'Инженерные системы', $formData['engineeringSystems'], '', 1));
-        $villaggioForm->addInput(new input('villaggio[property]', 'isSlider', 'Имущество', $formData['property'], '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isEngineeringSystems]', 'slider' => 'villaggio[engineeringSystems]'), 'isSlider', 'Инженерные системы', array('checkbox' => $formData['isEngineeringSystems'], 'slider' => $formData['engineeringSystems']), '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isProperty]', 'slider' => 'villaggio[property]'), 'isSlider', 'Имущество', array('checkbox' => $formData['isProperty'], 'slider' => $formData['property']), '', 1));
         $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
-        $villaggioForm->addInput(new input('villaggio[liability]', 'isSlider', 'Гражданская ответственность', $formData['liability'], '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isLiability]', 'slider' => 'villaggio[liability]'), 'isSlider', 'Гражданская ответственность', array('checkbox' => $formData['isLiability'], 'slider' => $formData['liability']), '', 1));
 
         //block territory of insure
         $villaggioForm->putNewBlock('Дополнительные строения', 'grid g_right g_none');

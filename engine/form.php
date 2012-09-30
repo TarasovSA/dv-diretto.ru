@@ -95,14 +95,19 @@ class input
                 echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('$this->name',200);\"  alt=\"left\"/><input name=\"$this->name\" class=\"arrow_input\" type=\"text\" id=\"$this->name\" value=\"$this->value\"/><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('$this->name',200);\"  alt=\"right\"/></div>";
                 break;
             case 'isSlider':
+            {
+                if ($this->value['checkbox'] == 1)
                 {
-                if ($this->value == 1)
-                    echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doCheckbox(this);\" name=\"is$this->name\" type=\"checkbox\" value=\"1\" checked=\"checked\"/> $this->pre</div></div>";
-                else
-                    echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doCheckbox(this);\" name=\"is$this->name\" type=\"checkbox\" value=\"1\"/> $this->pre</div></div>";
-                echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('$this->name',200);\"  alt=\"left\"/><input name=\"$this->name\" class=\"arrow_input\" type=\"text\" id=\"$this->name\" value=\"$this->value\"/><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('$this->name',200);\"  alt=\"right\"/></div>";
-                break;
+                    echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doSliderCheckbox(this, '".$this->name['slider']."');\" name=\"".$this->name['checkbox']."\" type=\"checkbox\" value=\"1\" checked=\"checked\"/> $this->pre</div></div>";
+                    echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('".$this->name['slider']."',1000);\"  alt=\"left\"/><input name=\"".$this->name['slider']."\" class=\"arrow_input\" type=\"text\" id=\"".$this->name['slider']."\" value=\"".$this->value['slider']."\"/><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('".$this->name['slider']."',1000);\"  alt=\"right\"/></div>";
                 }
+                else
+                {
+                    echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doSliderCheckbox(this, '".$this->name['slider']."');\" name=\"".$this->name['checkbox']."\" type=\"checkbox\" value=\"1\"/> $this->pre</div></div>";
+                    echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('".$this->name['slider']."',1000);\"  alt=\"left\"/><input name=\"".$this->name['slider']."\" class=\"arrow_input\" type=\"text\" id=\"".$this->name['slider']."\" value=\"".$this->value['slider']."\"/ disabled=\"disabled\"><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('".$this->name['slider']."',1000);\"  alt=\"right\"/></div>";
+                }
+                break;
+            }
             case 'checkbox':
                 {
                 if ($this->value == 1)

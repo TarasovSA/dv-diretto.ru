@@ -1,20 +1,20 @@
 // JavaScript Document ------------------------------------------------------------------------------------------------
 function counter_up(id, step)
 {
-	document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;	
+    if (!document.getElementById(id).disabled)
+	    document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;
 }
 
 function counter_down(id, step)
 {
-	if(parseInt(document.getElementById(id).value) >= step)
-	{
-		document.getElementById(id).value = parseInt(document.getElementById(id).value) - step;	
-	}
+    if (!document.getElementById(id).disabled)
+        if(parseInt(document.getElementById(id).value) >= step)
+            document.getElementById(id).value = parseInt(document.getElementById(id).value) - step;
 }
 
 // JavaScript Document ------------------------------------------------------------------------------------------------
 
-// Установка стилей в соответствии с текущим состоянием чекбоксов на странице
+// РЈСЃС‚Р°РЅРѕРІРєР° СЃС‚РёР»РµР№ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚РѕСЏРЅРёРµРј С‡РµРєР±РѕРєСЃРѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ
 function ConvertAllCheckbox()
 {
 	var el=document.getElementsByTagName('input');
@@ -25,19 +25,19 @@ function ConvertAllCheckbox()
 	}
 }
 
-// Обработка состояния чекбокса
+// РћР±СЂР°Р±РѕС‚РєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ С‡РµРєР±РѕРєСЃР°
 function doCheckbox(elem) {
-	// Чекбокс должен быть внутри DIV'а и иметь стиль 'boxCheckbox'
+	// Р§РµРєР±РѕРєСЃ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІРЅСѓС‚СЂРё DIV'Р° Рё РёРјРµС‚СЊ СЃС‚РёР»СЊ 'boxCheckbox'
 	if (elem.className=='boxCheckbox' &&
 		elem.parentNode.tagName.toLowerCase()=='div') {
-		// Поменять стиль "обертки" в зависимости от состояния переключателя
+		// РџРѕРјРµРЅСЏС‚СЊ СЃС‚РёР»СЊ "РѕР±РµСЂС‚РєРё" РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЏ
 		elem.parentNode.className='box'+(elem.checked?'Checked':'Unchecked');
 	}
 }
 
 // JavaScript Document 22222222 ----------------------------------------------------------------------------------------
 
-// Установка стилей в соответствии с текущим состоянием на странице
+// РЈСЃС‚Р°РЅРѕРІРєР° СЃС‚РёР»РµР№ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚РѕСЏРЅРёРµРј РЅР° СЃС‚СЂР°РЅРёС†Рµ
 function ConvertAllRadio()
 {
 	var el=document.getElementsByTagName('input');
@@ -48,11 +48,27 @@ function ConvertAllRadio()
 	}
 }
 
-// Обработка состояния
+// РћР±СЂР°Р±РѕС‚РєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ
 function doRadio(elem) {
 	if (elem.className=='boxRadio' &&
 		elem.parentNode.tagName.toLowerCase()=='div') {
-		// Поменять стиль "обертки" в зависимости от состояния переключателя
+		// РџРѕРјРµРЅСЏС‚СЊ СЃС‚РёР»СЊ "РѕР±РµСЂС‚РєРё" РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЏ
 		elem.parentNode.className='boxRadio'+(elem.checked?'Checked':'Unchecked');
 	}
+}
+
+function doSliderCheckbox(elem, sliderId) {
+	// Р§РµРєР±РѕРєСЃ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІРЅСѓС‚СЂРё DIV'Р° Рё РёРјРµС‚СЊ СЃС‚РёР»СЊ 'boxCheckbox'
+	if (elem.className=='boxCheckbox' &&
+		elem.parentNode.tagName.toLowerCase()=='div') {
+		// РџРѕРјРµРЅСЏС‚СЊ СЃС‚РёР»СЊ "РѕР±РµСЂС‚РєРё" РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЏ
+		elem.parentNode.className='box'+(elem.checked?'Checked':'Unchecked');
+	}
+
+    if (elem.checked){
+        document.getElementById(sliderId).removeAttribute('disabled');
+    }
+    else {
+        document.getElementById(sliderId).setAttribute('disabled', 'disabled');
+    }
 }
