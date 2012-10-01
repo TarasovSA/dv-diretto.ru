@@ -5,15 +5,15 @@ $defaultValues = array('calc' =>
     'villaggio' =>
         array(
         'constructionEl' => 500000,
-        'isExteriorTrim' => 1,
+        'isExteriorTrim' => 0,
         'exteriorTrim' => 30000,
-        'isInteriorTrim' => 1,
+        'isInteriorTrim' => 0,
         'interiorTrim' => 30000,
-        'isEngineeringSystems' => 1,
+        'isEngineeringSystems' => 0,
         'engineeringSystems' => 50000,
-        'isProperty' => 1,
+        'isProperty' => 0,
         'property' => 20000,
-        'isLiability' => 1,
+        'isLiability' => 0,
         'liability' => 40000
         ),
     'insurant' =>
