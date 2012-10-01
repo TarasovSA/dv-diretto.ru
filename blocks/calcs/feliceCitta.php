@@ -23,12 +23,11 @@ switch ($step)
         $fcForm->setMethod("POST");
                 
         $fcForm->putNewBlock('Квартира', 'grid g_none');
-        $fcForm->addInput(new input('feliceCitta[constructionEl]', 'isSlider', 'Констрактивные элементы', $formData['constructionEl'], '', 3));
+        $fcForm->addInput(new input('feliceCitta[constructionEl]', 'slider', 'Конструктивные элементы', $formData['constructionEl'], '', 3));
         $fcForm->addInput(new input('feliceCitta[interiorTrim]', 'isSlider', 'Внутренняя отделка', $formData['interiorTrim'], '', 3));
         $fcForm->addInput(new input('feliceCitta[engineeringSystems]', 'isSlider', 'Инженерные системы', $formData['engineeringSystems'], '', 3));
         $fcForm->addInput(new input('feliceCitta[property]', 'isSlider', 'Имущество', $formData['property'], '', 3));
         $fcForm->addInput(new input('feliceCitta[liability]', 'isSlider', 'Гражданская ответственность', $formData['liability'], '', 3));
-		$fcForm->addInput(new input('feliceCittaAdditionalStruct[0][type]', 'checkbox', 'Обязательное страхование', '', 'boxCheckbox', 3));
         $fcForm->addInput(new input('sendFeliceCitta', 'submit', '', 'Далее', 'btn next', 4));
         $fcForm->printForm();
 		
