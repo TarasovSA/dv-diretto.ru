@@ -1,13 +1,13 @@
 // JavaScript Document ------------------------------------------------------------------------------------------------
 function counter_up(id, step)
 {
-    if (!document.getElementById(id).disabled)
+    if (!document.getElementById(id).readOnly)
 	    document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;
 }
 
 function counter_down(id, step)
 {
-    if (!document.getElementById(id).disabled)
+    if (!document.getElementById(id).readOnly)
         if(parseInt(document.getElementById(id).value) >= step)
             document.getElementById(id).value = parseInt(document.getElementById(id).value) - step;
 }
@@ -66,10 +66,10 @@ function doSliderCheckbox(elem, sliderId) {
 	}
 
     if (elem.checked){
-        document.getElementById(sliderId).removeAttribute('disabled');
+        document.getElementById(sliderId).removeAttribute('readonly');
     }
     else {
-        document.getElementById(sliderId).setAttribute('disabled', 'disabled');
+        document.getElementById(sliderId).setAttribute('readonly', 'readonly');
     }
 }
 
