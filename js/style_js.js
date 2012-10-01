@@ -72,3 +72,7 @@ function doSliderCheckbox(elem, sliderId) {
         document.getElementById(sliderId).setAttribute('disabled', 'disabled');
     }
 }
+
+function addNewAdditionalStructure() {
+    $("#addNewAdditionalStructure").dialog('open');
+}

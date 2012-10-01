@@ -34,19 +34,29 @@ switch ($step)
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isLiability]', 'slider' => 'villaggio[liability]'), 'isSlider', 'Гражданская ответственность', array('checkbox' => $formData['isLiability'], 'slider' => $formData['liability']), '', 1));
 
         //block territory of insure
-        $villaggioForm->putNewBlock('Дополнительные строения', 'grid g_right g_none');
-		
-        $villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Баня', '20000', 'text_input short', 1));
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Хозблок', '20000', 'text_input short', 1));
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Гараж', '20000', 'text_input short', 1));
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Забор', '20000', 'text_input short', 1));
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Прочие строения', '20000', 'text_input short', 1));
+        $villaggioForm->putNewBlock('Дополнительные строения', 'grid g_right g_none', 'additionalStructures');
+
+        $formData = NULL;
+        if (isset($_SESSION['calc']['villaggioAdditionalStruct']))
+            $formData = $_SESSION['calc']['villaggioAdditionalStruct'];
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggioAdditionalStruct[0][name]', 'slider' => 'villaggioAdditionalStruct[0][value]'), 'isSlider', 'Баня', array('checkbox' => $formData[0]['name'], 'slider' => $formData[0]['value']), 'text_input short', 1));
+		$villaggioForm->addInput(new input(array ('checkbox' => 'villaggioAdditionalStruct[1][name]', 'slider' => 'villaggioAdditionalStruct[1][value]'), 'isSlider', 'Хозблок', array('checkbox' => $formData[1]['name'], 'slider' => $formData[1]['value']), 'text_input short', 1));
+		$villaggioForm->addInput(new input(array ('checkbox' => 'villaggioAdditionalStruct[2][name]', 'slider' => 'villaggioAdditionalStruct[2][value]'), 'isSlider', 'Гараж', array('checkbox' => $formData[2]['name'], 'slider' => $formData[2]['value']), 'text_input short', 1));
+		$villaggioForm->addInput(new input(array ('checkbox' => 'villaggioAdditionalStruct[3][name]', 'slider' => 'villaggioAdditionalStruct[3][value]'), 'isSlider', 'Забор', array('checkbox' => $formData[3]['name'], 'slider' => $formData[3]['value']), 'text_input short', 1));
+
+        $villaggioForm->addInput(new input('', 'custom', '', '<a href="#" onclick="addNewAdditionalStructure();">Добавить строение</a>', '', 1));
+        $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
+        foreach ($formData as $number => $additionalStructures)
+        {
+            if ($number > 3)
+                $villaggioForm->addInput(new input(array ('checkbox' => 'villaggioAdditionalStruct['.$number.'][name]', 'slider' => 'villaggioAdditionalStruct['.$number.'][value]', 'hidden' => 'villaggioAdditionalStruct['.$number.'][fieldName]'), 'isSlider', $additionalStructures['fieldName'], array('checkbox' => $additionalStructures['name'], 'slider' => $additionalStructures['value'], 'hidden' => $additionalStructures['fieldName']), 'text_input short', 1));
+        }
+		//$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Прочие строения', '20000', 'text_input short', 1));*/
         //$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][value]', 'slider', 'Стоимость', '12312', '', 1));
 		
 		$villaggioForm->putNewBlock('Предметы ландшафтного дизайна', 'grid g_none');
 		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Ландшафтный дизайн', '30000', 'text_input short', 1));
-		
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'checkbox', 'Обязательное страхование', '', 'boxCheckbox', 3));
+
 		
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
 

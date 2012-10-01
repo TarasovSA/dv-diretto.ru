@@ -53,6 +53,7 @@ function addVillaggioCalcData($step)
         case 1:
             if(isset($_REQUEST['villaggio']))
                 $_SESSION['calc']['villaggio'] = $_REQUEST['villaggio'];
+                $_SESSION['calc']['villaggioAdditionalStruct'] = $_POST['villaggioAdditionalStruct'];
             break;
         case 2:
             $_SESSION['calc']['insurant'] = $_REQUEST['insurant'];

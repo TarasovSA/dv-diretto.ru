@@ -36,11 +36,12 @@ class form
     {
         $this->inputs[$this->currentBlock]['blockName'] = $name;
     }
-    public function putNewBlock ($name, $class)
+    public function putNewBlock ($name, $class, $id='')
     {
         $this->currentBlock++;
         $this->inputs[$this->currentBlock]['blockName'] = $name;
         $this->inputs[$this->currentBlock]['class'] = $class;
+        $this->inputs[$this->currentBlock]['id'] = $id;
         $this->inputs[$this->currentBlock]['inputs'] = array();
     }
     public function printForm()
@@ -48,7 +49,7 @@ class form
         echo "<form action=\"$this->action\" method=\"$this->method\">";
         foreach ($this->inputs as $block)
         {
-            echo "<div class=\"".$block['class']."\"><div class=\"grid_title\">".$block['blockName']."</div>";
+            echo "<div class=\"".$block['class']."\"".($block['id']?' id='.$block['id']:'')."><div class=\"grid_title\">".$block['blockName']."</div>";
             foreach ($block['inputs'] as $input)
             {
                 $input->show();
@@ -106,6 +107,8 @@ class input
                     echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doSliderCheckbox(this, '".$this->name['slider']."');\" name=\"".$this->name['checkbox']."\" type=\"checkbox\" value=\"1\"/> $this->pre</div></div>";
                     echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('".$this->name['slider']."',1000);\"  alt=\"left\"/><input name=\"".$this->name['slider']."\" class=\"arrow_input\" type=\"text\" id=\"".$this->name['slider']."\" value=\"".$this->value['slider']."\"/ disabled=\"disabled\"><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('".$this->name['slider']."',1000);\"  alt=\"right\"/></div>";
                 }
+                if (isset ($this->name['hidden']))
+                    echo "<input type=\"hidden\" name=\"".$this->name['hidden']."\" value=\"".$this->value['hidden']."\">";
                 break;
             }
             case 'checkbox':
