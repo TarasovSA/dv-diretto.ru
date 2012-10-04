@@ -1,10 +1,7 @@
 <?php
-if (isset($_GET['p']))
-    $page = $_GET['p'];
-else
-    $page = 'main';
 
-switch ($page)
+
+switch ($GLOBALS['page'])
 {
     case 'coefficient':
         include_once ('navCoefficient.php');

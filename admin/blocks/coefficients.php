@@ -1,15 +1,7 @@
 <?php
 
-$calc = null;
-
-if (isset($_GET['calc']))
-    $calc = $_GET['calc'];
-else
-    $calc = 'main';
-
-
-switch ($calc)
-{
+//print_r ($_POST);
+switch ($GLOBALS['calc']) {
     case 'villaggio':
         $coefficients = dbGetCoefficientsForCalc(array('calc' => 0));
         break;
@@ -28,88 +20,35 @@ switch ($calc)
 }
 
 
+if ($GLOBALS['calc'] == 'main')
+{
+
+}
+else
+{
 
 ?>
 
 
-<div class="hero-unit">
-    <h1>Коэффициенты</h1>
-    <?php
-    foreach ($coefficients as $coefficient)
-    {
-        echo $coefficient['longName'].'<input type=text name="'.$coefficient['id'].'" value="'.$coefficient['value'].'"></br>';
-    }
+    <div class="hero-unit">
+        <h2>Коэффициенты</h2>
+        <form class="form-horizontal" action="/admin/index.php?p=coefficient&calc=villaggio" method="POST">
+            <?php
+                foreach ($coefficients as $coefficient) {
+                    echo '<div class="control-group">';
+                    echo '<label class="control-label" for="' . $coefficient['id'] . '">' . $coefficient['longName'] . '</label>';
+                    echo '<div class="controls"><input type=text id="' . $coefficient['id'] . '" name="coeff[' . $coefficient['id'] . ']" value="' . $coefficient['value'] . '"></div>';
+                    echo '</div>';
+                }
+                ?>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" name="saveVillaggioCoefficient" value="1">Обновить</button>
+              <button type="button" class="btn">Отменить (работу кнопки не проверял!!!)</button>
+            </div>
+        </form>
+    </div>
+
+
+<?php
+}
 ?>
-
-    <p>This is a template for a simple marketing or informational website. It includes a large callout
-        called the hero unit and three supporting pieces of content. Use it as a starting point to create
-        something more unique.</p>
-
-    <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
-<div class="row-fluid">
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-</div>
-<!--/row-->
-<div class="row-fluid">
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-    <div class="span4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui. </p>
-
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <!--/span-->
-</div>
-<!--/row-->

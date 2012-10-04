@@ -14,6 +14,14 @@ try {
     # MySQL через PDO_MYSQL
     $DBH = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
     $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+
+    $DBH->exec("SET NAMES 'utf8'");
+    $DBH->exec("SET collation_connection = 'utf8_general_ci'");
+    $DBH->exec("SET collation_server = 'utf8_general_ci'");
+    $DBH->exec("SET character_set_client = 'utf8'");
+    $DBH->exec("SET character_set_connection = 'utf8'");
+    $DBH->exec("SET character_set_results = 'utf8'");
+    $DBH->exec("SET character_set_server = 'utf8'");
 }
 catch(PDOException $e) {
     errorMessageHandler($e);
@@ -21,7 +29,6 @@ catch(PDOException $e) {
 
 function dbGetCoefficientsForCalc($structure)
 {
-    //TODO: need to convert to temp DB
     global $DBH;
     $coefficients = array();
     try {
@@ -43,4 +50,18 @@ function dbGetCoefficientsForCalc($structure)
         errorMessageHandler($e);
     }
     return $coefficients;
+}
+
+function dbUpdateCoefficient($structure)
+{
+    global $DBH;
+    try {
+        $STH = $DBH->prepare("UPDATE coefficient SET value = :value WHERE id = :id");
+        $STH->execute($structure);
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return 1;
 }
