@@ -16,7 +16,7 @@ switch ($step)
         else
             $formData = $defaultValues['calc']['villaggio'];
 
-        $villaggioForm = new form();
+        $villaggioForm = new form('villaggioPrimary');
         $villaggioForm->setAction("index.php?action=calc&type=0&step=2");
         $villaggioForm->setMethod("POST");
 
@@ -53,37 +53,43 @@ switch ($step)
         }
 		//$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Прочие строения', '20000', 'text_input short', 1));*/
         //$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][value]', 'slider', 'Стоимость', '12312', '', 1));
-		
-		$villaggioForm->putNewBlock('Предметы ландшафтного дизайна', 'grid g_none');
-		$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Ландшафтный дизайн', '30000', 'text_input short', 1));
 
-		
+		$villaggioForm->putNewBlock('Предметы ландшафтного дизайна', 'grid g_none');
+		$villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isLandscape]', 'slider' => 'villaggio[landscape]'), 'isSlider', 'Ландшафтный дизайн', array('checkbox' => $formData['isLandscape'], 'slider' => $formData['landscape']), 'text_input short', 1));
+
+
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
 
 		$villaggioForm->printForm();
-		
-echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
-<caption>
-<span>Итого</span>
-</caption>
-<tr>
-<td class="t_lable">Итого стоимость полиса в год:</td>
-<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
-</tr>
-<tr>
-<td colspan="2" class="t_last"><p>
-<b>По данному полису включены следующие риски:</b>
-<ul>
-<li>Пожар</li>
-<li>Залив</li>
-<li>Стихийные бедствия</li>
-<li>Механическое повреждение</li>
-</ul>
-<i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
-</p>
-</td>
-</tr>
-</table>';
+
+?>
+    <table class="total_table" border="0" cellspacing="3" cellpadding="3">
+        <caption>
+            <span>Итого</span>
+        </caption>
+        <tr>
+            <td class="t_lable">Итого стоимость полиса в год:</td>
+            <td class="t_input"><input type="text" name="villaggioResult" class="text_input double" value=""></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="t_last"><p>
+                <b>По данному полису включены следующие риски:</b>
+                <ul>
+                    <li>Пожар</li>
+                    <li>Залив</li>
+                    <li>Стихийные бедствия</li>
+                    <li>Механическое повреждение</li>
+                </ul>
+                <i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
+                </p>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $("#villaggioPrimary").click(function(){villaggioUpdateFirstPage();}).change(function (){villaggioUpdateFirstPage();});
+        villaggioUpdateFirstPage();
+    </script>
+<?php
         break;
 
     case 2:
@@ -159,10 +165,10 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 		$villaggioForm->addInput(new input('', 'custom', null, '<span style="margin-left:25px;">Введите ПРОМОКОД для получения скидки:</span>', '', 2));
 		$villaggioForm->addInput(new input('payType[promo]', 'text', null, $formData['name'], 'text_input short', 1));
 		$villaggioForm->addInput(new input('payType[0][type]', 'checkbox', 'С <a href="#">Правилами страхования</a> и <a href="#">Полисными условиями</a> ознакомлен', '', 'boxCheckbox', 3));
-		
+
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
         $villaggioForm->printForm();
-		
+
 echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 <caption>
 <span>Оплатить</span>
@@ -178,6 +184,6 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 </td>
 </tr>
 </table>';
-		
+
 		break;
 }

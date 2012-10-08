@@ -14,7 +14,9 @@ $defaultValues = array('calc' =>
         'isProperty' => 0,
         'property' => 20000,
         'isLiability' => 0,
-        'liability' => 40000
+        'liability' => 40000,
+        'isLandscape' => 0,
+        'landscape' => 50000
         ),
     'insurant' =>
         array(
