@@ -18,7 +18,7 @@ switch ($step)
             $formData = $defaultValues['calc']['bellaVita'];
 
 
-        $bvForm = new form();
+        $bvForm = new form('bellaVitaPrimary');
         $bvForm->setAction("index.php?action=calc&type=2&step=2");
         $bvForm->setMethod("POST");
 
@@ -28,25 +28,28 @@ switch ($step)
         $bvForm->addInput(new input('sendbellaVita', 'submit', null, 'Далее', 'btn next', 4));
         $bvForm->printForm();
 		
-echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
-<caption>
-<span>Итого</span>
-</caption>
-<tr>
-<td class="t_lable">Итого стоимость полиса в год:</td>
-<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
-</tr>
-<tr>
-<td colspan="2" class="t_last"><p>
-<b>По данному полису включены следующие риски:</b><br>
-<ul>
-<li>Смерть застрахованного в результе несчастного случая</li>
-</ul>
-<i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
-</p>
-</td>
-</tr>
-</table>';
+echo '
+<table class="total_table" border="0" cellspacing="3" cellpadding="3">
+    <caption><span>Итого</span></caption>
+    <tr>
+        <td class="t_lable">Итого стоимость полиса в год:</td>
+        <td class="t_input"><input type="text" name="bellaVitaResult" class="text_input double" value=""></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="t_last"><p>
+            <b>По данному полису включены следующие риски:</b><br>
+            <ul>
+                <li>Смерть застрахованного в результе несчастного случая</li>
+            </ul>
+            <i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
+            </p>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $("#bellaVitaPrimary").click(function(){bellaVitaUpdateFirstPage();}).change(function (){bellaVitaUpdateFirstPage();});
+    bellaVitaUpdateFirstPage();
+</script>';
 
         break;
 

@@ -33,13 +33,6 @@ function villaggioUpdateFirstPage()
         }
     }
 
-
-
-
-
-
-
-
     var sum = 0;
 
     sum = constructionEl*0.005 + isExteriorTrim*exteriorTrim*0.005 + isInteriorTrim*interiorTrim*0.005 + isEngineeringSystems*engineeringSystems*0.005 + isProperty*property*0.006 + isLiability*liability*0.01;
@@ -49,4 +42,32 @@ function villaggioUpdateFirstPage()
     sum += isLandscape*landscape*0.01;
 
     $('[name=villaggioResult]').val(sum);
+}
+
+function feliceCittaUpdateFirstPage()
+{
+    var constructionEl = $('#feliceCitta\\[constructionEl\\]').val();
+    var isInteriorTrim = $('[name="feliceCitta\\[isInteriorTrim\\]"]').is(':checked');
+    var interiorTrim = $('#feliceCitta\\[interiorTrim\\]').val();
+    var isEngineeringSystems = $('[name="feliceCitta\\[isEngineeringSystems\\]"]').is(':checked');
+    var engineeringSystems = $('#feliceCitta\\[engineeringSystems\\]').val();
+    var isProperty = $('[name="feliceCitta\\[isProperty\\]"]').is(':checked');
+    var property = $('#feliceCitta\\[property\\]').val();
+    var isLiability = $('[name="feliceCitta\\[isLiability\\]"]').is(':checked');
+    var liability = $('#feliceCitta\\[liability\\]').val();
+    var sum = 0;
+
+    sum = constructionEl*0.005 + isInteriorTrim*interiorTrim*0.005 + isEngineeringSystems*engineeringSystems*0.005 + isProperty*property*0.006 + isLiability*liability*0.01;
+
+    $('[name=feliceCittaResult]').val(sum);
+}
+
+function bellaVitaUpdateFirstPage()
+{
+    var insuranceAmount = $('#bellaVita\\[insuranceAmount\\]').val();
+    var sum = 0;
+
+    sum = insuranceAmount*0.005;
+
+    $('[name=bellaVitaResult]').val(sum);
 }

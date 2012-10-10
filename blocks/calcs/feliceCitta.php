@@ -18,41 +18,44 @@ switch ($step)
             $formData = $defaultValues['calc']['feliceCitta'];
 
 
-        $fcForm = new form();
+        $fcForm = new form('feliceCittaPrimary');
         $fcForm->setAction("index.php?action=calc&type=1&step=2");
         $fcForm->setMethod("POST");
                 
         $fcForm->putNewBlock('Квартира', 'grid g_none');
         $fcForm->addInput(new input('feliceCitta[constructionEl]', 'slider', 'Конструктивные элементы', $formData['constructionEl'], '', 3));
-        $fcForm->addInput(new input('feliceCitta[interiorTrim]', 'isSlider', 'Внутренняя отделка', $formData['interiorTrim'], '', 3));
-        $fcForm->addInput(new input('feliceCitta[engineeringSystems]', 'isSlider', 'Инженерные системы', $formData['engineeringSystems'], '', 3));
-        $fcForm->addInput(new input('feliceCitta[property]', 'isSlider', 'Имущество', $formData['property'], '', 3));
-        $fcForm->addInput(new input('feliceCitta[liability]', 'isSlider', 'Гражданская ответственность', $formData['liability'], '', 3));
+        $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isInteriorTrim]', 'slider' => 'feliceCitta[interiorTrim]'), 'isSlider', 'Внутренняя отделка', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['interiorTrim']), '', 3));
+        $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isEngineeringSystems]', 'slider' => 'feliceCitta[engineeringSystems]'), 'isSlider', 'Инженерные системы', array('checkbox' => $formData['engineeringSystems'], 'slider' => $formData['engineeringSystems']), '', 3));
+        $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isProperty]', 'slider' => 'feliceCitta[property]'), 'isSlider', 'Имущество', array('checkbox' => $formData['property'], 'slider' => $formData['property']), '', 3));
+        $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isLiability]', 'slider' => 'feliceCitta[liability]'), 'isSlider', 'Гражданская ответственность', array('checkbox' => $formData['liability'], 'slider' => $formData['liability']), '', 3));
         $fcForm->addInput(new input('sendFeliceCitta', 'submit', '', 'Далее', 'btn next', 4));
         $fcForm->printForm();
 		
-echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
-<caption>
-<span>Итого</span>
-</caption>
-<tr>
-<td class="t_lable">Итого стоимость полиса в год:</td>
-<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
-</tr>
-<tr>
-<td colspan="2" class="t_last"><p>
-<b>По данному полису включены следующие риски:</b><br>
-<ul>
-<li>Пожар</li>
-<li>Залив</li>
-<li>Стихийные бедствия</li>
-<li>Механическое повреждение</li>
-</ul>
-<i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
-</p>
-</td>
-</tr>
-</table>';
+echo '
+<table class="total_table" border="0" cellspacing="3" cellpadding="3">
+    <caption><span>Итого</span></caption>
+    <tr>
+        <td class="t_lable">Итого стоимость полиса в год:</td>
+        <td class="t_input"><input type="text" name="feliceCittaResult" class="text_input double" value=""></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="t_last"><p>
+            <b>По данному полису включены следующие риски:</b><br>
+            <ul>
+            <li>Пожар</li>
+            <li>Залив</li>
+            <li>Стихийные бедствия</li>
+            <li>Механическое повреждение</li>
+            </ul>
+            <i>*окончательная стоимость будет определена от формы рассрочки платежей</i>
+            </p>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $("#feliceCittaPrimary").click(function(){feliceCittaUpdateFirstPage();}).change(function (){feliceCittaUpdateFirstPage();});
+    feliceCittaUpdateFirstPage();
+</script>';
 		
         break;
 
