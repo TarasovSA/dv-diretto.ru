@@ -413,6 +413,7 @@ background:url(../images/table_bg.png);
 border-radius: 7px;
 border:1px solid #dddddd;
 margin-bottom:30px;
+float:left;
 }
 
 .g_none{

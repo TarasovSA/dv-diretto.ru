@@ -76,3 +76,7 @@ function doSliderCheckbox(elem, sliderId) {
 function addNewAdditionalStructure() {
     $("#addNewAdditionalStructure").dialog('open');
 }
+
+function addNewDriver() {
+    $("#addNewDriver").dialog('open');
+}

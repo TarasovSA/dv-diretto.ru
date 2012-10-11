@@ -71,3 +71,33 @@ function bellaVitaUpdateFirstPage()
 
     $('[name=bellaVitaResult]').val(sum);
 }
+
+function addDriver()
+{
+    var driversQuantity = $('[id^="bellissimoDriversdriver"]').length;
+    if (driversQuantity < 5){
+
+        var html = '<div class="grid_label">Дата рождения:</div>' +
+                '<script type="text/javascript">' +
+                '    $(function(){' +
+                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker({' +
+                '            inline: true,' +
+                '            changeMonth: true,' +
+                '            changeYear: true' +
+                '        });' +
+                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );' +
+                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( $.datepicker.regional[ \"ru\" ] );' +
+                '        $(\'#dialog_link, ul#icons li\').hover(' +
+                '            function() { $(this).addClass(\'ui-state-hover\'); },' +
+                '            function() { $(this).removeClass(\'ui-state-hover\'); }' +
+                '        );' +
+                '    });' +
+                '</script>' +
+                '<div class="r1"><input type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][birthDay]" value=""  class="text_input" id="bellissimoDriversdriver' + driversQuantity +'birthDay" onClick="this.value=\'\';"></div>' +
+                '<div class="grid_label">Стаж вождения (полных лет):</div><div class="r1"><input class="text_input short" type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][experience]" value="" placeholder="3"></div>';
+
+        $(html).appendTo('#drivers');
+        driversQuantity++;
+    }
+
+}

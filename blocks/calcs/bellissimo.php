@@ -23,11 +23,11 @@ switch ($step)
 
         //block insured
         $bellissimoForm->putNewBlock('Страхование КАСКО', 'grid');
-        $bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'select', 'Марка ТС:', $formData['typeOfCar'], 'select'));
-        $bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'select', 'Модель ТС:', $formData['modelOfCar'], 'select'));
-        $bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', $formData['yearOfCar'], 'select'));
+        $bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'select', 'Марка ТС:', array('select' => $defaultValues['select']['typesOfCar'], 'chose' => $formData['typeOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'select', 'Модель ТС:', array('select' => $defaultValues['select']['modelsOfCar'], 'chose' => $formData['modelOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', array('select' => $defaultValues['select']['yearsOfCar'], 'chose' => $formData['yearOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[carAmount]', 'slider', 'Стоимость ТС:', $formData['carAmount'],''));
-        $bellissimoForm->addInput(new input('bellissimo[isUnderWarranty]', 'text', 'ТС находится на гарантии:', $formData['isUnderWarranty'], 'text_input long', 3));
+        $bellissimoForm->addInput(new input('bellissimo[isUnderWarranty]', 'select', 'ТС находится на гарантии:', array('select' => $defaultValues['select']['isUnderWarranty'], 'chose' => $formData['isUnderWarranty']), 'select', 3));
 
 
         if (isset($_SESSION['calc']['bellissimoDrivers']))
@@ -37,7 +37,7 @@ switch ($step)
             global $defaultValues;
             $formData = $defaultValues['calc']['bellissimoDrivers'];
         }
-        $bellissimoForm->putNewBlock('Допущенные к управлению','grid');
+        $bellissimoForm->putNewBlock('Допущенные к управлению','grid', 'drivers');
 
         if (count($formData['driver'] > 0))
         {
@@ -52,7 +52,7 @@ switch ($step)
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'dataPicker', 'Дата рождения:', "", 'text_input', 1));
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'text', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
         }
-		$bellissimoForm->addInput(new input('', 'custom', null, '<a href="#" class="small_link italic">Добавить водителя не более пяти лет</a>', '', 4));
+		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();">Добавить водителя (не более пяти)</a>', '', 4));
 
 
 
@@ -65,7 +65,7 @@ switch ($step)
         }
         $bellissimoForm->putNewBlock('Дополнительная информация','grid');
         $bellissimoForm->addInput(new input('bellissimoOthers[formOfCompensation]', 'text', 'Форма возмещения:', $formData['formOfCompensation'], 'text_input long', 3 ));
-		
+
 		$bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][0]', 'isCheckbox', 'Установленные ПУС:', 'Штатная ПУС и/или иммобилайзер', 'boxCheckbox', 3));
         $bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][1]', 'isCheckbox', '', 'Дополнительно установленная ЭПС', 'boxCheckbox'));
         $bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][2]', 'isCheckbox', '', 'Механическая ПУС', 'boxCheckbox'));
