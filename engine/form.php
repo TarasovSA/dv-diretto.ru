@@ -48,7 +48,7 @@ class form
     }
     public function printForm()
     {
-        echo "<form action=\"$this->action\" method=\"$this->method\" id=\"$this->id\">";
+        echo "<form action='{$this->action}' method='{$this->method}' id='{$this->id}'>";
         foreach ($this->inputs as $block)
         {
             echo "<div class=\"".$block['class']."\"".($block['id']?' id='.$block['id']:'')."><div class=\"grid_title\">".$block['blockName']."</div>";
@@ -95,7 +95,7 @@ class input
         {
             case 'slider':
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
-                echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('$this->name',1000);\"  alt=\"left\"/><input name=\"$this->name\" class=\"arrow_input\" type=\"text\" id=\"$this->name\" value=\"$this->value\"/><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('$this->name',1000);\"  alt=\"right\"/></div>";
+                echo "<div class=\"r$this->divWidth\"><img src='/images/left_arrow.png' class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('$this->name',1000);\"  alt=\"left\"/><input name=\"$this->name\" class=\"arrow_input\" type=\"text\" id=\"$this->name\" value=\"$this->value\"/><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('$this->name',1000);\"  alt=\"right\"/></div>";
                 break;
             case 'isSlider':
             {
@@ -106,8 +106,8 @@ class input
                 }
                 else
                 {
-                    echo "<div class=\"grid_label\"><div><input class=\"boxCheckbox\" onclick=\"doSliderCheckbox(this, '".$this->name['slider']."');\" name=\"".$this->name['checkbox']."\" type=\"checkbox\" value=\"1\"/> $this->pre</div></div>";
-                    echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('".$this->name['slider']."',1000);\"  alt=\"left\"/><input name=\"".$this->name['slider']."\" class=\"arrow_input\" type=\"number\" id=\"".$this->name['slider']."\" value=\"".$this->value['slider']."\"/ readonly=\"readonly\"><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('".$this->name['slider']."',1000);\"  alt=\"right\"/></div>";
+                    echo "<div class=\"grid_label\">\n<div>\n<input class=\"boxCheckbox\" onclick=\"doSliderCheckbox(this, '".$this->name['slider']."');\" name=\"".$this->name['checkbox']."\" type=\"checkbox\" value=\"1\"/> $this->pre</div>\n</div>\n";
+                    echo "<div class=\"r$this->divWidth\"><img src=\"/images/left_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_down('".$this->name['slider']."',1000);\"  alt=\"left\"/><input name=\"".$this->name['slider']."\" class=\"arrow_input\" type=\"text\" id=\"".$this->name['slider']."\" value=\"".$this->value['slider']."\"/ readonly=\"readonly\"><img src=\"/images/right_arrow.png\" class=\"arrows_button\" align=\"absbottom\" onclick=\"counter_up('".$this->name['slider']."',1000);\"  alt=\"right\"/></div>";
                 }
                 if (isset ($this->name['hidden']))
                     echo "<input type=\"hidden\" name=\"".$this->name['hidden']."\" value=\"".$this->value['hidden']."\">";
@@ -116,21 +116,24 @@ class input
             case 'checkbox':
                 {
                 if ($this->value == 1)
-                    echo "<div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" name=\"$this->name\" type=\"$this->type\" value=\"1\" checked=\"checked\"/> $this->pre</div></div>";
+                    echo "<div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" id='$this->name' name=\"$this->name\" type=\"$this->type\" value=\"1\" checked=\"checked\"/> $this->pre</div></div>";
                 else
-                    echo "<div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" name=\"$this->name\" type=\"$this->type\" value=\"1\"/> $this->pre</div></div>";
+                    echo "<div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" id='$this->name' name=\"$this->name\" type=\"$this->type\" value=\"1\"/> $this->pre</div></div>";
                 break;
                 }
 			case 'isCheckbox':
                 {
                 if ($this->value == 1)
-                    echo "<div class=\"grid_label\">$this->pre</div><div><div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" name=\"$this->name\" type=\"checkbox\" value=\"1\" checked=\"checked\"/> $this->value</div></div>";
+                    echo "<div class=\"grid_label\">$this->pre</div>\n<div><div class=\"r$this->divWidth\"><div>\n<input class=\"$this->class\" onclick=\"doCheckbox(this);\" id='$this->name' name=\"$this->name\" type=\"checkbox\" value=\"1\" checked=\"checked\"/> $this->value</div></div>";
                 else
-                    echo "<div class=\"grid_label\">$this->pre</div><div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doCheckbox(this);\" name=\"$this->name\" type=\"checkbox\" value=\"1\"/> $this->value</div></div>";
+                    echo "<div class=\"grid_label\">$this->pre</div>\n<div class=\"r$this->divWidth\"><div>\n<input class=\"$this->class\" onclick=\"doCheckbox(this);\" id='$this->name' name=\"$this->name\" type=\"checkbox\" value=\"1\"/> $this->value</div></div>";
                 break;
                 }
             case 'radio':
-                echo "<div class=\"r$this->divWidth\"><div><input class=\"$this->class\" onclick=\"doRadio(this);ConvertAllRadio();\" name=\"$this->name\" type=\"$this->type\" value=\"1\" checked=\"checked\"/>$this->pre</div></div>";
+                if ($this->value == 1)
+                    echo "<div class=\"r$this->divWidth\">\n<div>\n<input class=\"$this->class\" onclick=\"doRadio(this);ConvertAllRadio();\" name=\"$this->name\" type=\"$this->type\" value=\"1\" checked=\"checked\"/>$this->pre</div>\n</div>\n";
+                else
+                    echo "<div class=\"r$this->divWidth\">\n<div>\n<input class=\"$this->class\" onclick=\"doRadio(this);ConvertAllRadio();\" name=\"$this->name\" type=\"$this->type\" value=\"1\"/>$this->pre</div>\n</div>\n";
                 break;
             case 'newLine':
                 echo "<div style=\"clear:both;\"></div>";
@@ -144,7 +147,8 @@ class input
                                 $('#".str_replace(array("[", "]"),'',$this->name)."').datepicker({
                                     inline: true,
                                     changeMonth: true,
-                                    changeYear: true
+                                    changeYear: true,
+                                    maxDate: -6575
                                 });
 
                                 $( \"".str_replace(array("[", "]"),'',$this->name)."\" ).datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );
@@ -164,18 +168,13 @@ class input
                 {
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
                 echo "<div class=\"r$this->divWidth\"><div class=\"select\">
-                            <select name=\"$this->name\" class=\"$this->class\">";
-                echo "<option value=\"0\" disabled=\"disabled\">123123</option>";
-                echo "<option value=\"0\" selected>123123</option>";
-                echo "<option value=\"0\">123123</option>";
-
-
-                foreach ($this->value as $id=>$value)
+                            <select name=\"$this->name\" class=\"$this->class\" id='$this->name'>\n";
+                $isSelected = $this->value['chose']==0?'selected = selected':'';
+                echo "<option value=\"0\" disabled=\"disabled\" $isSelected>Выбрать...</option>\n";
+                foreach ($this->value['select'] as $id=>$value)
                 {
-                    if ($id == 0)
-                        echo "<option value=\"0\" disabled=\"disabled\">$value</option>";
-                    else
-                        echo "<option value=\"$value\">$value</option>";
+                    $isSelected = $this->value['chose']==$id?'selected = selected':'';
+                    echo "<option value=\"{$id}\" {$isSelected}>{$value}</option>\n";
                 }
                 echo "</select></div></div>";
                 break;
@@ -186,7 +185,9 @@ class input
                 break;
             default:
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
-                echo "<div class=\"r$this->divWidth\"><input class=\"$this->class\" type=\"$this->type\" name=\"$this->name\" value='' placeholder=\"$this->value\"></div>";
+                if (isset($this)) {
+                    echo "<div class='r{$this->divWidth}'><input class='{$this->class}' type='{$this->type}' id='{$this->name}' name='{$this->name}' value='' placeholder='{$this->value}'></div>";
+                }
         }
 
 

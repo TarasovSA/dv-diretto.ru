@@ -42,6 +42,27 @@ function villaggioUpdateFirstPage()
     sum += isLandscape*landscape*0.01;
 
     $('[name=villaggioResult]').val(sum);
+
+    $('[name = villaggio\\[isConstructionEl\\]]').change(function () {
+        $('[name = villaggio\\[isConstructionEl\\]]').attr('checked', true);
+        ConvertAllCheckbox();
+    })
+}
+
+function villaggioUpdateSecondPage()
+{
+    if ($('#insurant\\[beneficiary\\]:checked').length)
+    {
+        $('#beneficiary\\[name\\]').val($('#insurant\\[name\\]').val());
+        $('#beneficiarybirthday').val($('#insurantbirthday').val());
+    }
+    $('#insurant\\[beneficiary\\]').change(function (){
+        if ($('#insurant\\[beneficiary\\]:checked').length == 0)
+        {
+            $('#beneficiary\\[name\\]').val('');
+            $('#beneficiarybirthday').val('');
+        }
+    })
 }
 
 function feliceCittaUpdateFirstPage()
@@ -70,6 +91,56 @@ function bellaVitaUpdateFirstPage()
     sum = insuranceAmount*0.005;
 
     $('[name=bellaVitaResult]').val(sum);
+}
+
+function bellissimoUpdateFirstPage()
+{
+    //update Model List
+    $('#bellissimo\\[typeOfCar\\]').change(function () {
+        var typeOfCar = $('#bellissimo\\[typeOfCar\\]').val();
+            if (typeOfCar > 0)
+            {
+                $.getJSON('../engine/ajax.php?get=getModels&type='+typeOfCar, function (data)
+                    {
+                        $('#bellissimo\\[modelOfCar\\]').empty();
+                        var html = '<option value="0" disabled="disabled" selected = "selected">Выбрать...</option>';
+                        for (var key in data)
+                        {
+                            html += '<option value="' + key + '">' + data[key] + '</option>';
+                        }
+                        $(html).appendTo('#bellissimo\\[modelOfCar\\]');
+                    }
+                )
+            }
+    })
+
+    //check carAmount value
+    if ($('#bellissimo\\[carAmount\\]').val() == "")
+    {
+        $('#bellissimo\\[carAmount\\]').val(500000);
+    }
+
+    //driver must be over 18 years old
+    $('[id^="bellissimoDriversdriver"]').each (function (index, element) {
+        var today = new Date();
+        if (parseInt(element.value.split('.')[2]) >= (today.getFullYear() - 18))
+        {
+            alert ('Возраст водителя должен быть больше 18 лет');
+            element.value = '';
+        }
+            /*if (parseInt(element.value.split('.')[1]) >= (today.getMonth()))
+                if(parseInt(element.value.split('.')[0]) >= (today.getDay()))*/
+
+    })
+
+}
+
+function bellissimoUpdateSecondPage()
+{
+    $.getJSON('../engine/ajax.php?get=session', function (data) {
+        var damage = data.cars[data.session.calc.bellissimo.typeOfCar][data.session.calc.bellissimo.modelOfCar][0].damage;
+        var theft = data.cars[data.session.calc.bellissimo.typeOfCar][data.session.calc.bellissimo.modelOfCar][0].theft;
+    })
 }
 
 function addDriver()
@@ -101,3 +172,10 @@ function addDriver()
     }
 
 }
+
+function removeDriver()
+{
+    var driversQuantity = $('[id^="bellissimoDriversdriver"]').length;
+    $('#drivers:last-child').empty();
+}
+

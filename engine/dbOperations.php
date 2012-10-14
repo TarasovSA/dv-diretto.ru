@@ -14,6 +14,14 @@ try {
     # MySQL через PDO_MYSQL
     $DBH = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
     $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+
+    $DBH->exec("SET NAMES 'utf8'");
+    $DBH->exec("SET collation_connection = 'utf8_general_ci'");
+    $DBH->exec("SET collation_server = 'utf8_general_ci'");
+    $DBH->exec("SET character_set_client = 'utf8'");
+    $DBH->exec("SET character_set_connection = 'utf8'");
+    $DBH->exec("SET character_set_results = 'utf8'");
+    $DBH->exec("SET character_set_server = 'utf8'");
 }
 catch(PDOException $e) {
     errorMessageHandler($e);
@@ -135,4 +143,140 @@ function dbGetUserId($structure)
     }
 
     return $idUser;
+}
+
+
+/*function dbGetCarsList()
+{
+    global $DBH;
+    $carsList = array();
+    try {
+        $STH = $DBH->prepare('SELECT * FROM cars WHERE 1');
+        $STH->execute();
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        while($row = $STH->fetch())
+        {
+            $carsList[$row['type']][$row['model']]['yearStart'] = $row['yearStart'];
+            $carsList[$row['type']][$row['model']]['yearStop'] = $row['yearStop'];
+            $carsList[$row['type']][$row['model']]['damage'] = $row['damage'];
+            $carsList[$row['type']][$row['model']]['theft'] = $row['theft'];
+            $carsList[$row['type']][$row['model']]['minCost'] = $row['minCost'];
+            $carsList[$row['type']][$row['model']]['maxCost'] = $row['maxCost'];
+            $carsList[$row['type']][$row['model']]['defaultCost'] = $row['defaultCost'];
+        }
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+
+    foreach ($carsList as $type=>$carModels)
+    {
+        $STH = $DBH->prepare("INSERT INTO carsTypes (typeName) VALUES (:typeName)");
+        $STH->execute(array('typeName'=>$type));
+        $idType = $DBH->lastInsertId();
+        foreach ($carModels as $model=>$car)
+        {
+            $STH = $DBH->prepare("INSERT INTO carsModels (idType, modelName) VALUES (:idType, :modelName)");
+            $STH->execute(array('idType' => $idType, 'modelName'=>$model));
+            $idModel = $DBH->lastInsertId();
+
+            $STH = $DBH->prepare("INSERT INTO carsParams (idModel, yearStart, yearStop, damage, theft, minCost, maxCost, defaultCost) VALUES (:idModel, :yearStart, :yearStop, :damage, :theft, :minCost, :maxCost, :defaultCost)");
+            $STH->execute(array('idModel' => $idModel, 'yearStart' => '2000-01-01', 'yearStop' => '2012-12-31', 'damage' => $car['damage'], 'theft' => $car['damage'], 'minCost' => $car['minCost'], 'maxCost' => $car['maxCost'], 'defaultCost' => $car['defaultCost']));
+        }
+    }
+
+    return $carsList;
+}*/
+
+function dbGetCars()
+{
+    global $DBH;
+    $carsList = array();
+    try {
+        $STH = $DBH->prepare('SELECT idType, idModel, typeName, modelName, carsParams.id, yearStart, yearStop, damage, theft, minCost, maxCost, defaultCost FROM carsTypes LEFT JOIN carsModels ON carsTypes.id = carsModels.idType LEFT JOIN carsParams ON carsModels.id = carsParams.idModel WHERE 1');
+        $STH->execute();
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        while($row = $STH->fetch()) {
+            $carsList[$row['idType']]['name'] = $row['typeName'];
+            $carsList[$row['idType']][$row['idModel']]['name'] = $row['modelName'];
+            $temp['yearStart'] = $row['yearStart'];
+            $temp['yearStop'] = $row['yearStop'];
+            $temp['damage'] = $row['damage'];
+            $temp['theft'] = $row['theft'];
+            $temp['minCost'] = $row['minCost'];
+            $temp['maxCost'] = $row['maxCost'];
+            $temp['defaultCost'] = $row['defaultCost'];
+            $carsList[$row['idType']][$row['idModel']][] = $temp;
+        }
+
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return $carsList;
+}
+
+function dbGetCarsTypes()
+{
+    global $DBH;
+    $carsTypesList = array();
+    try {
+        $STH = $DBH->prepare('SELECT * FROM carsTypes WHERE 1');
+        $STH->execute();
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        while($row = $STH->fetch()) {
+            $carsTypesList[$row['id']] = $row['typeName'];
+        }
+
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return $carsTypesList;
+}
+
+function dbGetCarsModelsByType($structure)
+{
+    global $DBH;
+    $carsModelList = array();
+    try {
+        $STH = $DBH->prepare('SELECT id, modelName FROM carsModels WHERE carsModels.idType = :idType');
+        $STH->execute($structure);
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        while($row = $STH->fetch()) {
+            $carsModelList[$row['id']] = $row['modelName'];
+        }
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return $carsModelList;
+}
+
+function dbGetCarsParamsByModel($structure)
+{
+    global $DBH;
+    $carsList = array();
+    try {
+        $STH = $DBH->prepare('SELECT * FROM carsParams WHERE carsParams.idModel = :idModel');
+        $STH->execute($structure);
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        while($row = $STH->fetch()) {
+            $carsParamsList[$row['id']]['yearStart'] = $row['yearStart'];
+            $carsParamsList[$row['id']]['yearStop'] = $row['yearStop'];
+            $carsParamsList[$row['id']]['minCost'] = $row['minCost'];
+            $carsParamsList[$row['id']]['maxCost'] = $row['maxCost'];
+            $carsParamsList[$row['id']]['defaultCost'] = $row['defaultCost'];
+        }
+
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return $carsList;
 }

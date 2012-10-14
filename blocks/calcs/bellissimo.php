@@ -17,14 +17,14 @@ switch ($step)
         else
             $formData = $defaultValues['calc']['bellissimo'];
 
-        $bellissimoForm = new form();
+        $bellissimoForm = new form('bellissimoPrimary');
         $bellissimoForm->setAction("index.php?action=calc&type=3&step=2");
         $bellissimoForm->setMethod("POST");
 
         //block insured
         $bellissimoForm->putNewBlock('Страхование КАСКО', 'grid');
-        $bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'select', 'Марка ТС:', array('select' => $defaultValues['select']['typesOfCar'], 'chose' => $formData['typeOfCar']), 'select'));
-        $bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'select', 'Модель ТС:', array('select' => $defaultValues['select']['modelsOfCar'], 'chose' => $formData['modelOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'select', 'Марка ТС:', array('select' => $defaultValues['select']['cars'], 'chose' => $formData['typeOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'select', 'Модель ТС:', array('select' => dbGetCarsModelsByType(array('idType' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', array('select' => $defaultValues['select']['yearsOfCar'], 'chose' => $formData['yearOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[carAmount]', 'slider', 'Стоимость ТС:', $formData['carAmount'],''));
         $bellissimoForm->addInput(new input('bellissimo[isUnderWarranty]', 'select', 'ТС находится на гарантии:', array('select' => $defaultValues['select']['isUnderWarranty'], 'chose' => $formData['isUnderWarranty']), 'select', 3));
@@ -52,7 +52,7 @@ switch ($step)
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'dataPicker', 'Дата рождения:', "", 'text_input', 1));
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'text', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
         }
-		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();">Добавить водителя (не более пяти)</a>', '', 4));
+		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();">Добавить водителя (не более пяти)</a> <a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>', '', 4));
 
 
 
@@ -64,7 +64,7 @@ switch ($step)
             $formData = $defaultValues['calc']['bellissimoOthers'];
         }
         $bellissimoForm->putNewBlock('Дополнительная информация','grid');
-        $bellissimoForm->addInput(new input('bellissimoOthers[formOfCompensation]', 'text', 'Форма возмещения:', $formData['formOfCompensation'], 'text_input long', 3 ));
+        $bellissimoForm->addInput(new input('bellissimoOthers[formOfCompensation]', 'select', 'Форма возмещения:', array('select' => $defaultValues['select']['formOfCompensation'], 'chose' => $formData['formOfCompensation']), 'select', 3 ));
 
 		$bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][0]', 'isCheckbox', 'Установленные ПУС:', 'Штатная ПУС и/или иммобилайзер', 'boxCheckbox', 3));
         $bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][1]', 'isCheckbox', '', 'Дополнительно установленная ЭПС', 'boxCheckbox'));
@@ -75,11 +75,17 @@ switch ($step)
 
         $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Далее', 'btn next', 4));
         $bellissimoForm->printForm();
+        echo '<script type="text/javascript">
+            $("#bellissimoPrimary").click(function(){bellissimoUpdateFirstPage();}).change(function (){bellissimoUpdateFirstPage();});
+            bellissimoUpdateFirstPage();
+        </script>';
         break;
 
     case 2:
+
+        $results = calcFinalAward();
 	
-        $bellissimoForm = new form();
+        $bellissimoForm = new form('bellissimoSecond');
         $bellissimoForm->setAction("index.php?action=calc&type=3&step=3");
         $bellissimoForm->setMethod("POST");
 
@@ -99,12 +105,12 @@ switch ($step)
 		
 		$custom_table = '
 		<div class="r2">
-		<table class="info_table" border="0" cellspacing="2" cellpadding="2" width="400">
+		<table class="info_table" border="0" cellspacing="2" cellpadding="2" width="400" id="additionalEquipment">
 		  <tr>
 			<th scope="col">Наименование оборудования</th>
 			<th scope="col">Стоимость</th>
 		  </tr>
-		  <tr>
+		  <!--<tr>
 			<td>Диски литые</td>
 			<td>180 000 руб.</td>
 		  </tr>
@@ -119,7 +125,7 @@ switch ($step)
 			<tr>
 			<td><b>Страховая премия:</b></td>
 			<td><b>7 000 руб.</b></td>
-		  </tr>
+		  </tr>-->
 		</table>
 		</div>';
 		
@@ -154,8 +160,8 @@ switch ($step)
 		$bellissimoForm->addInput(new input('bellissimoDiscount[isFranchise]', 'checkbox', 'Вариант франшизы:', $formData['isFranchise'], 'boxCheckbox', '2_5'));
 		$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, $formData['Franchise'], 'select', 3));
 		
-        $bellissimoForm->addInput(new input('bellissimoDiscount[isPromo]', 'checkbox', 'ПромоКод для скидки:', '', 'boxCheckbox','2_5'));
-        $bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
+        //$bellissimoForm->addInput(new input('bellissimoDiscount[isPromo]', 'checkbox', 'ПромоКод для скидки:', '', 'boxCheckbox','2_5'));
+        //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
         $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 210 рублей и получить скидку по КАСКО 5%', '', 'boxCheckbox',4));
 
         $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Далее', 'btn next', 4));
@@ -172,7 +178,11 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 <tr>
 <td class="t_last" colspan="2"></td>
 </tr>
-</table>';
+</table>
+<script type="text/javascript">
+    $("#bellissimoSecond").click(function(){bellissimoUpdateSecondPage();}).change(function (){bellissimoUpdateSecondPage();});
+    bellissimoUpdateSecondPage();
+</script>';
 		
         break;
 
@@ -237,7 +247,7 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
         $bellissimoForm->putNewBlock('Сведения о страхуемом ТС','grid');
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[typeOfCar]', 'select', 'Марка ТС:', $formData['typeOfCar'], 'select',3));
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[modelOfCar]', 'select', 'Модель ТС:', $formData['modelOfCar'], 'select',3));
-        $bellissimoForm->addInput(new input('bellissimoAutoInfo[yearOfCar]', 'select', 'Год начала эксплуатации:', $formData['yearOfCar'], 'select',3));
+        $bellissimoForm->addInput(new input('bellissimoAutoInfo[yearOfCar]', 'select', 'Год выпуска ТС:', $formData['yearOfCar'], 'select',3));
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[VIN]', 'text', 'VIN номер ТС:', $formData['VIN'], 'text_input short'),3);
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[vehicleRegistration]', 'text', 'ПТС:', $formData['vehicleRegistration'], 'text_input double',3));
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[isRegistred]', 'isCheckbox', ' ', 'ТС не зарегистрирован в ГИБДД' ,'boxCheckbox',3));
@@ -322,12 +332,12 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
         //block insured
         $bellissimoForm->addInput(new input('', 'custom', null, '<b class="warning">ПОЛИС ВСТУПАЕТ В СИЛУ ТОЛЬКО С МОМЕНТА ОПЛАТЫ И ОСМОТРА ТС</b>', '', 4));
         $bellissimoForm->putNewBlock('Выберите вариант рассрочки платежа:', 'grid');
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Единовременный платеж', '', 'boxRadio', 3));
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 2 равных платежа в течение 3-х месяцев', '', 'boxRadio', 3));
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 2 равных платежа в течение 6-ти месяцев', '', 'boxRadio', 3));
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 4 равных платежа каждые 3 месяца', '', 'boxRadio', 3));
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 12 равных платежа каждый месяц', '', 'boxRadio', 3));
-        $bellissimoForm->addInput(new input('payType', 'radio', 'Первый взнос 50%, далее ежедневная оплата', '', 'boxRadio', 3));	
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Единовременный платеж', '1', 'boxRadio', 3));
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 2 равных платежа в течение 3-х месяцев', '0', 'boxRadio', 3));
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 2 равных платежа в течение 6-ти месяцев', '0', 'boxRadio', 3));
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 4 равных платежа каждые 3 месяца', '0', 'boxRadio', 3));
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Рассрочка на 12 равных платежа каждый месяц', '0', 'boxRadio', 3));
+        $bellissimoForm->addInput(new input('payType', 'radio', 'Первый взнос 50%, далее ежедневная оплата', '0', 'boxRadio', 3));
 		$bellissimoForm->addInput(new input('', 'custom', null, '<span class="italic"><b class="orange">ОБРАТИТЕ ВНИМАНИЕ!</b><br>Если осмотр и оплата полиса произошли ранее указанного срока, то полис начинает действовать согласно указанному сроку.</span>', '', 4));		
 		$bellissimoForm->addInput(new input('payType[0][type]', 'checkbox', 'С <a href="#">Правилами страхования</a> и <a href="#">Полисными условиями</a> ознакомлен', '', 'boxCheckbox', 3));		
         $bellissimoForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));

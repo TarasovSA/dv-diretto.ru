@@ -23,7 +23,7 @@ switch ($step)
         //block insurant
         $villaggioForm->putNewBlock('Основная информация', 'grid g_left g_none');
 
-        $villaggioForm->addInput(new input('villaggio[constructionEl]', 'slider', 'Конструктивные элементы', $formData['constructionEl'], '', 1));
+        $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isConstructionEl]', 'slider' => 'villaggio[constructionEl]'), 'isSlider', 'Конструктивные элементы', array('checkbox' => 1, 'slider' => $formData['constructionEl']), '', 1));
         $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isExteriorTrim]', 'slider' => 'villaggio[exteriorTrim]'), 'isSlider', 'Внешняя отделка', array('checkbox' => $formData['isExteriorTrim'], 'slider' => $formData['exteriorTrim']), '', 1));
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isInteriorTrim]', 'slider' => 'villaggio[interiorTrim]'), 'isSlider', 'Внутренняя отделка', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['interiorTrim']), '', 1));
@@ -98,7 +98,7 @@ switch ($step)
         else
             $formData = $defaultValues['calc']['insurant'];
 
-        $villaggioForm = new form();
+        $villaggioForm = new form('villaggioSecond');
         $villaggioForm->setAction("index.php?action=calc&type=0&step=3");
         $villaggioForm->setMethod("POST");
 
@@ -145,16 +145,46 @@ switch ($step)
 		$villaggioForm->addInput(new input('insurant[beneficiary]', 'isCheckbox', ' ', 'Страхователь является выгодоприобретателем страхуемого имущества', 'boxCheckbox', 3));
         $villaggioForm->addInput(new input('beneficiary[name]', 'text', 'ФИО', $formData['name'], 'text_input long', 3));
         $villaggioForm->addInput(new input('beneficiary[birthday]', 'dataPicker', 'Дата рождения:', $formData['birthday'], 'text_input', 1));
-        $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
+
+
+        $villaggioForm->putNewBlock('Начало срока страхования', 'grid');
+$customHtml = '<script type="text/javascript">
+                            $(function(){
+
+                                // Datepicker
+                                $("#insurancestartDay").datepicker({
+                                    inline: true,
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    minDate: 5,
+                                    maxDate: 187
+                                });
+
+                                $("beneficiarybirthday").datepicker( "option", "dateFormat", "dd.mm.yy" );
+
+                                $("beneficiarybirthday").datepicker($.datepicker.regional[ "ru" ]);
+                                //hover states on the static widgets
+                                $("#dialog_link, ul#icons li").hover(
+                                    function() { $(this).addClass("ui-state-hover"); },
+                                    function() { $(this).removeClass("ui-state-hover"); }
+                                );
+
+                        });
+                        </script><div class="r1"><input type="text" name="insurance[startDay]" value=""  class="text_input" id="insurancestartDay" onClick="this.value="";"></div>';
+        $villaggioForm->addInput(new input('', 'custom', 'Выберите дату:', $customHtml));
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
         $villaggioForm->printForm();
+echo '<script type="text/javascript">
+        $("#villaggioSecond").click(function(){villaggioUpdateSecondPage();}).change(function (){villaggioUpdateSecondPage();});
+        villaggioUpdateSecondPage();
+    </script>';
         break;
     case 3:
         $villaggioForm = new form();
         $villaggioForm->setAction("index.php?action=calc&type=0&step=4");
         $villaggioForm->setMethod("POST");
 
-        $villaggioForm->addInput(new input('', 'custom', null, '<b class="warning">ОБРАТИТЕ ВНИМАНИЕ, ЧТО ПОЛИС ВСТУПАЕТ В СИЛУ ТОЛЬКО НА 5-е СУТКИ ПОСЛЕ ОПЛАТЫ</b>', '', 4));
+        //$villaggioForm->addInput(new input('', 'custom', null, '<b class="warning">ОБРАТИТЕ ВНИМАНИЕ, ЧТО ПОЛИС ВСТУПАЕТ В СИЛУ ТОЛЬКО НА 5-е СУТКИ ПОСЛЕ ОПЛАТЫ</b>', '', 4));
         $villaggioForm->putNewBlock('Выберите вариант рассрочки платежа:', 'grid');
         $villaggioForm->addInput(new input('payType', 'radio', 'Единовременный платеж', '', 'boxRadio', 3));
         $villaggioForm->addInput(new input('payType', 'radio', 'Рассрочка на 2 равных платежа в течение 3-х месяцев', '', 'boxRadio', 3));
@@ -162,12 +192,13 @@ switch ($step)
         $villaggioForm->addInput(new input('payType', 'radio', 'Рассрочка на 4 равных платежа каждые 3 месяца', '', 'boxRadio', 3));
         $villaggioForm->addInput(new input('payType', 'radio', 'Рассрочка на 12 равных платежа каждый месяц', '', 'boxRadio', 3));
         $villaggioForm->addInput(new input('payType', 'radio', 'Ежедневная рассрочка платежей', '', 'boxRadio', 3));
-		$villaggioForm->addInput(new input('', 'custom', null, '<span style="margin-left:25px;">Введите ПРОМОКОД для получения скидки:</span>', '', 2));
-		$villaggioForm->addInput(new input('payType[promo]', 'text', null, $formData['name'], 'text_input short', 1));
+		//$villaggioForm->addInput(new input('', 'custom', null, '<span style="margin-left:25px;">Введите ПРОМОКОД для получения скидки:</span>', '', 2));
+		//$villaggioForm->addInput(new input('payType[promo]', 'text', null, $formData['name'], 'text_input short', 1));
 		$villaggioForm->addInput(new input('payType[0][type]', 'checkbox', 'С <a href="#">Правилами страхования</a> и <a href="#">Полисными условиями</a> ознакомлен', '', 'boxCheckbox', 3));
 
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
         $villaggioForm->printForm();
+
 
 echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 <caption>

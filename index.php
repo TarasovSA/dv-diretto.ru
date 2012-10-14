@@ -2,8 +2,8 @@
 //error_reporting(E_ALL);
 error_reporting(0);
 include_once ('engine/session.php');
-include_once ('engine/defaultValues.php');
 include_once ('engine/dbOperations.php');
+include_once ('engine/defaultValues.php');
 include_once ('engine/form.php');
 include_once ('engine/buttonReaction.php');
 include_once ('engine/auxiliaryFunctions.php');

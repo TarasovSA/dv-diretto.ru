@@ -23,7 +23,7 @@ switch ($step)
         $fcForm->setMethod("POST");
                 
         $fcForm->putNewBlock('Квартира', 'grid g_none');
-        $fcForm->addInput(new input('feliceCitta[constructionEl]', 'slider', 'Конструктивные элементы', $formData['constructionEl'], '', 3));
+        $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isConstructionEl]', 'slider' => 'feliceCitta[constructionEl]'), 'isSlider', 'Конструктивные элементы', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['constructionEl']), '', 3));
         $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isInteriorTrim]', 'slider' => 'feliceCitta[interiorTrim]'), 'isSlider', 'Внутренняя отделка', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['interiorTrim']), '', 3));
         $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isEngineeringSystems]', 'slider' => 'feliceCitta[engineeringSystems]'), 'isSlider', 'Инженерные системы', array('checkbox' => $formData['engineeringSystems'], 'slider' => $formData['engineeringSystems']), '', 3));
         $fcForm->addInput(new input(array ('checkbox' => 'feliceCitta[isProperty]', 'slider' => 'feliceCitta[property]'), 'isSlider', 'Имущество', array('checkbox' => $formData['property'], 'slider' => $formData['property']), '', 3));
