@@ -186,7 +186,7 @@ class input
             default:
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
                 if (isset($this)) {
-                    echo "<div class='r{$this->divWidth}'><input class='{$this->class}' type='{$this->type}' id='{$this->name}' name='{$this->name}' value='' placeholder='{$this->value}'></div>";
+                    echo "<div class='r{$this->divWidth}'><input class='{$this->class}' type='{$this->type}' id='{$this->name}' name='{$this->name}' value='{$this->value}' placeholder=''></div>";
                 }
         }
 

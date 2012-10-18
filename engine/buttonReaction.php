@@ -86,6 +86,7 @@ function addBellissimoData($step)
             $_SESSION['calc']['bellissimoBeneficiary'] = $_REQUEST['bellissimoBeneficiary'];
             $_SESSION['calc']['bellissimoAutoInfo'] = $_REQUEST['bellissimoAutoInfo'];
             $_SESSION['calc']['bellissimoAddressCheck'] = $_REQUEST['bellissimoAddressCheck'];
+            $_SESSION['calc']['bellissimoDrivers'] = $_REQUEST['bellissimoDrivers'];
             break;
         default:
             $structure = null;

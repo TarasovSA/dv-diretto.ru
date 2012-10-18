@@ -27,14 +27,14 @@ function calcFinalAward()
     $cars = dbGetCars();
     $damage = 0;
     $damageK = $cars[$_SESSION['calc']['bellissimo']['typeOfCar']][$_SESSION['calc']['bellissimo']['modelOfCar']][0]['damage'];
-    echo $damageK;
+    //echo $damageK;
     $theftK = $cars[$_SESSION['calc']['bellissimo']['typeOfCar']][$_SESSION['calc']['bellissimo']['modelOfCar']][0]['theft'];
     $yearK = $_SESSION['calc']['bellissimo']['yearOfCar'];
-    echo $yearK;
+    //echo $yearK;
     $isUnderWarrantyK = $_SESSION['calc']['bellissimo']['isUnderWarranty'];
-    echo $isUnderWarrantyK;
+    //echo $isUnderWarrantyK;
     $formOfCompensationK = $_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
-    echo $formOfCompensationK;
+    //echo $formOfCompensationK;
 
     $inexperienced = 10;
     foreach ($_SESSION['calc']['bellissimoDrivers']['driver'] as $driver)
@@ -43,7 +43,10 @@ function calcFinalAward()
             $inexperienced = $driver['experience'];
     }
     $inexperiencedK = $inexperienced;
-    echo $inexperiencedK;
+    //echo $inexperiencedK;
     $damage = $_SESSION['calc']['bellissimo']['carAmount'] * $damageK * $yearK * $isUnderWarrantyK * $formOfCompensationK * $inexperiencedK;
     $theft = $_SESSION['calc']['bellissimo']['carAmount'] * $theftK * $yearK ;
+
+    return $damage + $theft;
+
 }
