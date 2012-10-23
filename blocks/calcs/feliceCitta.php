@@ -18,7 +18,7 @@ switch ($step)
             $formData = $defaultValues['calc']['feliceCitta'];
 
 
-        $fcForm = new form('feliceCittaPrimary');
+        $fcForm = new form('feliceCittaPrimary', 'feliceCittaValidateFirst()');
         $fcForm->setAction("index.php?action=calc&type=1&step=2");
         $fcForm->setMethod("POST");
                 

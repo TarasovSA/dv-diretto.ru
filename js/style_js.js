@@ -2,14 +2,24 @@
 function counter_up(id, step)
 {
     if (!document.getElementById(id).readOnly)
-	    document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;
+    {
+        if (document.getElementById(id).value == "")
+            document.getElementById(id).value = 300000;
+        document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;
+    }
+
 }
 
 function counter_down(id, step)
 {
     if (!document.getElementById(id).readOnly)
+    {
+        if (document.getElementById(id).value == "")
+            document.getElementById(id).value = 300000;
         if(parseInt(document.getElementById(id).value) >= step)
             document.getElementById(id).value = parseInt(document.getElementById(id).value) - step;
+    }
+
 }
 
 // JavaScript Document ------------------------------------------------------------------------------------------------

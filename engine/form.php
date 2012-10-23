@@ -12,12 +12,16 @@ class form
     private $method;
     private $currentBlock;
     private $id;
+    private $validator;
     private $inputs = array();
 
-    public function __construct($id = '')
+    public function __construct($id = '', $validator='', $action = '', $method = '')
     {
         $this->currentBlock = 0;
         $this->id = $id;
+        $this->validator = $validator;
+        $this->action = $action;
+        $this->method = $method;
     }
 
     public function setMethod($method)
@@ -48,7 +52,7 @@ class form
     }
     public function printForm()
     {
-        echo "<form action='{$this->action}' method='{$this->method}' id='{$this->id}'>";
+        echo "<form action='{$this->action}' method='{$this->method}' id='{$this->id}' onsubmit='return {$this->validator}'>";
         foreach ($this->inputs as $block)
         {
             echo "<div class=\"".$block['class']."\"".($block['id']?' id='.$block['id']:'')."><div class=\"grid_title\">".$block['blockName']."</div>";

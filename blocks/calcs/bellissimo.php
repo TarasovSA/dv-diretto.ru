@@ -113,6 +113,11 @@ switch ($step)
 			<th scope="col">Действие</th>
 		  </tr>';
         $isLastElement = 0;
+        if (count($formData['equipment']) == 0)
+            $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder=''></td>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder=''></td>
+                            <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this, {$id})'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;
@@ -299,9 +304,12 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
                     if ($equipment == 0)
                         continue;
                     $info_table_2 .= "<tr>
-                        <td>{$defaultValues['calc']['bellissimoOthers']['antiStealingName'][$id]}</td>
-                        <td><input class='text_input short' type='text' id='bellissimoOthers[antiStealingName][{$id}]' name='bellissimoOthers[antiStealingName][{$id}]' value='' placeholder=''></td>
-                    </tr>";
+                        <td>{$defaultValues['calc']['bellissimoOthers']['antiStealingName'][$id]}</td>";
+                    if ($id==0)
+                        $info_table_2 .= "<td></td>";
+                    else
+                        $info_table_2 .= "<td><input class='text_input short' type='text' id='bellissimoOthers[antiStealingName][{$id}]' name='bellissimoOthers[antiStealingName][{$id}]' value='' placeholder=''></td>";
+                    $info_table_2 .= "</tr>";
                 }
         $info_table_2 .= "</table>";
 

@@ -25,6 +25,9 @@ switch ($step)
 
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isConstructionEl]', 'slider' => 'villaggio[constructionEl]'), 'isSlider', 'Конструктивные элементы', array('checkbox' => 1, 'slider' => $formData['constructionEl']), '', 1));
         $villaggioForm->addInput(new input('', 'newLine', '', '', '', ''));
+        $villaggioForm->addInput(new input('villaggio[structureType]', 'radio', 'Деревянное строение', '1', 'boxRadio', 3));
+        $villaggioForm->addInput(new input('villaggio[structureType]', 'radio', 'Каменное строение', '0', 'boxRadio', 3));
+        $villaggioForm->addInput(new input('villaggio[structureType]', 'radio', 'Смешанное строение', '0', 'boxRadio', 3));
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isExteriorTrim]', 'slider' => 'villaggio[exteriorTrim]'), 'isSlider', 'Внешняя отделка', array('checkbox' => $formData['isExteriorTrim'], 'slider' => $formData['exteriorTrim']), '', 1));
         $villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isInteriorTrim]', 'slider' => 'villaggio[interiorTrim]'), 'isSlider', 'Внутренняя отделка', array('checkbox' => $formData['isInteriorTrim'], 'slider' => $formData['interiorTrim']), '', 1));
 

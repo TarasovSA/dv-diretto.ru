@@ -223,7 +223,7 @@ function dbGetCarsTypes()
     global $DBH;
     $carsTypesList = array();
     try {
-        $STH = $DBH->prepare('SELECT * FROM carsTypes WHERE 1');
+        $STH = $DBH->prepare('SELECT * FROM carsTypes WHERE 1 ORDER BY `typeName`');
         $STH->execute();
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {
