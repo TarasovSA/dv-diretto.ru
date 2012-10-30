@@ -333,22 +333,22 @@ height:21px;
 cursor:pointer;
 }
 
-/* ---------------------- Стиль CheckBox ------------------------------- */
+/* ---------------------- пїЅпїЅпїЅпїЅпїЅ CheckBox ------------------------------- */
 
-/* Стиль для обертки отмеченного checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ checkbox'пїЅ */
 div.boxChecked 
 {
     background: url("../images/boxChecked.jpg") no-repeat left bottom;
 	color:#f37326;
 }
 
-/* Стиль для обертки неотмеченного checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ checkbox'пїЅ */
 div.boxUnchecked 
 {
     background: url("../images/boxUnchecked.jpg") no-repeat left bottom;
 } 
 
-/* Прозрачный стиль для checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ checkbox'пїЅ */
 div.boxChecked input, div.boxUnchecked input 
 {
     cursor: pointer;
@@ -362,22 +362,22 @@ div.boxChecked input, div.boxUnchecked input
     filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 
-/* -------------------------  Стиль Radio -----------------------------*/
+/* -------------------------  пїЅпїЅпїЅпїЅпїЅ Radio -----------------------------*/
 
-/* Стиль для обертки отмеченного checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ checkbox'пїЅ */
 div.boxRadioChecked 
 {
     background:url("../images/radioChecked.png") no-repeat left bottom;
 	color:#f37326;
 }
 
-/* Стиль для обертки неотмеченного checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ checkbox'пїЅ */
 div.boxRadioUnchecked 
 {
     background: url("../images/radioUnchecked.png") no-repeat left bottom;
 }
 
-/* Прозрачный стиль для checkbox'а */
+/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ checkbox'пїЅ */
 div.boxRadioChecked input, div.boxRadioUnchecked input 
 {
     cursor: pointer;
@@ -520,12 +520,9 @@ border-top-right-radius: 7px;
 }
 
 .total_table td{
-padding:25px;
+padding:10px;
 }
 
-.total_table td{
-padding:25px;
-}
 
 .total_table .t_lable{
 text-align:left;
@@ -577,7 +574,7 @@ position:relative;
 select.select{
 position:relative;
 z-index:10;
-width:170px !important;
+width:370px !important;
 height:24px !important;
 line-height:22px;
 }
@@ -587,7 +584,7 @@ position:absolute;
 bottom:0;
 float:left;
 left:0;
-width:162px;
+width:350px;
 height:24px;
 line-height:26px;
 text-indent:10px;

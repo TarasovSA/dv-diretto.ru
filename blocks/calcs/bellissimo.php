@@ -113,17 +113,19 @@ switch ($step)
 			<th scope="col">Действие</th>
 		  </tr>';
         $isLastElement = 0;
+        print_r ($formData['equipment']);
+
         if (count($formData['equipment']) == 0)
             $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
-                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder=''></td>
-                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder=''></td>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование'></td>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость'></td>
                             <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this, {$id})'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;
             $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
-                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder=''></td>
-                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder=''></td>";
+                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование'></td>
+                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder='Стоимость'></td>";
             if (count($formData['equipment']) == $isLastElement)
                 $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this, {$id})'></a></td>";
             else
@@ -135,6 +137,7 @@ switch ($step)
 
 		
         $bellissimoForm->addInput(new input('bellissimoAdditional[optionalEquipment]', 'custom', 'Дополнительное оборудование:', $custom_table));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentkAmount]', 'text', 'Итоговая стоимость дополнительного оборудования:', '', 'text_input short', 3));
 
 
 
@@ -150,7 +153,6 @@ switch ($step)
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][1]', 'checkbox', 'Сбор справок ГИБДД', $formData['information'][1], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][2]', 'checkbox', 'Сбор справок ОВД', $formData['information'][2], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[VIPPackAmount]', 'text', 'Итоговая стоимость ВИП пакета:', '', 'text_input short', 3));
-        $bellissimoForm->addInput(new input('bellissimoMaintenance[TotalAmount]', 'text', 'Итоговая премия по полису:', '', 'text_input short', 3));
 
 
         if (isset($_SESSION['calc']['bellissimoDiscount']))
@@ -159,15 +161,17 @@ switch ($step)
             $formData = $defaultValues['calc']['bellissimoDiscount'];
 
         $bellissimoForm->putNewBlock('Снизить стоимость полиса', 'grid');
-        $bellissimoForm->addInput(new input('bellissimoDiscount[isTransition]', 'checkbox', 'Безубыточный переход из другой СК:', $formData['isTransition'], 'boxCheckbox', 4));
+        $bellissimoForm->addInput(new input('bellissimoDiscount[isTransition]', 'checkbox', 'Безубыточный переход из другой СК:', $formData['isTransition'], 'boxCheckbox', 2));
+        $bellissimoForm->addInput(new input('bellissimoDiscount[transition]', 'text', null, $formData['transition'], 'text_input short', 2));
+        $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[nomer]', 'text', 'Номер договора:', '', 'text_input short', 3));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[polis]', 'text', 'Номер полиса:', '', 'text_input short', 3));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[isFranchise]', 'checkbox', 'Вариант франшизы:', $formData['isFranchise'], 'boxCheckbox', '2_5'));
-		$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, $formData['Franchise'], 'select', 3));
+		$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, array('select' => $defaultValues['select']['franchiseCar'], 'chose' => $formData['franchiseCar']), 'select', 3));
 		
         //$bellissimoForm->addInput(new input('bellissimoDiscount[isPromo]', 'checkbox', 'ПромоКод для скидки:', '', 'boxCheckbox','2_5'));
         //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 210 рублей и получить скидку по КАСКО 5%', '', 'boxCheckbox',4));
+        $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
 
         $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Далее', 'btn next', 4));
         $bellissimoForm->printForm();
@@ -177,7 +181,19 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 <span>Итоговая страховая премия</span>
 </caption>
 <tr>
+<td class="t_lable">Итоговая стоимость дополнительного оборудования:</td>
+<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
+</tr>
+<tr>
+<td class="t_lable">Итоговая стоимость ВИП пакета:</td>
+<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
+</tr>
+<tr>
 <td class="t_lable">Итого:</td>
+<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
+</tr>
+<tr>
+<td class="t_lable">Стоимость страховой премии:</td>
 <td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
 </tr>
 <tr>
