@@ -113,7 +113,6 @@ switch ($step)
 			<th scope="col">Действие</th>
 		  </tr>';
         $isLastElement = 0;
-        print_r ($formData['equipment']);
 
         if (count($formData['equipment']) == 0)
             $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
@@ -181,21 +180,30 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 <span>Итоговая страховая премия</span>
 </caption>
 <tr>
-<td class="t_lable">Итоговая стоимость дополнительного оборудования:</td>
+<td class="t_lable">Страховая премия КАСКО:</td>
 <td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
 </tr>
 <tr>
-<td class="t_lable">Итоговая стоимость ВИП пакета:</td>
+<td class="t_lable">Стоимость VIP пакета:</td>
 <td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
 </tr>
 <tr>
-<td class="t_lable">Итого:</td>
+<td class="t_lable">Страховая премия по гражданской ответственности:</td>
 <td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
 </tr>
 <tr>
-<td class="t_lable">Стоимость страховой премии:</td>
+<td class="t_lable">Страховая премия от несчастного случая:</td>
 <td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
 </tr>
+<tr>
+<td class="t_lable">Страховая премия по дополнительному оборудованию:</td>
+<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
+</tr>
+<tr>
+<td class="t_lable">Итоговая страховая премия:</td>
+<td class="t_input"><input type="text" name="123" class="text_input double" value="123" ></td>
+</tr>
+
 <tr>
 <td class="t_last" colspan="2"></td>
 </tr>
@@ -332,13 +340,13 @@ echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
 		$bellissimoForm->addInput(new input('', 'custom', null, $info_table_2, '', 4));
 		
 		
-		$bellissimoForm->putNewBlock('Введите адрес места осмотра ТС представителем СТРАХОВЩИКА:','grid');
+		$bellissimoForm->putNewBlock('Введите адрес места и время осмотра ТС представителем СТРАХОВЩИКА:','grid');
         $bellissimoForm->addInput(new input('bellissimoAddressCheck[region]', 'text', 'Область или край:', $formData['region'], 'text_input long',3));
         $bellissimoForm->addInput(new input('bellissimoAddressCheck[city]', 'text', 'Город:', $formData['city'], 'text_input long',3));
         $bellissimoForm->addInput(new input('bellissimoAddressCheck[street]', 'text', 'Улица:', $formData['street'], 'text_input long',3));
         $bellissimoForm->addInput(new input('bellissimoAddressCheck[house]', 'text', 'Дом / Корпус:', $formData['house'], 'text_input short',1));
         $bellissimoForm->addInput(new input('bellissimoAddressCheck[housing]', 'text', null, $formData['housing'], 'text_input short',2));		
-		$bellissimoForm->addInput(new input('bellissimoAddressCheck[date]', 'dataPicker', 'Дата осмотра ТС:', $formData['date'], 'text_input', 3));
+		$bellissimoForm->addInput(new input('bellissimoAddressCheck[date]', 'dataPicker', 'Дата осмотра ТС (ориентировочно):', $formData['date'], 'text_input', 3));
 		$bellissimoForm->addInput(new input('bellissimoRulesCheck', 'isCheckbox', ' ', 'С условиями осмотра и вступления полиса в действие ознакомлен' ,'boxCheckbox',3));
         $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Далее', 'btn next',4));
         $bellissimoForm->printForm();

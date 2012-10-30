@@ -57,8 +57,8 @@ switch ($step)
 		//$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][type]', 'isSlider', 'Прочие строения', '20000', 'text_input short', 1));*/
         //$villaggioForm->addInput(new input('villaggioAdditionalStruct[0][value]', 'slider', 'Стоимость', '12312', '', 1));
 
-		$villaggioForm->putNewBlock('Предметы ландшафтного дизайна', 'grid g_none');
-		$villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isLandscape]', 'slider' => 'villaggio[landscape]'), 'isSlider', 'Ландшафтный дизайн', array('checkbox' => $formData['isLandscape'], 'slider' => $formData['landscape']), 'text_input short', 1));
+		$villaggioForm->putNewBlock('', 'grid g_none');
+		//$villaggioForm->addInput(new input(array ('checkbox' => 'villaggio[isLandscape]', 'slider' => 'villaggio[landscape]'), 'isSlider', 'Ландшафтный дизайн', array('checkbox' => $formData['isLandscape'], 'slider' => $formData['landscape']), 'text_input short', 1));
 
 
         $villaggioForm->addInput(new input('sendVillaggio', 'submit', '', 'Далее', 'btn next', 4));
