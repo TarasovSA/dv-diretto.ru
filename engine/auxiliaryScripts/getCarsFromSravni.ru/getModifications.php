@@ -6,6 +6,8 @@ $dbName = 'paboti_dvdiretto';
 $dbUser = 'paboti_mysql';
 $dbPass = 'mnsjmlnn';
 
+$marksIds = array();
+
 function errorMessageHandler ($e)
 {
     echo $e->getMessage();
@@ -34,9 +36,14 @@ try {
     $STH->execute();
     $STH->setFetchMode(PDO::FETCH_ASSOC);
 
-    while($row = $STH->fetch()) {
+    //while($row = $STH->fetch()) {
+    for ($i=0; $i<30; $i++){
+        $row = $STH->fetch();
         $file = file_get_contents('http://www.sravni.ru/Autocomplete/Model/?term='.urlencode($row['markName'].' '.$row['modelName']));
         $modelId = json_decode($file);
+        echo $modelId->carModel."\n";
+        for ($year=2004; $year<=2012; $year++)
+            getModification('', $year, $modelId->carModel);
 
 
     }
@@ -46,19 +53,26 @@ catch (PDOException $e)
     errorMessageHandler($e);
 }
 
+print_r ($marksIds);
+
 function getModification($term, $year, $modelId)
 {
-    $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'year='.$year.'&modelId='.$modelId);
+    global $marksIds;
+    echo 'http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'&year='.$year.'&modelId='.$modelId.'</br>';
+    $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'&year='.$year.'&modelId='.$modelId);
     $result = json_decode($file);
-    if (isset ($result['Info']))
+    if (isset($result->suggests))
     {
-        $asd=5;
+        foreach ($result->suggests as $newTerm)
+        {
+            getModification($newTerm, $year, $modelId->carModel);
+        }
     }
     else
     {
-
+        array_push($marksIds, $result->carModelId);
     }
-    return $term;
+    print_r ($result);
 }
 
 
