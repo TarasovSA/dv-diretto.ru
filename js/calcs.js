@@ -181,13 +181,13 @@ function removeDriver()
 
 function addEquipment(img, id)
 {
-    img.setAttribute('src','/images/faticons/16x16/cog_delete.png');
+    img.setAttribute('src','/images/faticons/16x16/delete.png');
     img.setAttribute('onclick','removeEquipment('+ id +')');
     id++;
     var html = '<tr id="bellissimoAdditional[equipment][' + id + ']">'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="" align="center"></td>'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="" align="center"></td>'+
-        '<td><a href="#" name="addEquipment"><img src="/images/faticons/16x16/cog_add.png" onclick="addEquipment(this, ' + id + ')"></a></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="Наименование" align="center"></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="Стоимость" align="center"></td>'+
+        '<td><a href="#" name="addEquipment"><img src="/images/faticons/16x16/plus.png" onclick="addEquipment(this, ' + id + ')"></a></td>'+
       '</tr>';
     $(html).appendTo('#additionalEquipment');
 }

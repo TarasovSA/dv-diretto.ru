@@ -54,7 +54,7 @@ include_once ('engine/auxiliaryFunctions.php');
 <div id="top_bg">&nbsp;</div>
 <table id="main" align="center" border="0" cellspacing="0" cellpadding="0">
   <tr class="top_menu_bg">
-    <td id="logo_td" valign="top"><a href="/"><img src="images/logotip.png" width="165" height="69" border="0" /></a></td>
+    <td id="logo_td" valign="top"><a href="/"><img src="images/logo.png" width="165" height="69" border="0" /></a></td>
     <td id="top_menu_td" valign="top">
 
     <ul id="top_menu">

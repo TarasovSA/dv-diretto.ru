@@ -122,7 +122,7 @@ switch ($step)
             $custom_table .= "<tr id='bellissimoAdditional[equipment][0]'>
                             <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование'></td>
                             <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость'></td>
-                            <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this,0)'></a></td></tr>";
+                            <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this,0)'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;
@@ -130,9 +130,9 @@ switch ($step)
                 <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование'></td>
                 <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder='Стоимость'></td>";
             if (count($formData['equipment']) == $isLastElement)
-                $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this, {$id})'></a></td>";
+                $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this, {$id})'></a></td>";
             else
-                $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_delete.png' onclick='removeEquipment({$id})'></a></td>";
+                $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/delete.png' onclick='removeEquipment({$id})'></a></td>";
             $custom_table .= "</tr>";
         }
         $custom_table .= "</table>
