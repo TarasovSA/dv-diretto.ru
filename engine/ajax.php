@@ -3,7 +3,7 @@ include_once ('session.php');
 include_once ('dbOperations.php');
 function getModels($type)
 {
-    echo json_encode(dbGetCarsModelsByType(array('idType' => $type)));
+    echo json_encode(dbGetCarsModelsByMark(array('idMark' => $type)));
 }
 
 function getSession()

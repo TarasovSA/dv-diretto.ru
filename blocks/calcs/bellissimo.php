@@ -12,6 +12,7 @@ else
 switch ($step)
 {
     case 1:
+        print_r ($_SESSION['calc']['bellissimo']);
         if (isset($_SESSION['calc']['bellissimo']))
             $formData = $_SESSION['calc']['bellissimo'];
         else
@@ -23,9 +24,12 @@ switch ($step)
 
         //block insured
         $bellissimoForm->putNewBlock('Страхование КАСКО', 'grid');
-        $bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'select', 'Марка ТС:', array('select' => $defaultValues['select']['cars'], 'chose' => $formData['typeOfCar']), 'select'));
-        $bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'select', 'Модель ТС:', array('select' => dbGetCarsModelsByType(array('idType' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('', 'custom', 'Марка ТС:', '<input type="text" class="text_input double" name="" id="typeOfCarName" onclick="selectCarMarkList()"><input type="hidden" name="bellissimo[typeOfCar]" id="typeOfCarId">', '', 3));
+        $bellissimoForm->addInput(new input('', 'custom', 'Модель ТС:', '<input type="text" class="text_input double" name="" id="typeOfModelName" onclick="selectCarModelList()"><input type="hidden" name="bellissimo[modelOfCar]" id="typeOfModelId">', '', 3));
+        //$bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'popup', 'Марка ТС:', array('select' => $defaultValues['select']['cars'], 'chose' => $formData['typeOfCar']), 'select'));
+        //$bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'popup', 'Модель ТС:', array('select' => dbGetCarsModelsByMark(array('idMark' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', array('select' => $defaultValues['select']['yearsOfCar'], 'chose' => $formData['yearOfCar']), 'select'));
+        //$bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'popup', 'Модель ТС:', array('select' => dbGetCarsModifications(array('idMark' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[carAmount]', 'slider', 'Стоимость ТС:', $formData['carAmount'],''));
         $bellissimoForm->addInput(new input('bellissimo[isUnderWarranty]', 'select', 'ТС находится на гарантии:', array('select' => $defaultValues['select']['isUnderWarranty'], 'chose' => $formData['isUnderWarranty']), 'select', 3));
 
@@ -115,10 +119,10 @@ switch ($step)
         $isLastElement = 0;
 
         if (count($formData['equipment']) == 0)
-            $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
+            $custom_table .= "<tr id='bellissimoAdditional[equipment][0]'>
                             <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование'></td>
                             <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость'></td>
-                            <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this, {$id})'></a></td></tr>";
+                            <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/cog_add.png' onclick='addEquipment(this,0)'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;

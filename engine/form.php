@@ -183,6 +183,12 @@ class input
                 echo "</select></div></div>";
                 break;
                 }
+            case 'popup':
+            {
+                echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
+                echo "<div class=\"r$this->divWidth\"><input type='date' value=''></div></div>";
+                break;
+            }
             case 'custom':
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
                 echo "<div class=\"r$this->divWidth\">$this->value</div>";

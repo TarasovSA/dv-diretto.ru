@@ -44,6 +44,18 @@ font-style:italic;
 color:#fb7d00;
 }
 
+.zeroPadding{
+    padding: 0;
+}
+
+.zeroMargin{
+    margin: 0;
+}
+
+.inline{
+    display: inline;
+}
+
 /* Payment */
 .p_visa, .p_master_card, .p_web_money, .p_yandex, .p_qiwi, .p_sms{
 display:block;

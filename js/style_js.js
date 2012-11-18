@@ -87,6 +87,20 @@ function addNewAdditionalStructure() {
     $("#addNewAdditionalStructure").dialog('open');
 }
 
+function selectCarMarkList(){
+    $("#selectCarMark").dialog('open');
+}
+
 function addNewDriver() {
     $("#addNewDriver").dialog('open');
+}
+
+function selectCarMark(id, carMark){
+    document.getElementById('typeOfCarId').value = id;
+    document.getElementById('typeOfCarName').value = carMark;
+    $("#selectCarMark").dialog('close');
+}
+
+function selectCarModelList() {
+    $("#selectCarModel").dialog('open');
 }

@@ -189,25 +189,22 @@ function dbGetUserId($structure)
     return $carsList;
 }*/
 
-function dbGetCars()
+function dbGetCar($structure)
 {
     global $DBH;
     $carsList = array();
     try {
-        $STH = $DBH->prepare('SELECT idType, idModel, typeName, modelName, carsParams.id, yearStart, yearStop, damage, theft, minCost, maxCost, defaultCost FROM carsTypes LEFT JOIN carsModels ON carsTypes.id = carsModels.idType LEFT JOIN carsParams ON carsModels.id = carsParams.idModel WHERE 1');
-        $STH->execute();
+        $STH = $DBH->prepare('SELECT carsMarks.id as idMark, carsModels.id as idModel, markName, modelName, carsModifications.id as carModificationId, year, cost FROM carsMarks LEFT JOIN carsModels ON carsMarks.id = carsModels.idMark LEFT JOIN carsModifications ON carsModels.id = carsModifications.idModel WHERE carsMarks.id = :carMarkId AND carsModels.id = :carModelId');
+        $STH->execute($structure);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {
-            $carsList[$row['idType']]['name'] = $row['typeName'];
-            $carsList[$row['idType']][$row['idModel']]['name'] = $row['modelName'];
-            $temp['yearStart'] = $row['yearStart'];
-            $temp['yearStop'] = $row['yearStop'];
-            $temp['damage'] = $row['damage'];
-            $temp['theft'] = $row['theft'];
-            $temp['minCost'] = $row['minCost'];
-            $temp['maxCost'] = $row['maxCost'];
-            $temp['defaultCost'] = $row['defaultCost'];
-            $carsList[$row['idType']][$row['idModel']][] = $temp;
+            $carsList[$row['idMark']]['name'] = $row['markName'];
+            $carsList[$row['idMark']][$row['idModel']]['name'] = $row['modelName'];
+            $temp['yearStart'] = $row['year'];
+            //$temp['damage'] = $row['damage'];
+            //$temp['theft'] = $row['theft'];
+            $temp['defaultCost'] = $row['cost'];
+            $carsList[$row['idMark']][$row['idModel']][] = $temp;
         }
 
     }
@@ -218,16 +215,16 @@ function dbGetCars()
     return $carsList;
 }
 
-function dbGetCarsTypes()
+function dbGetCarsMarks()
 {
     global $DBH;
     $carsTypesList = array();
     try {
-        $STH = $DBH->prepare('SELECT * FROM carsTypes WHERE 1 ORDER BY `typeName`');
+        $STH = $DBH->prepare('SELECT * FROM carsMarks WHERE 1 ORDER BY `markName`');
         $STH->execute();
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {
-            $carsTypesList[$row['id']] = $row['typeName'];
+            $carsTypesList[$row['id']] = $row['markName'];
         }
 
     }
@@ -238,12 +235,12 @@ function dbGetCarsTypes()
     return $carsTypesList;
 }
 
-function dbGetCarsModelsByType($structure)
+function dbGetCarsModelsByMark($structure)
 {
     global $DBH;
     $carsModelList = array();
     try {
-        $STH = $DBH->prepare('SELECT id, modelName FROM carsModels WHERE carsModels.idType = :idType');
+        $STH = $DBH->prepare('SELECT id, modelName FROM carsModels WHERE carsModels.idMark = :idMark');
         $STH->execute($structure);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {

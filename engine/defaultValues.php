@@ -185,7 +185,7 @@ $defaultValues = array('calc'         =>
                            )
                        ),
                        'select' => array (
-                           'cars' => dbGetCarsTypes(),
+                           'cars' => dbGetCarsMarks(),
                            'isUnderWarranty' =>
                             array(
                                 1 => 'Да',

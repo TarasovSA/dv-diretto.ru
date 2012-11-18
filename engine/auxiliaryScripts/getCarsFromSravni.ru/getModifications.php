@@ -1,12 +1,16 @@
 <?php
 
 
-$dbHost = 'paboti.mysql';
-$dbName = 'paboti_dvdiretto';
-$dbUser = 'paboti_mysql';
-$dbPass = 'mnsjmlnn';
+//$dbHost = 'paboti.mysql';
+//$dbName = 'paboti_dvdiretto';
+//$dbUser = 'paboti_mysql';
+//$dbPass = 'mnsjmlnn';
 
-$marksIds = array();
+$dbHost = '127.0.0.1';
+$dbName = 'paboti_dvdiretto';
+$dbUser = 'root';
+$dbPass = '';
+
 
 function errorMessageHandler ($e)
 {
@@ -15,7 +19,7 @@ function errorMessageHandler ($e)
 //connect to DB
 try {
     # MySQL ����� PDO_MYSQL
-    $DBH = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
+    $DBH = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser);
     $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
     $DBH->exec("SET NAMES 'utf8'");
@@ -30,22 +34,43 @@ catch(PDOException $e) {
     errorMessageHandler($e);
 }
 
+$modificationsIds = array(2004 => array(),
+    2005 => array(),
+    2006 => array(),
+    2007 => array(),
+    2008 => array(),
+    2009 => array(),
+    2010 => array(),
+    2011 => array(),
+    2012 => array());
 
 try {
     $STH = $DBH->prepare("SELECT * FROM carsMarks LEFT JOIN carsModels ON carsMarks.idMark = carsModels.idMark WHERE 1");
     $STH->execute();
     $STH->setFetchMode(PDO::FETCH_ASSOC);
 
-    //while($row = $STH->fetch()) {
-    for ($i=0; $i<30; $i++){
-        $row = $STH->fetch();
+    while($row = $STH->fetch()) {
+    //for ($i=0; $i<10; $i++){
+        echo '<h1>'.$row['markName'].'</h1></br>';
+        echo "\n";
+        echo 'http://www.sravni.ru/Autocomplete/Model/?term='.urlencode($row['markName'].' '.$row['modelName']).'</br>';
+        echo "\n";
         $file = file_get_contents('http://www.sravni.ru/Autocomplete/Model/?term='.urlencode($row['markName'].' '.$row['modelName']));
         $modelId = json_decode($file);
-        echo $modelId->carModel."\n";
         for ($year=2004; $year<=2012; $year++)
-            getModification('', $year, $modelId->carModel);
-
-
+        {
+            //echo '-> http://www.sravni.ru/Kasko/Suggest/Modification/?term=&year='.$year.'&modelId='.$modelId->carModel."</br>";
+            $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term=&year='.$year.'&modelId='.$modelId->carModel);
+            if ($file == '""')
+            {
+                updateCarsModelYear($year, $row['idModel']);
+                break;
+            }
+            else
+            {
+                getModification('', $year, $modelId->carModel, $row['idModel']);
+            }
+        }
     }
 }
 catch (PDOException $e)
@@ -53,26 +78,52 @@ catch (PDOException $e)
     errorMessageHandler($e);
 }
 
-print_r ($marksIds);
-
-function getModification($term, $year, $modelId)
+function getModification($term, $year, $modelId, $realId)
 {
-    global $marksIds;
-    echo 'http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'&year='.$year.'&modelId='.$modelId.'</br>';
+    global $modificationsIds, $DBH;
+    echo '--> http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'&year='.$year.'&modelId='.$modelId.'</br>';
+    echo "\n";
     $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term='.urlencode($term).'&year='.$year.'&modelId='.$modelId);
     $result = json_decode($file);
+
     if (isset($result->suggests))
     {
         foreach ($result->suggests as $newTerm)
         {
-            getModification($newTerm, $year, $modelId->carModel);
+            getModification($newTerm, $year, $modelId, $realId);
         }
     }
     else
     {
-        array_push($marksIds, $result->carModelId);
+        if (!in_array($result->carModelId, $modificationsIds[$year]))
+        {
+            $modificationsIds[$year][] = $result->carModelId;
+            try {
+                $STH = $DBH->prepare("INSERT INTO carsModifications (idModel, modificationName, price, year) VALUES (:idModel, :modificationName, :price, :year)");
+                $STH->execute(array('idModel' => $realId, 'modificationName' => $term, 'price' => $result->Info->price, 'year' => $year));
+                echo '<h3>'.$term.' - added</h3></br>';
+                echo "\n";
+            }
+            catch (PDOException $e)
+            {
+                errorMessageHandler($e);
+            }
+        }
     }
-    print_r ($result);
+}
+
+function updateCarsModelYear($year, $model)
+{
+    global $DBH;
+    try {
+        $STH = $DBH->prepare("UPDATE carsModels SET endYear = :endYear WHERE idModel = :idModel");
+        $STH->execute(array('endYear' => ($year-1), 'idModel' => $model));
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+
 }
 
 
