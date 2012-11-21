@@ -64,20 +64,19 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3)
                     echo '</ul></br>';
                 $firstLetter = mb_substr($carMark,0,1,'UTF-8');
                 echo "<h3 class='orange inline'>{$firstLetter}</h3>";
-                echo "<ul><li><a href='#' onclick='selectCarMark({$id}, \"{$carMark}\")' style='text-decoration: underline; margin: 10 10 10 10'>{$carMark}</a></li>";
+                echo "<ul><li><a href='#' onclick='selectCarMark({$id}, \"{$carMark}\")' style='text-decoration: underline;'>{$carMark}</a></li>";
             }
             else
-                echo "<li><a href='#' onclick='selectCarMark({$id}, \"{$carMark}\")' style='text-decoration: underline; margin: 10 10 10 10'>{$carMark}</a></li>";
+                echo "<li><a href='#' onclick='selectCarMark({$id}, \"{$carMark}\")' style='text-decoration: underline;'>{$carMark}</a></li>";
         }
-    echo '</ul>';
+        echo '</ul>';
 ?>
 </div>
-<?php
-$carsModels = dbGetCarsMarks();
-?>
+
+<!-- Models -->
 <script>
     $(function () {
-        $("#selectCarMark").dialog({
+        $("#selectCarModel").dialog({
             autoOpen:false,
             width:700,
             height:500,
@@ -85,22 +84,23 @@ $carsModels = dbGetCarsMarks();
         });
     });
 </script>
-<div id="selectCarMark" title="Выберите марку автомобиля">
-    <?php
-
-    $firstLetter = null;
-    foreach ($carsMarks as $id => $carMark)
-    {
-        if ($firstLetter == null OR $firstLetter != $carMark[0])
-        {
-            $firstLetter = $carMark[0];
-            echo "<h3>{$firstLetter}</h3>";
-        }
-        echo "<a href='#' onclick='selectCarMark({$id}, \"{$carMark}\")'>{$carMark}</a> ";
+<div id="selectCarModel" title="Выберите модель автомобиля">
+</div>
 
 
-    }
-    ?>
+
+<!-- Modifications -->
+<script>
+    $(function () {
+        $("#selectCarModification").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectCarModification" title="Выберите модификацию автомобиля">
 </div>
 <?php
 }

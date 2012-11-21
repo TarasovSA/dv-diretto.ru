@@ -97,29 +97,24 @@ function bellaVitaUpdateFirstPage()
 function bellissimoUpdateFirstPage()
 {
     //update Model List
-    $('#bellissimo\\[typeOfCar\\]').change(function () {
-        var typeOfCar = $('#bellissimo\\[typeOfCar\\]').val();
-            if (typeOfCar > 0)
+    $('#typeOfCarId').change(function () {
+        var typeOfCar = $('#typeOfCarId').val();
+        if (typeOfCar > 0)
+        {
+            $.get('../engine/ajax.php?get=getModels&type='+typeOfCar, function (data)
             {
-                $.getJSON('../engine/ajax.php?get=getModels&type='+typeOfCar, function (data)
-                    {
-                        $('#bellissimo\\[modelOfCar\\]').empty();
-                        var html = '<option value="0" disabled="disabled" selected = "selected">Выбрать...</option>';
-                        for (var key in data)
-                        {
-                            html += '<option value="' + key + '">' + data[key] + '</option>';
-                        }
-                        $(html).appendTo('#bellissimo\\[modelOfCar\\]');
-                    }
-                )
-            }
+                $('#typeOfModelId').empty();
+                $('#typeOfModelName').empty();
+                $(data).appendTo('#selectCarModel');
+            })
+        }
     })
 
     //check carAmount value
-    if ($('#bellissimo\\[carAmount\\]').val() == "")
+    /*if ($('#bellissimo\\[carAmount\\]').val() == "")
     {
         $('#bellissimo\\[carAmount\\]').val(500000);
-    }
+    }*/
 
     //driver must be over 18 years old
     $('[id^="bellissimoDriversdriver"]').each (function (index, element) {
@@ -154,7 +149,8 @@ function addDriver()
                 '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker({' +
                 '            inline: true,' +
                 '            changeMonth: true,' +
-                '            changeYear: true' +
+                '            changeYear: true,' +
+                '            maxDate: -6575' +
                 '        });' +
                 '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );' +
                 '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( $.datepicker.regional[ \"ru\" ] );' +
@@ -165,7 +161,7 @@ function addDriver()
                 '    });' +
                 '</script>' +
                 '<div class="r1"><input type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][birthDay]" value=""  class="text_input" id="bellissimoDriversdriver' + driversQuantity +'birthDay" onClick="this.value=\'\';"></div>' +
-                '<div class="grid_label">Стаж вождения (полных лет):</div><div class="r1"><input class="text_input short" type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][experience]" value="" placeholder="3"></div>';
+                '<div class="grid_label">Стаж вождения (полных лет):</div><div class="r1"><input class="text_input short" type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][experience]" value="" placeholder="Стаж"></div>';
 
         $(html).appendTo('#drivers');
         driversQuantity++;

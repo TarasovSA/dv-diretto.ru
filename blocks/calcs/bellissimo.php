@@ -1,5 +1,4 @@
 <?php
-//print_r($_REQUEST);
 global $defaultValues;
 if (isset($_REQUEST['step']))
     $step = $_REQUEST['step'];
@@ -12,7 +11,6 @@ else
 switch ($step)
 {
     case 1:
-        print_r ($_SESSION['calc']['bellissimo']);
         if (isset($_SESSION['calc']['bellissimo']))
             $formData = $_SESSION['calc']['bellissimo'];
         else
@@ -24,12 +22,13 @@ switch ($step)
 
         //block insured
         $bellissimoForm->putNewBlock('Страхование КАСКО', 'grid');
-        $bellissimoForm->addInput(new input('', 'custom', 'Марка ТС:', '<input type="text" class="text_input double" name="" id="typeOfCarName" onclick="selectCarMarkList()"><input type="hidden" name="bellissimo[typeOfCar]" id="typeOfCarId">', '', 3));
-        $bellissimoForm->addInput(new input('', 'custom', 'Модель ТС:', '<input type="text" class="text_input double" name="" id="typeOfModelName" onclick="selectCarModelList()"><input type="hidden" name="bellissimo[modelOfCar]" id="typeOfModelId">', '', 3));
+        $bellissimoForm->addInput(new input('', 'custom', 'Марка ТС:', '<input type="text" class="text_input double" name="bellissimo[typeOfCarName]" id="typeOfCarName" onclick="selectCarMarkList()"><input type="hidden" name="bellissimo[typeOfCarId]" id="typeOfCarId">', '', 3));
+        $bellissimoForm->addInput(new input('', 'custom', 'Модель ТС:', '<input type="text" class="text_input double" name="bellissimo[modelOfCarName]" id="typeOfModelName" onclick="selectCarModelList()"><input type="hidden" name="bellissimo[modelOfCarId]" id="typeOfModelId">', '', 3));
         //$bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'popup', 'Марка ТС:', array('select' => $defaultValues['select']['cars'], 'chose' => $formData['typeOfCar']), 'select'));
         //$bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'popup', 'Модель ТС:', array('select' => dbGetCarsModelsByMark(array('idMark' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
         $bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', array('select' => $defaultValues['select']['yearsOfCar'], 'chose' => $formData['yearOfCar']), 'select'));
         //$bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'popup', 'Модель ТС:', array('select' => dbGetCarsModifications(array('idMark' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
+        $bellissimoForm->addInput(new input('', 'custom', 'Модификация ТС:', '<input type="text" class="text_input double" name="bellissimo[modificationOfCarName]" id="modificationOfCarName" onclick="selectCarModificationList()"><input type="hidden" name="bellissimo[modificationOfCarId]" id="modificationOfCarId">', '', 3));
         $bellissimoForm->addInput(new input('bellissimo[carAmount]', 'slider', 'Стоимость ТС:', $formData['carAmount'],''));
         $bellissimoForm->addInput(new input('bellissimo[isUnderWarranty]', 'select', 'ТС находится на гарантии:', array('select' => $defaultValues['select']['isUnderWarranty'], 'chose' => $formData['isUnderWarranty']), 'select', 3));
 
@@ -56,7 +55,7 @@ switch ($step)
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'dataPicker', 'Дата рождения:', "", 'text_input', 1));
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'text', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
         }
-		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();">Добавить водителя (не более пяти)</a> <a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>', '', 4));
+		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();" style="position: absolute;">Добавить водителя (не более пяти)</a> <!--<a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>-->', '', 4));
 
 
 
@@ -89,7 +88,7 @@ switch ($step)
     case 2:
 
         $results = calcFinalAward();
-	
+
         $bellissimoForm = new form('bellissimoSecond');
         $bellissimoForm->setAction("index.php?action=calc&type=3&step=3");
         $bellissimoForm->setMethod("POST");

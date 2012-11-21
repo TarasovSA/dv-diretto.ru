@@ -24,8 +24,8 @@ function selectContentBg()
 
 function calcFinalAward()
 {
-    $carMark = $_SESSION['calc']['bellissimo']['typeOfCar'];
-    $carModel = $_SESSION['calc']['bellissimo']['modelOfCar'];
+    $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
+    $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
     $year = $_SESSION['calc']['bellissimo']['yearOfCar'];
     $cars = dbGetCar(array('carMarkId' => $carMark, 'carModelId' => $carModel));
     $damage = 0;

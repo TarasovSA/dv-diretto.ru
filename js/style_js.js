@@ -87,20 +87,81 @@ function addNewAdditionalStructure() {
     $("#addNewAdditionalStructure").dialog('open');
 }
 
+
+
+/*function addNewDriver() {
+    $("#addNewDriver").dialog('open');
+}*/
+
 function selectCarMarkList(){
     $("#selectCarMark").dialog('open');
-}
-
-function addNewDriver() {
-    $("#addNewDriver").dialog('open');
 }
 
 function selectCarMark(id, carMark){
     document.getElementById('typeOfCarId').value = id;
     document.getElementById('typeOfCarName').value = carMark;
+    document.getElementById('typeOfModelId').value = '';
+    document.getElementById('typeOfModelName').value = '';
+    document.getElementById('modificationOfCarId').value = '';
+    document.getElementById('modificationOfCarName').value = '';
+    document.getElementById('bellissimo[carAmount]').value = '';
     $("#selectCarMark").dialog('close');
 }
 
 function selectCarModelList() {
-    $("#selectCarModel").dialog('open');
+    var typeOfCar = $('#typeOfCarId').val();
+    if (typeOfCar > 0)
+    {
+        $.get('../engine/ajax.php?get=getModels&type='+typeOfCar, function (data)
+        {
+            $('#typeOfModelId').empty();
+            $('#typeOfModelName').empty();
+            $('#selectCarModel').empty();
+            $(data).appendTo('#selectCarModel');
+        });
+        $("#selectCarModel").dialog('open');
+    }
+}
+
+function selectCarModel(id, carModel){
+    document.getElementById('typeOfModelId').value = id;
+    document.getElementById('typeOfModelName').value = carModel;
+    document.getElementById('modificationOfCarId').value = '';
+    document.getElementById('modificationOfCarName').value = '';
+    document.getElementById('bellissimo[carAmount]').value = '';
+    $("#selectCarModel").dialog('close');
+}
+
+
+function selectCarModificationList() {
+    var ModelOfCar = $('#typeOfModelId').val();
+    var year = $('#bellissimo\\[yearOfCar\\]').val();
+    if (ModelOfCar > 0 && year > 0)
+    {
+        var selectedYear = new Date();
+        if (year == 1)
+        {
+            selectedYear = selectedYear.getFullYear();
+        }
+        else
+        {
+            selectedYear = selectedYear.getFullYear();
+            selectedYear = selectedYear - parseInt(year) + 2;
+        }
+        $.get('../engine/ajax.php?get=getModifications&model='+ ModelOfCar +'&year='+selectedYear, function (data)
+        {
+            $('#modificationOfCarId').empty();
+            $('#modificationOfCarName').empty();
+            $('#selectCarModification').empty();
+            $(data).appendTo('#selectCarModification');
+        });
+        $("#selectCarModification").dialog('open');
+    }
+}
+
+function selectCarModification(id, carModification, cost){
+    document.getElementById('modificationOfCarId').value = id;
+    document.getElementById('modificationOfCarName').value = carModification;
+    document.getElementById('bellissimo[carAmount]').value = cost;
+    $("#selectCarModification").dialog('close');
 }

@@ -254,20 +254,17 @@ function dbGetCarsModelsByMark($structure)
     return $carsModelList;
 }
 
-function dbGetCarsParamsByModel($structure)
+function dbGetCarsModificationsByModel($structure)
 {
     global $DBH;
-    $carsList = array();
+    $carsParamsList = array();
     try {
-        $STH = $DBH->prepare('SELECT * FROM carsParams WHERE carsParams.idModel = :idModel');
+        $STH = $DBH->prepare('SELECT id, modificationName, cost FROM carsModifications WHERE carsModifications.idModel = :idModel AND carsModifications.year = :year');
         $STH->execute($structure);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {
-            $carsParamsList[$row['id']]['yearStart'] = $row['yearStart'];
-            $carsParamsList[$row['id']]['yearStop'] = $row['yearStop'];
-            $carsParamsList[$row['id']]['minCost'] = $row['minCost'];
-            $carsParamsList[$row['id']]['maxCost'] = $row['maxCost'];
-            $carsParamsList[$row['id']]['defaultCost'] = $row['defaultCost'];
+            $carsParamsList[$row['id']]['modificationName'] = $row['modificationName'];
+            $carsParamsList[$row['id']]['cost'] = $row['cost'];
         }
 
     }
@@ -275,5 +272,5 @@ function dbGetCarsParamsByModel($structure)
     {
         errorMessageHandler($e);
     }
-    return $carsList;
+    return $carsParamsList;
 }
