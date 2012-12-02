@@ -24,32 +24,89 @@ function selectContentBg()
 
 function calcFinalAward()
 {
+    $coefficients = dbGetCoefficientsForCalc(array('calc' => 3));
+
+    //calc base damage coefficient
     $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
     $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
+    $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
+    $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
+
+    //calc k1 coefficient
     $year = $_SESSION['calc']['bellissimo']['yearOfCar'];
-    $cars = dbGetCar(array('carMarkId' => $carMark, 'carModelId' => $carModel));
-    $damage = 0;
-    $damageK = 0;//$cars[$carMark][$carModel][0]['damage'];
-    //echo $damageK;
-    $theftK = 0;//$cars[$carMark][$carModel][0]['theft'];
-    $yearK = $year;
-    //echo $yearK;
-    $isUnderWarrantyK = $_SESSION['calc']['bellissimo']['isUnderWarranty'];
-    //echo $isUnderWarrantyK;
-    $formOfCompensationK = $_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
-    //echo $formOfCompensationK;
+    $amountK['K1'] = $coefficients['K1Damage'][$year];
 
-    $inexperienced = 10;
-    foreach ($_SESSION['calc']['bellissimoDrivers']['driver'] as $driver)
+    //calc k2 coefficient
+    $amountK['K2'] = $coefficients['K1Theft'][$year];
+
+    //calc k3 coefficient
+    $drivers = $_SESSION['calc']['bellissimoDrivers']['driver'];
+    $minExperiance = null;
+    foreach ($drivers as $driver)
     {
-        if ($inexperienced > $driver['experience'])
-            $inexperienced = $driver['experience'];
+        if ($minExperiance == null OR $minExperiance>$driver['experience'])
+            $minExperiance = $driver['experience'];
     }
-    $inexperiencedK = $inexperienced;
-    //echo $inexperiencedK;
-    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * $damageK * $yearK * $isUnderWarrantyK * $formOfCompensationK * $inexperiencedK;
-    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * $theftK * $yearK ;
 
-    return $damage + $theft;
+    switch ($minExperiance)
+    {
+        case 0:
+            $minExperiance = '0-1';
+            break;
+        case 1:
+            $minExperiance = '1-2';
+            break;
+        case 2:
+            $minExperiance = '2-3';
+            break;
+        case 3:
+        case 4:
+            $minExperiance = '3-5';
+            break;
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+            $minExperiance = '5-10';
+            break;
+        default:
+            $minExperiance = '10plus';
+    }
+    $amountK['K3'] = $coefficients['K3'][$minExperiance];//$cars[$carMark][$carModel][0]['damage'];
+
+    //calc k6 coefficient
+    $formOfCompensationK = $_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
+    if ($year < 5)
+        $amountK['K6'] = $coefficients['K6NewCars'][$formOfCompensationK];
+    else
+        $amountK['K6'] = $coefficients['K6OldCars'][$formOfCompensationK];
+
+    //calc k8 coefficient
+    $antiStealing = $_SESSION['calc']['bellissimoOthers']['antiStealing'];
+    if (isset($antiStealing[5]) AND $antiStealing[5] == 1)
+        $amountK['K8'] = $coefficients['K8'][7];
+    elseif (isset($antiStealing[4]) AND $antiStealing[4] == 1)
+        $amountK['K8'] = $coefficients['K8'][6];
+    elseif (isset($antiStealing[4]) AND $antiStealing[3] == 1)
+        $amountK['K8'] = $coefficients['K8'][5];
+    elseif (isset($antiStealing[0]) AND isset($antiStealing[1]) AND isset($antiStealing[2]) AND $antiStealing[0] == 1 AND $antiStealing[1] == 1 AND $antiStealing[2] == 1)
+        $amountK['K8'] = $coefficients['K8'][4];
+    elseif (isset($antiStealing[0]) AND isset($antiStealing[2]) AND $antiStealing[0] == 1 AND $antiStealing[2] == 1)
+        $amountK['K8'] = $coefficients['K8'][3];
+    elseif (isset($antiStealing[0]) AND isset($antiStealing[1]) AND $antiStealing[0] == 1 AND $antiStealing[1] == 1)
+        $amountK['K8'] = $coefficients['K8'][2];
+    else
+        $amountK['K8'] = $coefficients['K8'][1];
+
+    //k4,k5,k7 coefficient
+    $amountK['K4'] = 1;
+    $amountK['K5'] = 1;
+    $amountK['K7'] = 1;
+
+    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $amountK['K1'] * $amountK['K3'] * $amountK['K4'] * $amountK['K5'] * $amountK['K6'] * $amountK['K7'] * $amountK['K8'])/100);
+    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $amountK['K2'] * $amountK['K4'] * $amountK['K7'] * $amountK['K8'])/100);;
+
+    return ceil($damage + $theft);
 
 }

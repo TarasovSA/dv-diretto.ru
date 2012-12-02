@@ -189,22 +189,19 @@ function dbGetUserId($structure)
     return $carsList;
 }*/
 
-function dbGetCar($structure)
+function dbGetCarInfo($structure)
 {
     global $DBH;
-    $carsList = array();
+    $info = array();
     try {
-        $STH = $DBH->prepare('SELECT carsMarks.id as idMark, carsModels.id as idModel, markName, modelName, carsModifications.id as carModificationId, year, cost FROM carsMarks LEFT JOIN carsModels ON carsMarks.id = carsModels.idMark LEFT JOIN carsModifications ON carsModels.id = carsModifications.idModel WHERE carsMarks.id = :carMarkId AND carsModels.id = :carModelId');
+        $STH = $DBH->prepare('SELECT damage, theft, year, cost FROM carsMarks LEFT JOIN carsModels ON carsMarks.id = carsModels.idMark LEFT JOIN carsModifications ON carsModels.id = carsModifications.idModel WHERE carsMarks.id = :carMarkId AND carsModels.id = :carModelId AND carsModifications.id = :carModificationId');
         $STH->execute($structure);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         while($row = $STH->fetch()) {
-            $carsList[$row['idMark']]['name'] = $row['markName'];
-            $carsList[$row['idMark']][$row['idModel']]['name'] = $row['modelName'];
-            $temp['yearStart'] = $row['year'];
-            //$temp['damage'] = $row['damage'];
-            //$temp['theft'] = $row['theft'];
-            $temp['defaultCost'] = $row['cost'];
-            $carsList[$row['idMark']][$row['idModel']][] = $temp;
+            $info['damage'] = $row['damage'];
+            $info['theft'] = $row['theft'];
+            $info['year'] = $row['year'];
+            $info['cost'] = $row['cost'];
         }
 
     }
@@ -212,7 +209,7 @@ function dbGetCar($structure)
     {
         errorMessageHandler($e);
     }
-    return $carsList;
+    return $info;
 }
 
 function dbGetCarsMarks()
@@ -273,4 +270,24 @@ function dbGetCarsModificationsByModel($structure)
         errorMessageHandler($e);
     }
     return $carsParamsList;
+}
+
+function dbGetCoefficientsForCalc($structure)
+{
+    global $DBH;
+    $coefficients = array();
+    try {
+        $STH = $DBH->prepare("SELECT * FROM coefficient WHERE calc = :calc");
+        $STH->execute($structure);
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+
+        while($row = $STH->fetch()) {
+            $coefficients[$row['name']][$row['param']] = $row['value'];
+        }
+    }
+    catch (PDOException $e)
+    {
+        errorMessageHandler($e);
+    }
+    return $coefficients;
 }
