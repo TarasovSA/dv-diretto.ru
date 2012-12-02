@@ -19,6 +19,8 @@ switch ($GLOBALS['calc']) {
 
 }
 
+print_r ($coefficients);
+
 
 if ($GLOBALS['calc'] == 'main')
 {
@@ -35,9 +37,12 @@ else
         <form class="form-horizontal" action="/admin/index.php?p=coefficient&calc=villaggio" method="POST">
             <?php
                 foreach ($coefficients as $coefficient) {
+                    $param = '';
+                    if ($coefficient['param'] != '')
+                        $param = "[{$coefficient['param']}]";
                     echo '<div class="control-group">';
-                    echo '<label class="control-label" for="' . $coefficient['id'] . '">' . $coefficient['longName'] . '</label>';
-                    echo '<div class="controls"><input type=text id="' . $coefficient['id'] . '" name="coeff[' . $coefficient['id'] . ']" value="' . $coefficient['value'] . '"></div>';
+                    echo "<label class=\"control-label\" for=\" {$coefficient['id']} \">{$coefficient['name']}{$param} = </label>";
+                    echo "<div class=\"controls\"><input type=text id=\"{$coefficient['id']}\" name=\"coeff[{$coefficient['id']}]\" value=\"{$coefficient['value']}\"> {$coefficient['longName']}</div>";
                     echo '</div>';
                 }
                 ?>

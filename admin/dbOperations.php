@@ -39,6 +39,7 @@ function dbGetCoefficientsForCalc($structure)
         while($row = $STH->fetch()) {
             $temp['id'] = $row['id'];
             $temp['name'] = $row['name'];
+            $temp['param'] = $row['param'];
             $temp['longName'] = $row['longName'];
             $temp['calc'] = $row['calc'];
             $temp['value'] = $row['value'];
