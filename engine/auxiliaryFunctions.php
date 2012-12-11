@@ -22,15 +22,10 @@ function selectContentBg()
     return "content_bg".$backgroundClass;
 }
 
-function calcFinalAward()
+function getBellissimoCoeff()
 {
     $coefficients = dbGetCoefficientsForCalc(array('calc' => 3));
 
-    //calc base damage coefficient
-    $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
-    $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
-    $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
-    $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
 
     //calc k1 coefficient
     $year = $_SESSION['calc']['bellissimo']['yearOfCar'];
@@ -104,9 +99,10 @@ function calcFinalAward()
     $amountK['K5'] = 1;
     $amountK['K7'] = 1;
 
-    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $amountK['K1'] * $amountK['K3'] * $amountK['K4'] * $amountK['K5'] * $amountK['K6'] * $amountK['K7'] * $amountK['K8'])/100);
-    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $amountK['K2'] * $amountK['K4'] * $amountK['K7'] * $amountK['K8'])/100);;
+    //$damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $amountK['K1'] * $amountK['K3'] * $amountK['K4'] * $amountK['K5'] * $amountK['K6'] * $amountK['K7'] * $amountK['K8'])/100);
+    //$theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $amountK['K2'] * $amountK['K4'] * $amountK['K7'] * $amountK['K8'])/100);
 
-    return ceil($damage + $theft);
+    //return ceil($damage + $theft);
+    return $amountK;
 
 }

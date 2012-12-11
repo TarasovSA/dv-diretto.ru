@@ -79,7 +79,7 @@ function feliceCittaUpdateFirstPage()
     var liability = $('#feliceCitta\\[liability\\]').val();
     var sum;
 
-    sum = isConstructionEl*constructionEl*0.005 + isInteriorTrim*interiorTrim*0.005 + isEngineeringSystems*engineeringSystems*0.005 + isProperty*property*0.006 + isLiability*liability*0.01;
+    sum = Math.ceil(isConstructionEl*constructionEl*0.005 + isInteriorTrim*interiorTrim*0.005 + isEngineeringSystems*engineeringSystems*0.005 + isProperty*property*0.006 + isLiability*liability*0.01);
 
     $('[name=feliceCittaResult]').val(sum);
 }
@@ -130,12 +130,99 @@ function bellissimoUpdateFirstPage()
 
 }
 
-function bellissimoUpdateSecondPage()
+function bellissimoUpdateSecondPage(k1, k7)
 {
-    $.getJSON('../engine/ajax.php?get=session', function (data) {
-        var damage = data.cars[data.session.calc.bellissimo.typeOfCar][data.session.calc.bellissimo.modelOfCar][0].damage;
-        var theft = data.cars[data.session.calc.bellissimo.typeOfCar][data.session.calc.bellissimo.modelOfCar][0].theft;
-    })
+    //set ReadOnly
+    document.getElementById('bellissimo[kasko]').setAttribute('readonly');
+    document.getElementById('amount[kasko]').setAttribute('readonly');
+    document.getElementById('amount[VIPPackAmount]').setAttribute('readonly');
+    document.getElementById('amount[liability]').setAttribute('readonly');
+    document.getElementById('amount[accident]').setAttribute('readonly');
+    document.getElementById('amount[EquipmentAmount]').setAttribute('readonly');
+    document.getElementById('amount[amountSummary]').setAttribute('readonly');
+
+    //calc
+    document.getElementById('amount[kasko]').value = document.getElementById('bellissimo[kasko]').value + '.00';
+
+    var Tdo = 7.9 * k1 * k7;
+    var Tgo = 0.099 * k7;
+    var Tns = 0.24 * k7;
+    var summaryTdo = 0;
+
+    $('[name^="bellissimoAdditional\\[equipment\\]"]').each (function (index, element) {
+        if (index%2 == 1)
+        {
+            summaryTdo += element.value * Tdo;
+        }
+    });
+
+    summaryTgo = document.getElementById('bellissimoAdditional[liability]').value * Tgo;
+    summaryTns = document.getElementById('bellissimoAdditional[accident]').value * Tns;
+
+    document.getElementById('bellissimoAdditional[EquipmentAmount]').value = Math.ceil(summaryTdo/100);
+    document.getElementById('amount[EquipmentAmount]').value = Math.ceil(summaryTdo/100) + '.00';
+
+    document.getElementById('amount[liability]').value = Math.ceil(summaryTgo/100) + '.00';
+    document.getElementById('amount[accident]').value = Math.ceil(summaryTns/100) + '.00';
+
+    document.getElementById('amount[amountSummary]').value = Math.ceil(parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100))) + '.00';
+
+
+    //set Read Only if isTransition false
+    if (document.getElementById('bellissimoDiscount[isTransition]').checked)
+    {
+        document.getElementById('bellissimoDiscount[transition]').removeAttribute('readonly');
+        document.getElementById('bellissimoDiscount[number]').removeAttribute('readonly');
+        document.getElementById('bellissimoDiscount[polis]').removeAttribute('readonly');
+    }
+    else
+    {
+        document.getElementById('bellissimoDiscount[transition]').setAttribute('readonly');
+        document.getElementById('bellissimoDiscount[number]').setAttribute('readonly');
+        document.getElementById('bellissimoDiscount[polis]').setAttribute('readonly');
+    }
+}
+
+function bellissimoUpdateThirdPage()
+{
+    if (document.getElementById('bellissimoBeneficiary[isInsurant]').checked)
+    {
+        document.getElementById('bellissimoBeneficiary[beneficiary][name]').value = document.getElementById('insurant[name]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][region]').value = document.getElementById('insurant[region]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][city]').value = document.getElementById('insurant[city]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][street]').value = document.getElementById('insurant[street]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][house]').value = document.getElementById('insurant[house]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][housing]').value = document.getElementById('insurant[housing]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][apartment]').value = document.getElementById('insurant[apartment]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][passportSeries]').value = document.getElementById('insurant[passportSeries]').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][passportNumber]').value = document.getElementById('insurant[passportNumber]').value;
+        document.getElementById('bellissimoBeneficiarybeneficiarybirthday').value = document.getElementById('insurantbirthday').value;
+        document.getElementById('bellissimoBeneficiary[beneficiary][phone]').value = document.getElementById('insurant[phone]').value;
+    }
+    else
+    {
+        document.getElementById('bellissimoBeneficiary[beneficiary][name]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][region]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][city]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][street]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][house]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][housing]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][apartment]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][passportSeries]').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][passportNumber]').value = '';
+        document.getElementById('bellissimoBeneficiarybeneficiarybirthday').value = '';
+        document.getElementById('bellissimoBeneficiary[beneficiary][phone]').value = '';
+    }
+
+    if (document.getElementById('bellissimoBeneficiary[isAutoInBank]').checked)
+    {
+        document.getElementById('autoInBank').removeAttribute('style','display:none');
+    }
+    else
+    {
+        document.getElementById('autoInBank').setAttribute('style','display:none');
+    }
+
 }
 
 function addDriver()
