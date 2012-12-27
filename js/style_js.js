@@ -87,6 +87,10 @@ function addNewAdditionalStructure() {
     $("#addNewAdditionalStructure").dialog('open');
 }
 
+function login() {
+    $("#login").dialog('open');
+}
+
 
 
 /*function addNewDriver() {
