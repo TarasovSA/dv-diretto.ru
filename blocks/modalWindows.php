@@ -1,3 +1,28 @@
+<script>
+    $(function () {
+        $("#login").dialog({
+            autoOpen:false,
+            width:300,
+            height:220,
+            modal:true,
+            buttons:{ "Войти":function () {
+                $(this).dialog("close");
+            }, "Отмена": function () {
+                $(this).dialog("close");
+            }}
+        });
+    });
+</script>
+<div id="login" title="Вход в личный кабинет">
+        <div class="form-title">Email</div>
+        <input class="form-field" type="text" name="firstname" /><br />
+        <div class="form-title">Пароль</div>
+        <input class="form-field" type="text" name="email" /><br />
+        <div class="submit-container">
+        </div>
+</div>
+
+
 <?php
 if ($_GET['action'] == 'calc' AND $_GET['type'] == 0)
 {

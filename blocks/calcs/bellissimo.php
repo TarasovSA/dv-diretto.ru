@@ -40,7 +40,7 @@ switch ($step)
             global $defaultValues;
             $formData = $defaultValues['calc']['bellissimoDrivers'];
         }
-        $bellissimoForm->putNewBlock('Допущенные к управлению','grid', 'drivers');
+        $bellissimoForm->putNewBlock('Допущенные к управлению','grid rel_grid', 'drivers');
 
         if (count($formData['driver'] > 0))
         {
@@ -55,7 +55,7 @@ switch ($step)
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'dataPicker', 'Дата рождения:', "", 'text_input', 1));
             $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'text', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
         }
-		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();" style="position: absolute;">Добавить водителя (не более пяти)</a> <!--<a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>-->', '', 4));
+		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();" style="cursor: pointer">Добавить водителя (не более пяти)</a> <!--<a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>-->', 'bottom_link', 4));
 
 
 
@@ -128,15 +128,15 @@ switch ($step)
 
         if (count($formData['equipment']) == 0)
             $custom_table .= "<tr id='bellissimoAdditional[equipment][0]'>
-                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование'></td>
-                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость'></td>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование' style='border:none; width:325px;'></td>
+                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость' style='border:none; width:165px;'></td>
                             <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this,0)'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;
             $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
-                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование'></td>
-                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder='Стоимость'></td>";
+                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование' style='border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:325px;'></td>
+                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder='Стоимость' style='border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:165px;'></td>";
             if (count($formData['equipment']) == $isLastElement)
                 $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this, {$id})'></a></td>";
             else

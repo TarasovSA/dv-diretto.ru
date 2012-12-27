@@ -268,8 +268,8 @@ function addEquipment(img, id)
     img.setAttribute('onclick','removeEquipment('+ id +')');
     id++;
     var html = '<tr id="bellissimoAdditional[equipment][' + id + ']">'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="Наименование" align="center"></td>'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="Стоимость" align="center"></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="Наименование" align="center" style="border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:325px;"></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="Стоимость" align="center" style="border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:165px;"></td>'+
         '<td><a href="#" name="addEquipment"><img src="/images/faticons/16x16/plus.png" onclick="addEquipment(this, ' + id + ')"></a></td>'+
       '</tr>';
     $(html).appendTo('#additionalEquipment');
