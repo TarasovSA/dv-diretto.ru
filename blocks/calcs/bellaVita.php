@@ -77,23 +77,6 @@ echo '
 		$bvForm->addInput(new input('insurant[birthday]', 'dataPicker', 'Дата рождения:', $formData['birthday'], 'text_input', 3));
         $bvForm->addInput(new input('insurant[phone]', 'text', 'Телефон:', $formData['phone'], 'text_input short', 1));
 
-        //block territory of insure
-        if (isset($_SESSION['calc']['bellaVitaInsured']))
-            $formData = $_SESSION['calc']['bellaVitaInsured'];
-        else
-        {
-            global $defaultValues;
-            $formData = $defaultValues['calc']['bellaVitaInsured'];
-        }
-        $bvForm->putNewBlock('Территория страхования', 'grid');
-		$bvForm->addInput(new input('', 'isCheckbox', ' ', 'Страхователь является застрахованным', 'boxCheckbox', 3));
-		$bvForm->addInput(new input('bellaVitaInsured[name]', 'text', 'ФИО:', $formData['name'], 'text_input long', 3));
-        $bvForm->addInput(new input('bellaVitaInsured[region]', 'text', 'Область или край:', $formData['region'], 'text_input long', 3));
-        $bvForm->addInput(new input('bellaVitaInsured[city]', 'text', 'Город:', $formData['city'], 'text_input long', 3));
-        $bvForm->addInput(new input('bellaVitaInsured[street]', 'text', 'Улица:', $formData['street'], 'text_input long', 3));
-        $bvForm->addInput(new input('bellaVitaInsured[house]', 'text', 'Дом / Корпус', $formData['house'], 'text_input short', 1));
-        $bvForm->addInput(new input('bellaVitaInsured[housing]', 'text', null, $formData['housing'], 'text_input short', 1));
-
         //beneficiary block
         if (isset($_SESSION['calc']['bellaVitaBeneficiary']))
             $formData = $_SESSION['calc']['bellaVitaBeneficiary'];
@@ -103,7 +86,6 @@ echo '
             $formData = $defaultValues['calc']['bellaVitaBeneficiary'];
         }
         $bvForm->putNewBlock('Выгодоприобретатель', 'grid');
-		$bvForm->addInput(new input('bellaVitaInsured[beneficiary]', 'isCheckbox', ' ', 'Страхователь является выгодоприобретателем страхуемого имущества', 'boxCheckbox', 3));
         $bvForm->addInput(new input('bellaVitaBeneficiary[name]', 'text', 'ФИО:', $formData['name'], 'text_input long', 3));       
         $bvForm->addInput(new input('bellaVitaBeneficiary[birthday]', 'dataPicker', 'Дата рождения:', $formData['birthday'], 'text_input', 3));
         $bvForm->addInput(new input('sendbellaVita', 'submit', null, 'Далее', 'btn next', 4));

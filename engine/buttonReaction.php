@@ -81,7 +81,7 @@ function addBellissimoData($step)
             $_SESSION['calc']['bellissimoAdditional'] = $_REQUEST['bellissimoAdditional'];
             $_SESSION['calc']['bellissimoMaintenance'] = $_REQUEST['bellissimoMaintenance'];
             break;
-        case 2:
+        case 3:
             $_SESSION['calc']['insurant'] = $_REQUEST['insurant'];
             $_SESSION['calc']['bellissimoBeneficiary'] = $_REQUEST['bellissimoBeneficiary'];
             $_SESSION['calc']['bellissimoAutoInfo'] = $_REQUEST['bellissimoAutoInfo'];

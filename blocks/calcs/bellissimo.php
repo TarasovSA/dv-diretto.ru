@@ -241,6 +241,7 @@ switch ($step)
             $formData = $defaultValues['calc']['insurant'];
 
         $bellissimoForm->putNewBlock('Основная информация', 'grid');
+        $bellissimoForm->addInput(new input('insurant[email]', 'text', 'Email:', $formData['email'], 'text_input double',3));
         $bellissimoForm->addInput(new input('insurant[name]', 'text', 'Страхователь:', $formData['name'], 'text_input long',3));
         $bellissimoForm->addInput(new input('insurant[region]', 'text', 'Адрес регистрации:', $formData['region'], 'text_input long',3));
         $bellissimoForm->addInput(new input('insurant[city]', 'text', ' ', $formData['city'], 'text_input long',3));
@@ -289,9 +290,9 @@ switch ($step)
             $formData = $defaultValues['calc']['bellissimoAutoInfo'];
 
         $bellissimoForm->putNewBlock('Сведения о страхуемом ТС','grid');
-        $bellissimoForm->addInput(new input('bellissimoAutoInfo[typeOfCar]', 'select', 'Марка ТС:', $formData['typeOfCar'], 'select',3));
-        $bellissimoForm->addInput(new input('bellissimoAutoInfo[modelOfCar]', 'select', 'Модель ТС:', $formData['modelOfCar'], 'select',3));
-        $bellissimoForm->addInput(new input('bellissimoAutoInfo[yearOfCar]', 'select', 'Год выпуска ТС:', $formData['yearOfCar'], 'select',3));
+        $bellissimoForm->addInput(new input('bellissimoAutoInfo[typeOfCar]', 'text', 'Марка ТС:', $_SESSION['calc']['bellissimo']['typeOfCarName'], 'text_input double',3));
+        $bellissimoForm->addInput(new input('bellissimoAutoInfo[modelOfCar]', 'text', 'Модель ТС:', $_SESSION['calc']['bellissimo']['modelOfCarName'].' '.$_SESSION['calc']['bellissimo']['modificationOfCarName'], 'text_input double',3));
+        $bellissimoForm->addInput(new input('bellissimoAutoInfo[yearOfCar]', 'text', 'Год выпуска ТС:', $_SESSION['calc']['bellissimo']['modificationOfCarId'], 'text_input double',3));
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[VIN]', 'text', 'VIN номер ТС:', $formData['VIN'], 'text_input short'),3);
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[vehicleRegistration]', 'text', 'ПТС:', $formData['vehicleRegistration'], 'text_input double',3));
         $bellissimoForm->addInput(new input('bellissimoAutoInfo[isRegistred]', 'isCheckbox', ' ', 'ТС не зарегистрирован в ГИБДД' ,'boxCheckbox',3));
@@ -372,6 +373,7 @@ switch ($step)
         break;
 
     case 4:
+        print_r ($_SESSION);
         $bellissimoForm = new form();
         $bellissimoForm->setAction("index.php?action=calc&type=2&step=5");
         $bellissimoForm->setMethod("POST");
