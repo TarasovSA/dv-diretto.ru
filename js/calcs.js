@@ -96,6 +96,12 @@ function bellaVitaUpdateFirstPage()
 
 function bellissimoUpdateFirstPage()
 {
+    document.getElementById('bellissimoOthers[antiStealing][0]').setAttribute('checked', 'checked');
+    if (document.getElementById('bellissimoOthers[antiStealing][0]').className=='boxCheckbox' &&
+        document.getElementById('bellissimoOthers[antiStealing][0]').parentNode.tagName.toLowerCase()=='div') {
+        // Поменять стиль "обертки" в зависимости от состояния переключателя
+        document.getElementById('bellissimoOthers[antiStealing][0]').parentNode.className='boxChecked';
+    }
     //update Model List
     $('#typeOfCarId').change(function () {
         var typeOfCar = $('#typeOfCarId').val();
@@ -165,6 +171,29 @@ function bellissimoUpdateSecondPage(k1, k7)
     if (document.getElementById('bellissimoMaintenance[information][2]').checked)
         vipSumm += 2000;
 
+    if (document.getElementById('carAmount').value > 750000)
+    {
+        document.getElementById('bellissimoMaintenance[information][0]').setAttribute('checked','checked');
+        document.getElementById('bellissimoMaintenance[information][1]').setAttribute('checked','checked');
+        document.getElementById('bellissimoMaintenance[information][2]').setAttribute('checked','checked');
+        if (document.getElementById('bellissimoMaintenance[information][0]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][0]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][0]').parentNode.className='boxChecked';
+        }
+        if (document.getElementById('bellissimoMaintenance[information][1]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][1]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][1]').parentNode.className='boxChecked';
+        }
+        if (document.getElementById('bellissimoMaintenance[information][2]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][2]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][2]').parentNode.className='boxChecked';
+        }
+        vipSumm = 0;
+    }
+
 
     summaryTgo = document.getElementById('bellissimoAdditional[liability]').value * Tgo;
     summaryTns = document.getElementById('bellissimoAdditional[accident]').value * Tns;
@@ -185,14 +214,21 @@ function bellissimoUpdateSecondPage(k1, k7)
     if (document.getElementById('bellissimoDiscount[isTransition]').checked)
     {
         document.getElementById('bellissimoDiscount[transition]').removeAttribute('readonly');
-        document.getElementById('bellissimoDiscount[number]').removeAttribute('readonly');
         document.getElementById('bellissimoDiscount[polis]').removeAttribute('readonly');
     }
     else
     {
         document.getElementById('bellissimoDiscount[transition]').setAttribute('readonly','readonly');
-        document.getElementById('bellissimoDiscount[number]').setAttribute('readonly','readonly');
         document.getElementById('bellissimoDiscount[polis]').setAttribute('readonly','readonly');
+    }
+
+    if (document.getElementById('bellissimoDiscount[isFranchise]').checked)
+    {
+        document.getElementById('bellissimo[Franchise]').removeAttribute('disabled');
+    }
+    else
+    {
+        document.getElementById('bellissimo[Franchise]').setAttribute('disabled','disabled');
     }
 }
 

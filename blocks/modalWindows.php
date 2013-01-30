@@ -62,7 +62,7 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 0)
 <?php
 }
 
-if ($_GET['action'] == 'calc' AND $_GET['type'] == 3)
+if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) OR $_GET['step'] == 1))
 {
 
     $carsMarks = dbGetCarsMarks();
