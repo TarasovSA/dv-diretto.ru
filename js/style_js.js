@@ -136,6 +136,16 @@ function selectCarModel(id, carModel){
     $("#selectCarModel").dialog('close');
 }
 
+function selectYearList() {
+    $("#selectStartYear").dialog('open');
+}
+
+function selectStartYear(yearId, yearName){
+    document.getElementById('yearId').value = yearId;
+    document.getElementById('yearName').value = yearName;
+    $("#selectStartYear").dialog('close');
+}
+
 
 function selectCarModificationList() {
     var ModelOfCar = $('#typeOfModelId').val();

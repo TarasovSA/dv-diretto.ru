@@ -112,8 +112,6 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
 <div id="selectCarModel" title="Выберите модель автомобиля">
 </div>
 
-
-
 <!-- Modifications -->
 <script>
     $(function () {
@@ -126,6 +124,33 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
     });
 </script>
 <div id="selectCarModification" title="Выберите модификацию автомобиля">
+</div>
+
+<!-- Years -->
+<script>
+    $(function () {
+        $("#selectStartYear").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectStartYear" title="Выберите год начала эксплуатации автомобиля">
+<h3 class='orange inline'></h3>
+    <ul>
+        <li><a href='#' onclick='selectStartYear("currentyear", "Новое ТС")' style='text-decoration: underline;'>Новое ТС</a></li>
+
+    <?php
+        $startYear = intval(date("Y"));
+        $stopYear = intval(date("Y"))-8;
+    for ($year=$startYear; $year>$stopYear; $year--)
+    {
+        echo "<li><a href='#' onclick='selectStartYear({$year}, {$year})' style='text-decoration: underline;'>{$year}</a></li>";
+    }
+?>
+    </ul>
 </div>
 <?php
 }
