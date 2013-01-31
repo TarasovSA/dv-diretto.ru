@@ -69,7 +69,7 @@ function addVillaggioCalcData($step)
 function addBellissimoData($step)
 {
     switch ($step){
-        case 1:
+        case 2:
             if(isset($_REQUEST['bellissimo']))
             {
                 $_SESSION['calc']['bellissimo'] = $_REQUEST['bellissimo'];
@@ -77,16 +77,19 @@ function addBellissimoData($step)
                 $_SESSION['calc']['bellissimoOthers'] = $_REQUEST['bellissimoOthers'];
             }
             break;
-        case 2:
+        case 3:
             $_SESSION['calc']['bellissimoAdditional'] = $_REQUEST['bellissimoAdditional'];
             $_SESSION['calc']['bellissimoMaintenance'] = $_REQUEST['bellissimoMaintenance'];
             break;
-        case 2:
+        case 4:
             $_SESSION['calc']['insurant'] = $_REQUEST['insurant'];
             $_SESSION['calc']['bellissimoBeneficiary'] = $_REQUEST['bellissimoBeneficiary'];
             $_SESSION['calc']['bellissimoAutoInfo'] = $_REQUEST['bellissimoAutoInfo'];
             $_SESSION['calc']['bellissimoAddressCheck'] = $_REQUEST['bellissimoAddressCheck'];
             $_SESSION['calc']['bellissimoDrivers'] = $_REQUEST['bellissimoDrivers'];
+            break;
+        case 'Courier':
+            $_SESSION['calc']['contactInfo'] = $_REQUEST['contactInfo'];
             break;
         default:
             $structure = null;
@@ -132,7 +135,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'calc')
     {
         if (isset($_REQUEST['step']))
         {
-            addBellissimoData($_REQUEST['step']-1);
+            addBellissimoData($_REQUEST['step']);
         }
     }
 }

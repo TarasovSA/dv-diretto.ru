@@ -21,6 +21,17 @@ a .small_link{
 font-size:9pt;
 }
 
+.bottom_link{
+display:block;
+position:absolute;
+left:0;
+bottom:0;
+}
+
+.rel_grid{
+position:relative;
+padding-bottom:35px;
+}
 
 b.warning{
 display:block;
@@ -556,13 +567,16 @@ padding-top:0px;
 /* INFO TABLE ------------------------------------------------------------------------------ */
 .info_table{
 min-width:620px;
-border-collapse:collapse;
+bor der-collapse:collapse;
 margin-bottom:25px;
 }
 
 .info_table, .info_table td, .info_table th
 {
 border:1px solid #c4c4c4;
+-webkit-border-radius: 7px;
+-moz-border-radius: 7px;
+border-radius: 7px;
 }
 
 .info_table th{

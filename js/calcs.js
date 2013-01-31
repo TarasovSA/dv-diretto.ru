@@ -39,7 +39,7 @@ function villaggioUpdateFirstPage()
     sum += otherStructures[0].name*otherStructures[0].value*0.01 + otherStructures[1].name*otherStructures[1].value*0.01 + otherStructures[2].name*otherStructures[2].value*0.005 + otherStructures[3].name*otherStructures[3].value*0.01;
     for (var i=4; i<quantityOfOtherStructures; i++)
         sum += otherStructures[i].name*otherStructures[i].value*0.01;
-    sum += isLandscape*landscape*0.01;
+    //sum += isLandscape*landscape*0.01;
 
     $('[name=villaggioResult]').val(sum);
 
@@ -96,6 +96,12 @@ function bellaVitaUpdateFirstPage()
 
 function bellissimoUpdateFirstPage()
 {
+    document.getElementById('bellissimoOthers[antiStealing][0]').setAttribute('checked', 'checked');
+    if (document.getElementById('bellissimoOthers[antiStealing][0]').className=='boxCheckbox' &&
+        document.getElementById('bellissimoOthers[antiStealing][0]').parentNode.tagName.toLowerCase()=='div') {
+        // Поменять стиль "обертки" в зависимости от состояния переключателя
+        document.getElementById('bellissimoOthers[antiStealing][0]').parentNode.className='boxChecked';
+    }
     //update Model List
     $('#typeOfCarId').change(function () {
         var typeOfCar = $('#typeOfCarId').val();
@@ -133,13 +139,13 @@ function bellissimoUpdateFirstPage()
 function bellissimoUpdateSecondPage(k1, k7)
 {
     //set ReadOnly
-    document.getElementById('bellissimo[kasko]').setAttribute('readonly');
-    document.getElementById('amount[kasko]').setAttribute('readonly');
-    document.getElementById('amount[VIPPackAmount]').setAttribute('readonly');
-    document.getElementById('amount[liability]').setAttribute('readonly');
-    document.getElementById('amount[accident]').setAttribute('readonly');
-    document.getElementById('amount[EquipmentAmount]').setAttribute('readonly');
-    document.getElementById('amount[amountSummary]').setAttribute('readonly');
+    document.getElementById('bellissimo[kasko]').setAttribute('readonly','readonly');
+    document.getElementById('amount[kasko]').setAttribute('readonly','readonly');
+    document.getElementById('amount[VIPPackAmount]').setAttribute('readonly','readonly');
+    document.getElementById('amount[liability]').setAttribute('readonly','readonly');
+    document.getElementById('amount[accident]').setAttribute('readonly','readonly');
+    document.getElementById('amount[EquipmentAmount]').setAttribute('readonly','readonly');
+    document.getElementById('amount[amountSummary]').setAttribute('readonly','readonly');
 
     //calc
     document.getElementById('amount[kasko]').value = document.getElementById('bellissimo[kasko]').value + '.00';
@@ -156,35 +162,82 @@ function bellissimoUpdateSecondPage(k1, k7)
         }
     });
 
+    var isConstructionEl = $('[name="feliceCitta\\[isConstructionEl\\]"]').is(':checked');
+    var vipSumm = 0;
+    if (document.getElementById('bellissimoMaintenance[information][0]').checked)
+        vipSumm += 1500;
+    if (document.getElementById('bellissimoMaintenance[information][1]').checked)
+        vipSumm += 1000;
+    if (document.getElementById('bellissimoMaintenance[information][2]').checked)
+        vipSumm += 2000;
+
+    if (document.getElementById('carAmount').value > 750000)
+    {
+        document.getElementById('bellissimoMaintenance[information][0]').setAttribute('checked','checked');
+        document.getElementById('bellissimoMaintenance[information][1]').setAttribute('checked','checked');
+        document.getElementById('bellissimoMaintenance[information][2]').setAttribute('checked','checked');
+        if (document.getElementById('bellissimoMaintenance[information][0]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][0]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][0]').parentNode.className='boxChecked';
+        }
+        if (document.getElementById('bellissimoMaintenance[information][1]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][1]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][1]').parentNode.className='boxChecked';
+        }
+        if (document.getElementById('bellissimoMaintenance[information][2]').className=='boxCheckbox' &&
+            document.getElementById('bellissimoMaintenance[information][2]').parentNode.tagName.toLowerCase()=='div') {
+            // Поменять стиль "обертки" в зависимости от состояния переключателя
+            document.getElementById('bellissimoMaintenance[information][2]').parentNode.className='boxChecked';
+        }
+        vipSumm = 0;
+    }
+
+
     summaryTgo = document.getElementById('bellissimoAdditional[liability]').value * Tgo;
     summaryTns = document.getElementById('bellissimoAdditional[accident]').value * Tns;
 
     document.getElementById('bellissimoAdditional[EquipmentAmount]').value = Math.ceil(summaryTdo/100);
+    document.getElementById('bellissimoMaintenance[VIPPackAmount]').value = Math.ceil(vipSumm);
+
     document.getElementById('amount[EquipmentAmount]').value = Math.ceil(summaryTdo/100) + '.00';
+    document.getElementById('amount[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
 
     document.getElementById('amount[liability]').value = Math.ceil(summaryTgo/100) + '.00';
     document.getElementById('amount[accident]').value = Math.ceil(summaryTns/100) + '.00';
 
-    document.getElementById('amount[amountSummary]').value = Math.ceil(parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100))) + '.00';
+    document.getElementById('amount[amountSummary]').value = Math.ceil(parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(vipSumm)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100))) + '.00';
 
 
     //set Read Only if isTransition false
     if (document.getElementById('bellissimoDiscount[isTransition]').checked)
     {
         document.getElementById('bellissimoDiscount[transition]').removeAttribute('readonly');
-        document.getElementById('bellissimoDiscount[number]').removeAttribute('readonly');
         document.getElementById('bellissimoDiscount[polis]').removeAttribute('readonly');
     }
     else
     {
-        document.getElementById('bellissimoDiscount[transition]').setAttribute('readonly');
-        document.getElementById('bellissimoDiscount[number]').setAttribute('readonly');
-        document.getElementById('bellissimoDiscount[polis]').setAttribute('readonly');
+        document.getElementById('bellissimoDiscount[transition]').setAttribute('readonly','readonly');
+        document.getElementById('bellissimoDiscount[polis]').setAttribute('readonly','readonly');
+    }
+
+    if (document.getElementById('bellissimoDiscount[isFranchise]').checked)
+    {
+        document.getElementById('bellissimo[Franchise]').removeAttribute('disabled');
+    }
+    else
+    {
+        document.getElementById('bellissimo[Franchise]').setAttribute('disabled','disabled');
     }
 }
 
 function bellissimoUpdateThirdPage()
 {
+    document.getElementById('bellissimoAutoInfo[typeOfCar]').setAttribute('readonly','readonly');
+    document.getElementById('bellissimoAutoInfo[modelOfCar]').setAttribute('readonly','readonly');
+    document.getElementById('bellissimoAutoInfo[yearOfCar]').setAttribute('readonly','readonly');
+
     if (document.getElementById('bellissimoBeneficiary[isInsurant]').checked)
     {
         document.getElementById('bellissimoBeneficiary[beneficiary][name]').value = document.getElementById('insurant[name]').value;
@@ -221,6 +274,17 @@ function bellissimoUpdateThirdPage()
     else
     {
         document.getElementById('autoInBank').setAttribute('style','display:none');
+    }
+
+    if (document.getElementById('bellissimoAutoInfo[isRegistred]').checked)
+    {
+        document.getElementById('bellissimoAutoInfo[vehicleCertificate]').setAttribute('readonly');
+        document.getElementById('bellissimoAutoInfo[stateNumber]').setAttribute('readonly');
+    }
+    else
+    {
+        document.getElementById('bellissimoAutoInfo[vehicleCertificate]').removeAttribute('readonly');
+        document.getElementById('bellissimoAutoInfo[stateNumber]').removeAttribute('readonly');
     }
 
 }
@@ -268,8 +332,8 @@ function addEquipment(img, id)
     img.setAttribute('onclick','removeEquipment('+ id +')');
     id++;
     var html = '<tr id="bellissimoAdditional[equipment][' + id + ']">'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="Наименование" align="center"></td>'+
-        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="Стоимость" align="center"></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][name]" name="bellissimoAdditional[equipment][' + id + '][name]" value="" placeholder="Наименование" align="center" style="border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:325px;"></td>'+
+        '<td align="center"><input class="text_input short" type="text" id="bellissimoAdditional[equipment][' + id + '][cost]" name="bellissimoAdditional[equipment][' + id + '][cost]" value="" placeholder="Стоимость" align="center" style="border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:165px;"></td>'+
         '<td><a href="#" name="addEquipment"><img src="/images/faticons/16x16/plus.png" onclick="addEquipment(this, ' + id + ')"></a></td>'+
       '</tr>';
     $(html).appendTo('#additionalEquipment');
