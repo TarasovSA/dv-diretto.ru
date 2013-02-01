@@ -207,7 +207,25 @@ function bellissimoUpdateSecondPage(k1, k7)
     document.getElementById('amount[liability]').value = Math.ceil(summaryTgo/100) + '.00';
     document.getElementById('amount[accident]').value = Math.ceil(summaryTns/100) + '.00';
 
-    document.getElementById('amount[amountSummary]').value = Math.ceil(parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(vipSumm)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100))) + '.00';
+    var discount = {};
+    discount.transition = 1;
+    discount.franchise = 1;
+    discount.polisNC = 1;
+
+    if (document.getElementById('bellissimoDiscount[isTransition]').checked)
+    {
+        discount.transition = 0.9;
+    }
+    /*if (document.getElementById('bellissimoDiscount[isFranchise]').checked)
+    {
+
+    }*/
+    if (document.getElementById('bellissimoDiscount[isPolicyNC]').checked)
+    {
+        discount.polisNC = 0.9;
+    }
+
+    document.getElementById('amount[amountSummary]').value = Math.ceil((parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(vipSumm)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100)))* discount.transition * discount.franchise * discount.polisNC)  + '.00';
 
 
     //set Read Only if isTransition false
@@ -292,7 +310,7 @@ function bellissimoUpdateThirdPage()
 function addDriver()
 {
     var driversQuantity = $('[id^="bellissimoDriversdriver"]').length;
-    if (driversQuantity < 5){
+    if (driversQuantity < 3){
 
         var html = '<div class="grid_label">Дата рождения:</div>' +
                 '<script type="text/javascript">' +

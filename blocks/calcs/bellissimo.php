@@ -24,7 +24,7 @@ switch ($step)
         $bellissimoForm->putNewBlock('Страхование КАСКО', 'grid');
         $bellissimoForm->addInput(new input('', 'custom', 'Марка ТС:', '<input type="text" class="text_input double" name="bellissimo[typeOfCarName]" id="typeOfCarName" onclick="selectCarMarkList()"><input type="hidden" name="bellissimo[typeOfCarId]" id="typeOfCarId">', '', 3));
         $bellissimoForm->addInput(new input('', 'custom', 'Модель ТС:', '<input type="text" class="text_input double" name="bellissimo[modelOfCarName]" id="typeOfModelName" onclick="selectCarModelList()"><input type="hidden" name="bellissimo[modelOfCarId]" id="typeOfModelId">', '', 3));
-        $bellissimoForm->addInput(new input('', 'custom', 'Год начала эксплуатации:', '<input type="text" class="text_input double" name="bellissimo[yearOfCar]" id="yearName" onclick="selectYearList()"><input type="hidden" name="bellissimo[yearId]" id="yearId">', '', 3));
+        $bellissimoForm->addInput(new input('', 'custom', 'Год выпуска ТС:', '<input type="text" class="text_input double" name="bellissimo[yearOfCar]" id="yearName" onclick="selectYearList()"><input type="hidden" name="bellissimo[yearId]" id="yearId">', '', 3));
         //$bellissimoForm->addInput(new input('bellissimo[typeOfCar]', 'popup', 'Марка ТС:', array('select' => $defaultValues['select']['cars'], 'chose' => $formData['typeOfCar']), 'select'));
         //$bellissimoForm->addInput(new input('bellissimo[modelOfCar]', 'popup', 'Модель ТС:', array('select' => dbGetCarsModelsByMark(array('idMark' => $formData['typeOfCar'])), 'chose' => $formData['modelOfCar']), 'select'));
         //$bellissimoForm->addInput(new input('bellissimo[yearOfCar]', 'select', 'Год начала эксплуатации:', array('select' => $defaultValues['select']['yearsOfCar'], 'chose' => $formData['yearOfCar']), 'select'));
@@ -47,16 +47,16 @@ switch ($step)
         {
             foreach ($formData['driver'] as $idDriver => $driverInfo)
             {
-                $bellissimoForm->addInput(new input('bellissimoDrivers[driver]['.$idDriver.'][birthDay]', 'dataPicker', 'Дата рождения:', $driverInfo['birthDay'], 'text_input', 1));
-                $bellissimoForm->addInput(new input('bellissimoDrivers[driver]['.$idDriver.'][experience]', 'text', 'Стаж вождения (полных лет):', $driverInfo['experience'], 'text_input short', 1));
+                $bellissimoForm->addInput(new input('bellissimoDrivers[driver]['.$idDriver.'][birthDay]', 'number', 'Полных лет:', $driverInfo['birthDay'], 'text_input', 1));
+                $bellissimoForm->addInput(new input('bellissimoDrivers[driver]['.$idDriver.'][experience]', 'number', 'Стаж вождения (полных лет):', $driverInfo['experience'], 'text_input short', 1));
             }
         }
         else
         {
-            $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'dataPicker', 'Дата рождения:', "", 'text_input', 1));
-            $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'text', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
+            $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][birthDay]', 'number', 'Полных лет:', "", 'text_input', 1));
+            $bellissimoForm->addInput(new input('bellissimoDrivers[driver][0][experience]', 'number', 'Стаж вождения (полных лет):', "", 'text_input short', 1));
         }
-		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();" style="cursor: pointer">Добавить водителя (не более пяти)</a> <!--<a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>-->', 'bottom_link', 4));
+		$bellissimoForm->addInput(new input('', 'custom', null, '<a class="small_link italic" onclick="addDriver();" style="cursor: pointer">Добавить водителя (не более трех)</a> <!--<a class="small_link italic" onclick="removeDriver();">Убрать водителя</a>-->', 'bottom_link', 4));
 
 
 
@@ -69,7 +69,8 @@ switch ($step)
         }
 
         $bellissimoForm->putNewBlock('Дополнительная информация','grid');
-        $bellissimoForm->addInput(new input('bellissimoOthers[formOfCompensation]', 'select', 'Форма возмещения:', array('select' => $defaultValues['select']['formOfCompensation'], 'chose' => $formData['formOfCompensation']), 'select', 3 ));
+        $bellissimoForm->addInput(new input('', 'custom', 'Форма возмещения:', '<input type="text" class="text_input double" name="bellissimoOthers[formOfCompensation]" id="formOfCompensation" onclick="selectFormOfCompensationList()"><input type="hidden" name="bellissimoOthers[formOfCompensationValue]" id="formOfCompensationId">', '', 3));
+        //$bellissimoForm->addInput(new input('bellissimoOthers[formOfCompensation]', 'select', 'Форма возмещения:', array('select' => $defaultValues['select']['formOfCompensation'], 'chose' => $formData['formOfCompensation']), 'select', 3 ));
 
 		$bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][0]', 'isCheckbox', 'Установленные ПУС:', $defaultValues['calc']['bellissimoOthers']['antiStealingName'][0], 'boxCheckbox', 3));
         $bellissimoForm->addInput(new input('bellissimoOthers[antiStealing][1]', 'isCheckbox', '', $defaultValues['calc']['bellissimoOthers']['antiStealingName'][1], 'boxCheckbox'));
@@ -151,7 +152,7 @@ switch ($step)
 
 		
         $bellissimoForm->addInput(new input('bellissimoAdditional[optionalEquipment]', 'custom', 'Дополнительное оборудование:', $custom_table));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentAmount]', 'text', 'Итоговая стоимость дополнительного оборудования:', '', 'text_input short', 3));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentAmount]', 'text', 'Страховая премия за дополнительное оборудование:', '', 'text_input short', 3));
 
 
 
@@ -180,7 +181,8 @@ switch ($step)
 		$bellissimoForm->addInput(new input('bellissimoDiscount[transition]', 'text', 'Название компании:', '', 'text_input double', 3));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[polis]', 'text', 'Номер полиса/договора:', '', 'text_input double', 3));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[isFranchise]', 'checkbox', 'Вариант франшизы:', $formData['isFranchise'], 'boxCheckbox', '2_5'));
-		$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, array('select' => $defaultValues['select']['franchiseCar'], 'chose' => $formData['franchiseCar']), 'select', 3));
+        $bellissimoForm->addInput(new input('', 'custom', '', '<input type="text" class="text_input double" name="bellissimo[Franchise]" id="bellissimo[Franchise]" onclick="selectFranchiseList()"><input type="hidden" name="bellissimo[FranchiseId]" id="bellissimo[FranchiseId]">', '', 3));
+		//$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, array('select' => $defaultValues['select']['franchiseCar'], 'chose' => $formData['franchiseCar']), 'select', 3));
 		
         //$bellissimoForm->addInput(new input('bellissimoDiscount[isPromo]', 'checkbox', 'ПромоКод для скидки:', '', 'boxCheckbox','2_5'));
         //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
@@ -240,7 +242,6 @@ switch ($step)
         break;
 
     case 4:
-        print_r ($_SESSION);
         $bellissimoForm = new form();
         $bellissimoForm->setAction("index.php?action=calc&type=2&step=5");
         $bellissimoForm->setMethod("POST");
@@ -277,6 +278,7 @@ switch ($step)
         break;
     case 'Courier':
         echo '<div class="grid"><div class="grid_title">Спасибо!</div><div><div class="grid_label">Ваша заявка принята и будет рассмотрена в ближайшее время</div></div></div><div style="clear:both;"></div></div>';
+        break;
 
 };
 

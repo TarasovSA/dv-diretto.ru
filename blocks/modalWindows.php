@@ -138,9 +138,9 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
     });
 </script>
 <div id="selectStartYear" title="Выберите год начала эксплуатации автомобиля">
-<h3 class='orange inline'></h3>
+<h3 class='orange inline'>Год начала эксплуатации автомобиля</h3>
     <ul>
-        <li><a href='#' onclick='selectStartYear("currentyear", "Новое ТС")' style='text-decoration: underline;'>Новое ТС</a></li>
+        <li><a href='#' onclick='selectStartYear(<?=intval(date("Y"))?>, "Новое ТС")' style='text-decoration: underline;'>Новое ТС</a></li>
 
     <?php
         $startYear = intval(date("Y"));
@@ -152,6 +152,53 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
 ?>
     </ul>
 </div>
+
+<!--FormOfCompensation-->
+<script>
+    $(function () {
+        $("#selectFormOfCompensation").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectFormOfCompensation" title="Выберите форму возмещения">
+<h3 class='orange inline'>Форма возмещения</h3>
+    <ul>
+        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(1, "Ремонт на СТОА официального дилера")' style='text-decoration: underline;'>Ремонт на СТОА официального дилера</a></li>
+        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(2, "Ремонт на СТОА неофициального дилера")' style='text-decoration: underline;'>Ремонт на СТОА неофициального дилера</a></li>
+        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(3, "Выплата по калькуляции Страховщика")' style='text-decoration: underline;'>Выплата по калькуляции Страховщика</a></li>
+        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(4, "Ремонт на СТОА Страхователя")' style='text-decoration: underline;'>Ремонт на СТОА Страхователя</a></li>
+    </ul>
+</div>
 <?php
+}
+elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) OR $_GET['step'] == 2))
+{
+    ?>
+
+<!--Franchise-->
+<script>
+    $(function () {
+        $("#selectFranchise").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectFranchise" title="Выберите франшизу">
+<h3 class='orange inline'>Франшиза</h3>
+    <ul>
+        <li><a href='#' onclick='selectFranchise(6000, "6,000 руб.")' style='text-decoration: underline;'>6,000 руб.</a></li>
+        <li><a href='#' onclick='selectFranchise(9000, "9,000 руб.")' style='text-decoration: underline;'>9,000 руб.</a></li>
+        <li><a href='#' onclick='selectFranchise(15000, "15,000 руб.")' style='text-decoration: underline;'>15,000 руб.</a></li>
+        <li><a href='#' onclick='selectFranchise(30000, "30,000 руб.")' style='text-decoration: underline;'>30,000 руб.</a></li>
+    </ul>
+</div>
+    <?php
 }
 ?>

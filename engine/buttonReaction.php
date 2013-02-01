@@ -80,6 +80,7 @@ function addBellissimoData($step)
         case 3:
             $_SESSION['calc']['bellissimoAdditional'] = $_REQUEST['bellissimoAdditional'];
             $_SESSION['calc']['bellissimoMaintenance'] = $_REQUEST['bellissimoMaintenance'];
+            $_SESSION['calc']['bellissimoDiscount'] = $_REQUEST['bellissimoDiscount'];
             break;
         case 4:
             $_SESSION['calc']['insurant'] = $_REQUEST['insurant'];
@@ -90,6 +91,7 @@ function addBellissimoData($step)
             break;
         case 'Courier':
             $_SESSION['calc']['contactInfo'] = $_REQUEST['contactInfo'];
+            sendBellissimoCourierLetters();
             break;
         default:
             $structure = null;

@@ -149,20 +149,10 @@ function selectStartYear(yearId, yearName){
 
 function selectCarModificationList() {
     var ModelOfCar = $('#typeOfModelId').val();
-    var year = $('#bellissimo\\[yearOfCar\\]').val();
+    var year = $('#yearId').val();
     if (ModelOfCar > 0 && year > 0)
     {
-        var selectedYear = new Date();
-        if (year == 1)
-        {
-            selectedYear = selectedYear.getFullYear();
-        }
-        else
-        {
-            selectedYear = selectedYear.getFullYear();
-            selectedYear = selectedYear - parseInt(year) + 2;
-        }
-        $.get('../engine/ajax.php?get=getModifications&model='+ ModelOfCar +'&year='+selectedYear, function (data)
+        $.get('../engine/ajax.php?get=getModifications&model='+ ModelOfCar +'&year='+year, function (data)
         {
             $('#modificationOfCarId').empty();
             $('#modificationOfCarName').empty();
@@ -178,4 +168,28 @@ function selectCarModification(id, carModification, cost){
     document.getElementById('modificationOfCarName').value = carModification;
     document.getElementById('bellissimo[carAmount]').value = cost;
     $("#selectCarModification").dialog('close');
+}
+
+function selectFormOfCompensationList()
+{
+    $("#selectFormOfCompensation").dialog('open');
+}
+
+function selectFormOfCompensation(id, value)
+{
+    document.getElementById('formOfCompensationId').value = id;
+    document.getElementById('formOfCompensation').value = value;
+    $("#selectFormOfCompensation").dialog('close');
+}
+
+function selectFranchiseList()
+{
+    $("#selectFranchise").dialog('open');
+}
+
+function selectFranchise(id, value)
+{
+    document.getElementById('bellissimo[FranchiseId]').value = id;
+    document.getElementById('bellissimo[Franchise]').value = value;
+    $("#selectFranchise").dialog('close');
 }

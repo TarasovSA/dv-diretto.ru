@@ -193,6 +193,12 @@ class input
                 echo $this->pre==null?'':"<div class=\"grid_label\">$this->pre</div>";
                 echo "<div class=\"r$this->divWidth {$this->class}\">$this->value</div>";
                 break;
+            case 'number':
+                echo $this->pre==null?'<div>':"<div><div class=\"grid_label\">$this->pre</div>";
+                if (isset($this)) {
+                    echo "<div class='r{$this->divWidth}'><input class='{$this->class}' type='text' id='{$this->name}' name='{$this->name}' value='{$this->value}' placeholder=''></div></div>";
+                }
+                break;
             default:
                 echo $this->pre==null?'<div>':"<div><div class=\"grid_label\">$this->pre</div>";
                 if (isset($this)) {

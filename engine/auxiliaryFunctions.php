@@ -25,10 +25,8 @@ function selectContentBg()
 function getBellissimoCoeff()
 {
     $coefficients = dbGetCoefficientsForCalc(array('calc' => 3));
-
-
     //calc k1 coefficient
-    $year = $_SESSION['calc']['bellissimo']['yearOfCar'];
+    $year = intval(date("Y")) - $_SESSION['calc']['bellissimo']['yearOfCar'] + 1;
     $amountK['K1'] = $coefficients['K1Damage'][$year];
 
     //calc k2 coefficient
@@ -105,4 +103,56 @@ function getBellissimoCoeff()
     //return ceil($damage + $theft);
     return $amountK;
 
+}
+
+function sendBellissimoCourierLetters ()
+{
+    $amountK = getBellissimoCoeff();
+
+    $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
+    $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
+    $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
+    $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
+
+    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $amountK['K1'] * $amountK['K3'] * $amountK['K4'] * $amountK['K5'] * $amountK['K6'] * $amountK['K7'] * $amountK['K8'])/100);
+    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $amountK['K2'] * $amountK['K4'] * $amountK['K7'] * $amountK['K8'])/100);;
+    $amountSummary = ceil ($damage+$theft);
+
+    $amountLiability = ceil($_SESSION['calc']['bellissimoAdditional']['liability']/100);
+    $amountAccident = ceil($_SESSION['calc']['bellissimoAdditional']['accident']/100);
+
+    $amountAccident = $_SESSION['calc']['bellissimoAdditional']['EquipmentAmount'];
+
+    $amountVIP = $_SESSION['calc']['bellissimoMaintenance']['VIPPackAmount'];
+
+    $discount['transition'] = 1;
+    $discount['franchise'] = 1;
+    $discount['policyNC'] = 1;
+
+    if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
+        $discount['transition'] = 0.9;
+    //if ($_SESSION['calc']['bellissimoDiscount']['isFranchise'])
+        //$discount['franchise'] = 0.9;
+    if ($_SESSION['calc']['bellissimoDiscount']['isPolicyNC'])
+        $discount['policyNC'] = 0.9;
+
+    $amount = ceil(($amountSummary + $amountLiability + $amountAccident + $amountVIP) * $discount['transition'] * $discount['transition']);
+
+    $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>';
+    $subject = "Заказ полиса КАСКО";
+    $message = "Заказ полиса КАСКО для ".$_SESSION['calc']['bellissimo']['typeOfCarName']." ".$_SESSION['calc']['bellissimo']['modelOfCarName']." ".$_SESSION['calc']['bellissimo']['modificationOfCarName']." ".$_SESSION['calc']['bellissimo']['yearOfCar']."\n";
+    $message .= "Стоимость авто = ".$_SESSION['calc']['bellissimo']['carAmount']."\n";
+    foreach ($_SESSION['calc']['driver'] as $id=>$driver)
+        $message .= "Водитель № = ".$id." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
+    //$message .= $_SESSION['calc'];
+    mail($to, $subject, $message);
+
+    $to = $_SESSION['calc']['contactInfo']['name']."<".$_SESSION['calc']['contactInfo']['email'].">";
+    $message = "Уважаемый/ая ".$_SESSION['calc']['contactInfo']['name']."\n";
+    $message .= "Ваша заявка на расчет полиса КАСКО принята\n";
+    $message .= "В ближайшее время наш сотрудник свяжется с Вами\n";
+    $message .= "Так же Вы можете позвонить на по телефону (495)649-02-49, график работы ежедневно с 10 до 19.\n";
+    $message .= "С наилучшими пожеланиями Итальянских Страховой Дом Dolche Vita\n";
+    $headers = "From: Dolche Vita <info@dv-diretto.ru>";
+    mail($to, $subject, $message, $headers);
 }
