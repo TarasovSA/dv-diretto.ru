@@ -18,7 +18,7 @@ function errorMessageHandler ($e)
 }
 //connect to DB
 try {
-    # MySQL ����� PDO_MYSQL
+    # MySQL ????? PDO_MYSQL
     $DBH = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser);
     $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
@@ -34,15 +34,15 @@ catch(PDOException $e) {
     errorMessageHandler($e);
 }
 
-$modificationsIds = array(2004 => array(),
-    2005 => array(),
+$modificationsIds = array(2005 => array(),
     2006 => array(),
     2007 => array(),
     2008 => array(),
     2009 => array(),
     2010 => array(),
     2011 => array(),
-    2012 => array());
+    2012 => array(),
+    2013 => array());
 
 try {
     $STH = $DBH->prepare("SELECT * FROM carsMarks LEFT JOIN carsModels ON carsMarks.idMark = carsModels.idMark WHERE 1");
@@ -57,7 +57,7 @@ try {
         echo "\n";
         $file = file_get_contents('http://www.sravni.ru/Autocomplete/Model/?term='.urlencode($row['markName'].' '.$row['modelName']));
         $modelId = json_decode($file);
-        for ($year=2004; $year<=2012; $year++)
+        for ($year=2005; $year<=2013; $year++)
         {
             //echo '-> http://www.sravni.ru/Kasko/Suggest/Modification/?term=&year='.$year.'&modelId='.$modelId->carModel."</br>";
             $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term=&year='.$year.'&modelId='.$modelId->carModel);
