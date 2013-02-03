@@ -167,10 +167,10 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
 <div id="selectFormOfCompensation" title="Выберите форму возмещения">
 <h3 class='orange inline'>Форма возмещения</h3>
     <ul>
-        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(1, "Ремонт на СТОА официального дилера")' style='text-decoration: underline;'>Ремонт на СТОА официального дилера</a></li>
-        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(2, "Ремонт на СТОА неофициального дилера")' style='text-decoration: underline;'>Ремонт на СТОА неофициального дилера</a></li>
-        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(3, "Выплата по калькуляции Страховщика")' style='text-decoration: underline;'>Выплата по калькуляции Страховщика</a></li>
-        <li style="padding-bottom: 5px"><a href='#' onclick='selectFormOfCompensation(4, "Ремонт на СТОА Страхователя")' style='text-decoration: underline;'>Ремонт на СТОА Страхователя</a></li>
+        <li style="padding-bottom: 5px"><a onclick='selectFormOfCompensation(1, "Ремонт на СТОА официального дилера")' style='text-decoration: underline; cursor: pointer'>Ремонт на СТОА официального дилера</a></li>
+        <li style="padding-bottom: 5px"><a onclick='selectFormOfCompensation(2, "Ремонт на СТОА неофициального дилера")' style='text-decoration: underline; cursor: pointer'>Ремонт на СТОА неофициального дилера</a></li>
+        <li style="padding-bottom: 5px"><a onclick='selectFormOfCompensation(3, "Выплата по калькуляции Страховщика")' style='text-decoration: underline; cursor: pointer'>Выплата по калькуляции Страховщика</a></li>
+        <li style="padding-bottom: 5px"><a onclick='selectFormOfCompensation(4, "Ремонт на СТОА Страхователя")' style='text-decoration: underline; cursor: pointer'>Ремонт на СТОА Страхователя</a></li>
     </ul>
 </div>
 <?php

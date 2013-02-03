@@ -309,28 +309,11 @@ function bellissimoUpdateThirdPage()
 
 function addDriver()
 {
-    var driversQuantity = $('[id^="bellissimoDriversdriver"]').length;
-    if (driversQuantity < 3){
+    var driversQuantity = $('[id^="bellissimoDrivers"]').length;
+    if (driversQuantity < 6){
 
-        var html = '<div class="grid_label">Дата рождения:</div>' +
-                '<script type="text/javascript">' +
-                '    $(function(){' +
-                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker({' +
-                '            inline: true,' +
-                '            changeMonth: true,' +
-                '            changeYear: true,' +
-                '            maxDate: -6575' +
-                '        });' +
-                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( \"option\", \"dateFormat\", \"dd.mm.yy\" );' +
-                '        $(\'#bellissimoDriversdriver' + driversQuantity +'birthDay\').datepicker( $.datepicker.regional[ \"ru\" ] );' +
-                '        $(\'#dialog_link, ul#icons li\').hover(' +
-                '            function() { $(this).addClass(\'ui-state-hover\'); },' +
-                '            function() { $(this).removeClass(\'ui-state-hover\'); }' +
-                '        );' +
-                '    });' +
-                '</script>' +
-                '<div class="r1"><input type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][birthDay]" value=""  class="text_input" id="bellissimoDriversdriver' + driversQuantity +'birthDay" onClick="this.value=\'\';"></div>' +
-                '<div class="grid_label">Стаж вождения (полных лет):</div><div class="r1"><input class="text_input short" type="text" name="bellissimoDrivers[driver][' + driversQuantity +'][experience]" value="" placeholder="Стаж"></div>';
+        var html = '<div class="grid_label">Полных лет:</div><div class="r1"><input class="text_input" type="number" id="bellissimoDrivers[driver][' + driversQuantity/2 +'][birthDay]" name="bellissimoDrivers[driver][' + driversQuantity/2 +'][birthDay]" value="" placeholder="Полных лет"></div>' +
+                    '<div class="grid_label">Стаж вождения (полных лет):</div><div class="r1"><input class="text_input short" type="number" id="bellissimoDrivers[driver][' + driversQuantity/2 +'][experience]" name="bellissimoDrivers[driver][' + driversQuantity/2 +'][experience]" value="" placeholder="Стаж"></div>';
 
         $(html).appendTo('#drivers');
         driversQuantity++;

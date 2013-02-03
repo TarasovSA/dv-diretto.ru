@@ -20,11 +20,14 @@ include_once ('engine/buttonReaction.php');
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/themes/custom-theme/jquery-ui-1.9.0.custom.min.css">
+    <link rel="stylesheet" href="css/formValidation/validationEngine.jquery.css" type="text/css"/>
     <script type="text/javascript" language="javascript" src="js/style_js.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jquery.ui.datepicker-ru.js"></script>
     <script type="text/javascript" language="javascript" src="/js/calcs.js"></script>
+    <script src="js/formValidation/languages/jquery.validationEngine-ru.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/formValidation/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -98,5 +101,11 @@ include_once ('engine/buttonReaction.php');
         </td>
     </tr>
 </table>
+<script>
+    jQuery(document).ready(function(){
+        // binds form submission and fields to the validation engine
+        jQuery("#bellissimoPrimary").validationEngine();
+    });
+</script>
 </body>
 </html>

@@ -69,7 +69,7 @@ function getBellissimoCoeff()
     $amountK['K3'] = $coefficients['K3'][$minExperiance];//$cars[$carMark][$carModel][0]['damage'];
 
     //calc k6 coefficient
-    $formOfCompensationK = $_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
+    $formOfCompensationK = $_SESSION['calc']['bellissimoOthers']['formOfCompensationValue'];
     if ($year < 5)
         $amountK['K6'] = $coefficients['K6NewCars'][$formOfCompensationK];
     else
