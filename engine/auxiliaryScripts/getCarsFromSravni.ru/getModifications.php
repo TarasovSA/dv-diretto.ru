@@ -45,7 +45,7 @@ $modificationsIds = array(2005 => array(),
     2013 => array());
 
 try {
-    $STH = $DBH->prepare("SELECT * FROM carsMarks LEFT JOIN carsModels ON carsMarks.idMark = carsModels.idMark WHERE 1");
+    $STH = $DBH->prepare("SELECT * FROM carsMarks LEFT JOIN carsModels ON carsMarks.id = carsModels.idMark WHERE 1");
     $STH->execute();
     $STH->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -63,12 +63,12 @@ try {
             $file = file_get_contents('http://www.sravni.ru/Kasko/Suggest/Modification/?term=&year='.$year.'&modelId='.$modelId->carModel);
             if ($file == '""')
             {
-                updateCarsModelYear($year, $row['idModel']);
+                updateCarsModelYear($year, $row['id']);
                 break;
             }
             else
             {
-                getModification('', $year, $modelId->carModel, $row['idModel']);
+                getModification('', $year, $modelId->carModel, $row['id']);
             }
         }
     }
@@ -99,7 +99,7 @@ function getModification($term, $year, $modelId, $realId)
         {
             $modificationsIds[$year][] = $result->carModelId;
             try {
-                $STH = $DBH->prepare("INSERT INTO carsModifications (idModel, modificationName, price, year) VALUES (:idModel, :modificationName, :price, :year)");
+                $STH = $DBH->prepare("INSERT INTO carsModifications (idModel, modificationName, cost, year) VALUES (:idModel, :modificationName, :price, :year)");
                 $STH->execute(array('idModel' => $realId, 'modificationName' => $term, 'price' => $result->Info->price, 'year' => $year));
                 echo '<h3>'.$term.' - added</h3></br>';
                 echo "\n";
@@ -116,7 +116,7 @@ function updateCarsModelYear($year, $model)
 {
     global $DBH;
     try {
-        $STH = $DBH->prepare("UPDATE carsModels SET endYear = :endYear WHERE idModel = :idModel");
+        $STH = $DBH->prepare("UPDATE carsModels SET endYear = :endYear WHERE id = :idModel");
         $STH->execute(array('endYear' => ($year-1), 'idModel' => $model));
     }
     catch (PDOException $e)
