@@ -66,7 +66,7 @@
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
                     "regex": /^([\+][0-9]{1,3}[ \.\-])?([\(]{1}[0-9]{2,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$/,
-                    "alertText": "* Неправильный формат телефона"
+                    "alertText": "* Неправильный формат телефона. Требуется +X XXX XXXXXXX"
                 },
                 "email": {
                     // Shamelessly lifted from Scott Gonzalez via the Bassistance Validation plugin http://projects.scottsplayground.com/email_address_validation/

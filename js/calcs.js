@@ -139,7 +139,7 @@ function bellissimoUpdateFirstPage()
 function bellissimoUpdateSecondPage(k1, k7)
 {
     //set ReadOnly
-    document.getElementById('bellissimo[kasko]').setAttribute('readonly','readonly');
+    //document.getElementById('bellissimo[kasko]').setAttribute('readonly','readonly');
     document.getElementById('amount[kasko]').setAttribute('readonly','readonly');
     document.getElementById('amount[VIPPackAmount]').setAttribute('readonly','readonly');
     document.getElementById('amount[liability]').setAttribute('readonly','readonly');
@@ -148,7 +148,6 @@ function bellissimoUpdateSecondPage(k1, k7)
     document.getElementById('amount[amountSummary]').setAttribute('readonly','readonly');
 
     //calc
-    document.getElementById('amount[kasko]').value = document.getElementById('bellissimo[kasko]').value + '.00';
 
     var Tdo = 7.9 * k1 * k7;
     var Tgo = 0.099 * k7;
@@ -201,12 +200,6 @@ function bellissimoUpdateSecondPage(k1, k7)
     document.getElementById('bellissimoAdditional[EquipmentAmount]').value = Math.ceil(summaryTdo/100);
     document.getElementById('bellissimoMaintenance[VIPPackAmount]').value = Math.ceil(vipSumm);
 
-    document.getElementById('amount[EquipmentAmount]').value = Math.ceil(summaryTdo/100) + '.00';
-    document.getElementById('amount[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
-
-    document.getElementById('amount[liability]').value = Math.ceil(summaryTgo/100) + '.00';
-    document.getElementById('amount[accident]').value = Math.ceil(summaryTns/100) + '.00';
-
     var discount = {};
     discount.transition = 1;
     discount.franchise = 1;
@@ -225,7 +218,19 @@ function bellissimoUpdateSecondPage(k1, k7)
         discount.polisNC = 0.9;
     }
 
-    document.getElementById('amount[amountSummary]').value = Math.ceil((parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(vipSumm)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100)))* discount.transition * discount.franchise * discount.polisNC)  + '.00';
+
+
+    document.getElementById('amount[kasko]').value = Math.ceil(document.getElementById('bellissimo[kasko]').value * discount.transition * discount.polisNC) + '.00';
+
+    document.getElementById('amount[EquipmentAmount]').value = Math.ceil((summaryTdo/100) * discount.transition * discount.polisNC) + '.00';
+    document.getElementById('amount[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
+
+    document.getElementById('amount[liability]').value = Math.ceil((summaryTgo/100) * discount.transition * discount.polisNC) + '.00';
+    document.getElementById('amount[accident]').value = Math.ceil((summaryTns/100) * discount.transition * discount.polisNC) + '.00';
+
+
+
+    document.getElementById('amount[amountSummary]').value = Math.ceil(((parseInt(document.getElementById('bellissimo[kasko]').value) + parseInt(Math.ceil(summaryTdo/100)) + parseInt(Math.ceil(summaryTgo/100)) + parseInt(Math.ceil(summaryTns/100)))* discount.transition * discount.polisNC) + parseInt(Math.ceil(vipSumm)))  + '.00';
 
 
     //set Read Only if isTransition false

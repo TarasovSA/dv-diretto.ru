@@ -105,7 +105,9 @@ include_once ('engine/buttonReaction.php');
     jQuery(document).ready(function(){
         // binds form submission and fields to the validation engine
         jQuery("#bellissimoPrimary").validationEngine();
+        jQuery("#bellissimoCourier").validationEngine();
     });
+
 </script>
 </body>
 </html>

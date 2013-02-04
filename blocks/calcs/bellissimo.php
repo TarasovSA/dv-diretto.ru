@@ -101,6 +101,7 @@ switch ($step)
         $amountSummary = ceil ($damage+$theft);
 
         echo "<input type='hidden' id='carAmount' name='carAmount' value='{$_SESSION['calc']['bellissimo']['carAmount']}'>";
+        echo "<input type='hidden' id='bellissimo[kasko]' name='bellissimo[kasko]' value='".$amountSummary."'>";
 
         $bellissimoForm = new form('bellissimoSecond');
         $bellissimoForm->setAction("index.php?action=calc&type=3&step=3");
@@ -112,8 +113,8 @@ switch ($step)
         else
             $formData = $defaultValues['calc']['bellissimoAdditional'];
 		
-		$bellissimoForm->putNewBlock('Cтрахование КАСКО','grid');
-		$bellissimoForm->addInput(new input('bellissimo[kasko]', 'text', 'Итоговая премия:', $amountSummary, 'text_input short', 3));
+		//$bellissimoForm->putNewBlock('Cтрахование КАСКО','grid');
+		//$bellissimoForm->addInput(new input('bellissimo[kasko]', 'text', 'Итоговая премия:', $amountSummary, 'text_input short', 3));
 
         $bellissimoForm->putNewBlock('Дополнительное страхование','grid');
 
@@ -126,7 +127,7 @@ switch ($step)
 		  <tr>
 			<th scope="col">Наименование оборудования</th>
 			<th scope="col">Стоимость</th>
-			<th scope="col">Действие</th>
+			<th scope="col"></th>
 		  </tr>';
         $isLastElement = 0;
 
@@ -434,9 +435,9 @@ function step3Courier()
     $bellissimoForm->setMethod("POST");
 
     $bellissimoForm->putNewBlock('Основная информация', 'grid');
-    $bellissimoForm->addInput(new input('contactInfo[name]', 'text', 'ФИО:', '', 'text_input long',3));
-    $bellissimoForm->addInput(new input('contactInfo[email]', 'text', 'Email:', '', 'text_input double',3));
-    $bellissimoForm->addInput(new input('contactInfo[phone]', 'text', 'Телефон:', '', 'text_input double',3));
+    $bellissimoForm->addInput(new input('contactInfo[name]', 'text', 'ФИО:', '', 'text_input long validate[required]',3));
+    $bellissimoForm->addInput(new input('contactInfo[email]', 'text', 'Email:', '', 'text_input double validate[required,custom[email]]',3));
+    $bellissimoForm->addInput(new input('contactInfo[phone]', 'text', 'Телефон:', '', 'text_input double validate[required,custom[phone]]',3));
     $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Завершить', 'btn next',4));
     $bellissimoForm->printForm();
 }

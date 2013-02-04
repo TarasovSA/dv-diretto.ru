@@ -4,7 +4,7 @@ function counter_up(id, step)
     if (!document.getElementById(id).readOnly)
     {
         if (document.getElementById(id).value == "")
-            document.getElementById(id).value = 300000;
+            document.getElementById(id).value = 299000;
         document.getElementById(id).value = parseInt(document.getElementById(id).value) + step;
     }
 
@@ -15,7 +15,7 @@ function counter_down(id, step)
     if (!document.getElementById(id).readOnly)
     {
         if (document.getElementById(id).value == "")
-            document.getElementById(id).value = 300000;
+            document.getElementById(id).value = 301000;
         if(parseInt(document.getElementById(id).value) >= step)
             document.getElementById(id).value = parseInt(document.getElementById(id).value) - step;
     }
@@ -109,6 +109,7 @@ function selectCarMark(id, carMark){
     document.getElementById('modificationOfCarId').value = '';
     document.getElementById('modificationOfCarName').value = '';
     document.getElementById('bellissimo[carAmount]').value = '';
+    $('#typeOfCarName').validationEngine('hide');
     $("#selectCarMark").dialog('close');
 }
 
@@ -133,6 +134,7 @@ function selectCarModel(id, carModel){
     document.getElementById('modificationOfCarId').value = '';
     document.getElementById('modificationOfCarName').value = '';
     document.getElementById('bellissimo[carAmount]').value = '';
+    $('#typeOfModelName').validationEngine('hide');
     $("#selectCarModel").dialog('close');
 }
 
@@ -143,6 +145,7 @@ function selectYearList() {
 function selectStartYear(yearId, yearName){
     document.getElementById('yearId').value = yearId;
     document.getElementById('yearName').value = yearName;
+    $('#yearName').validationEngine('hide');
     $("#selectStartYear").dialog('close');
 }
 
@@ -167,6 +170,7 @@ function selectCarModification(id, carModification, cost){
     document.getElementById('modificationOfCarId').value = id;
     document.getElementById('modificationOfCarName').value = carModification;
     document.getElementById('bellissimo[carAmount]').value = cost;
+    $('#modificationOfCarName').validationEngine('hide');
     $("#selectCarModification").dialog('close');
 }
 
@@ -179,6 +183,7 @@ function selectFormOfCompensation(id, value)
 {
     document.getElementById('formOfCompensationId').value = id;
     document.getElementById('formOfCompensation').value = value;
+    $('#formOfCompensation').validationEngine('hide');
     $("#selectFormOfCompensation").dialog('close');
 }
 

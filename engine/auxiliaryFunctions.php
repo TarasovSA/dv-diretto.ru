@@ -145,14 +145,15 @@ function sendBellissimoCourierLetters ()
     foreach ($_SESSION['calc']['driver'] as $id=>$driver)
         $message .= "Водитель № = ".$id." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
     //$message .= $_SESSION['calc'];
-    mail($to, $subject, $message);
+    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
+    mail($to, $subject, $message, $headers);
 
     $to = $_SESSION['calc']['contactInfo']['name']."<".$_SESSION['calc']['contactInfo']['email'].">";
     $message = "Уважаемый/ая ".$_SESSION['calc']['contactInfo']['name']."\n";
     $message .= "Ваша заявка на расчет полиса КАСКО принята\n";
     $message .= "В ближайшее время наш сотрудник свяжется с Вами\n";
     $message .= "Так же Вы можете позвонить на по телефону (495)649-02-49, график работы ежедневно с 10 до 19.\n";
-    $message .= "С наилучшими пожеланиями Итальянских Страховой Дом Dolche Vita\n";
-    $headers = "From: Dolche Vita <info@dv-diretto.ru>";
+    $message .= "С наилучшими пожеланиями Итальянских Страховой Дом Dolce Vita\n";
+    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
 }
