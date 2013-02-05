@@ -149,11 +149,11 @@ function sendBellissimoCourierLetters ()
     mail($to, $subject, $message, $headers);
 
     $to = $_SESSION['calc']['contactInfo']['name']."<".$_SESSION['calc']['contactInfo']['email'].">";
-    $message = "Уважаемый/ая ".$_SESSION['calc']['contactInfo']['name']."\n";
-    $message .= "Ваша заявка на расчет полиса КАСКО принята\n";
-    $message .= "В ближайшее время наш сотрудник свяжется с Вами\n";
-    $message .= "Так же Вы можете позвонить на по телефону (495)649-02-49, график работы ежедневно с 10 до 19.\n";
-    $message .= "С наилучшими пожеланиями Итальянских Страховой Дом Dolce Vita\n";
+    $message = "Уважаемый/ая ".$_SESSION['calc']['contactInfo']['name']."!\n\n";
+    $message .= "Ваша заявка на расчет полиса КАСКО принята.\n";
+    $message .= "В ближайшее время наш сотрудник свяжется с Вами.\n\n";
+    $message .= "С наилучшими пожеланиями\n Итальянский Страховой Дом \"Dolce Vita\"\n";
+    $message .= "Телефон (495) 649-02-49\nГрафик работы ежедневно с 10 до 19.";
     $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
 }
