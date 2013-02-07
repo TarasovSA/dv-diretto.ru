@@ -48,7 +48,6 @@ include_once ('engine/buttonReaction.php');
                 });
 
             }
-            ;
 
         });
     </script>
@@ -94,9 +93,9 @@ include_once ('engine/buttonReaction.php');
         <td colspan="2" id="bottom_td" valign="top">
             <div class="copy_right"><p>&copy; All Rights Reserved. www.dv-diretto.ru 2012</p></div>
             <ul id="bottom_menu">
-                <li><a href="#">О проекте</a></li>
-                <li><a href="#">Контакты</a></li>
-                <li><a href="#">Разработчики</a></li>
+                <li><a href="index.php?page=aboutProject">О проекте</a></li>
+                <li><a href="index.php?page=contacts">Контакты</a></li>
+                <!--<li><a href="#">Разработчики</a></li>-->
             </ul>
         </td>
     </tr>

@@ -118,11 +118,13 @@ switch ($step)
 
         $bellissimoForm->putNewBlock('Дополнительное страхование','grid');
 
-        $bellissimoForm->addInput(new input('bellissimoAdditional[liability]', 'slider', 'Гражданская ответственность (ГО)', $formData['liability'], 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[liabilityAmount]', 'custom', 'Страховая премия за ГО:', '<span id="liabilityAmount" style="font-family: Georgia; font-size: 17pt"></span>', '', 1));
+        $bellissimoForm->addInput(new input('', 'custom', 'Гражданская ответственность (ГО):', '<input type="text" class="text_input short" name="bellissimoAdditional[liability]" id="bellissimoAdditional[liability]" onclick="selectLiabilityList()">', '', 1));
+        //$bellissimoForm->addInput(new input('bellissimoAdditional[liability]', 'text', 'Гражданская ответственность (ГО)', $formData['liability'], 'text_input short', 1));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[liabilityAmount]', 'custom', 'Страховая премия за ГО:', '<span id="liabilityAmount" style="font-family: Georgia; font-size: 17pt; margin-left: -50px; line-height: 10px"></span>', '', 1));
         $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[accident]', 'slider', 'Несчастный случай (НС):', $formData['accident'], 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[accidentAmount]', 'custom', 'Страховая премия за НС:', '<span id="accidentAmount" style="font-family: Georgia; font-size: 17pt"></span>', '', 1));
+        $bellissimoForm->addInput(new input('', 'custom', 'Несчастный случай (НС):', '<input type="text" class="text_input short" name="bellissimoAdditional[accident]" id="bellissimoAdditional[accident]" onclick="selectAccidentList()">', '', 1));
+        //$bellissimoForm->addInput(new input('bellissimoAdditional[accident]', 'text', 'Несчастный случай (НС):', $formData['accident'], 'text_input short', 1));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[accidentAmount]', 'custom', 'Страховая премия за НС:', '<span id="accidentAmount" style="font-family: Georgia; font-size: 17pt; margin-left: -50px; line-height: 10px"></span>', '', 1));
 		
 		$custom_table = '
 		<div class="r2">
@@ -136,14 +138,14 @@ switch ($step)
 
         if (count($formData['equipment']) == 0)
             $custom_table .= "<tr id='bellissimoAdditional[equipment][0]'>
-                            <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование' style='border:none; width:325px;'></td>
+                            <td><input class='text_input short validate[condRequired[bellissimoAdditional[equipment][0][cost]]]' type='text' id='bellissimoAdditional[equipment][0][name]' name='bellissimoAdditional[equipment][0][name]' value='' placeholder='Наименование' style='border:none; width:325px;'></td>
                             <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][0][cost]' name='bellissimoAdditional[equipment][0][cost]' value='' placeholder='Стоимость' style='border:none; width:165px;'></td>
                             <td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this,0)'></a></td></tr>";
         foreach ($formData['equipment'] as $id=>$equipment)
         {
             $isLastElement++;
             $custom_table .= "<tr id='bellissimoAdditional[equipment][{$id}]'>
-                <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование' style='border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:325px;'></td>
+                <td><input class='text_input short validate[condRequired[bellissimoAdditional[equipment][{$id}][cost]]]' type='text' id='bellissimoAdditional[equipment][{$id}][name]' name='bellissimoAdditional[equipment][{$id}][name]' value='{$equipment['name']}' placeholder='Наименование' style='border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:325px;'></td>
                 <td><input class='text_input short' type='text' id='bellissimoAdditional[equipment][{$id}][cost]' name='bellissimoAdditional[equipment][{$id}][cost]' value='{$equipment['cost']}' placeholder='Стоимость' style='border:none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; width:165px;'></td>";
             if (count($formData['equipment']) == $isLastElement)
                 $custom_table .= "<td><a href='#' name='addEquipment'><img src='/images/faticons/16x16/plus.png' onclick='addEquipment(this, {$id})'></a></td>";
@@ -193,7 +195,7 @@ switch ($step)
         $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
 
         $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Отправить заявку', 'btn next', 2));
-        $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Онлайн', 'btn next', 2));
+        //$bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Онлайн', 'btn next', 2));
         $bellissimoForm->printForm();
 		
         echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
@@ -232,7 +234,8 @@ switch ($step)
 
 
         echo "<script type=\"text/javascript\">
-                    $('#bellissimoSecond').click(function(){bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']});}).change(function (){bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']});});
+                    var bellissimoSecondPage = function(){bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']})};
+                    $('#bellissimoSecond').click(bellissimoSecondPage).change(bellissimoSecondPage);
                     bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']});
                 </script>";
 

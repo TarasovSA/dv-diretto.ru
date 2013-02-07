@@ -3,6 +3,8 @@ if (!isset($_REQUEST['zone']))
 {
     if (!isset($_REQUEST['action']))
     {
+        if (!isset($_REQUEST['page']))
+        {
 ?>
 
 <table class="select_table" align="center" border="0" cellspacing="0" cellpadding="0">
@@ -16,7 +18,12 @@ if (!isset($_REQUEST['zone']))
     </tr>
 </table>
 
-<?php
+        <?php
+        }
+        elseif (isset($_REQUEST['page']))
+        {
+            include_once('pages.php');
+        }
     }
     elseif ($_REQUEST['action'] == 'calc')
     {

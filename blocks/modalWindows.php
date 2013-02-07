@@ -180,6 +180,56 @@ elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step
     ?>
 
 <!--Franchise-->
+
+<script>
+    $(function () {
+        $("#selectLiability").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectLiability" title='Выберите размер компенсации по страховому случаю "Гражданская ответственность"'>
+    <h3 class='orange inline'>Франшиза</h3>
+    <ul>
+        <li><a href='#' onclick='selectLiability(300000)' style='text-decoration: underline;'>300 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(500000)' style='text-decoration: underline;'>500 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(750000)' style='text-decoration: underline;'>750 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(1000000)' style='text-decoration: underline;'>1 000 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(1250000)' style='text-decoration: underline;'>1 250 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(1500000)' style='text-decoration: underline;'>1 500 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(1750000)' style='text-decoration: underline;'>1 750 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(2000000)' style='text-decoration: underline;'>2 000 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(2500000)' style='text-decoration: underline;'>2 500 000 руб.</a></li>
+        <li><a href='#' onclick='selectLiability(3000000)' style='text-decoration: underline;'>3 000 000 руб.</a></li>
+    </ul>
+</div>
+
+
+<script>
+    $(function () {
+        $("#selectAccident").dialog({
+            autoOpen:false,
+            width:700,
+            height:500,
+            modal:true
+        });
+    });
+</script>
+<div id="selectAccident" title='Выберите размер компенсации по страховому случаю "Несчастный случай"'>
+    <h3 class='orange inline'>Франшиза</h3>
+    <ul>
+        <li><a href='#' onclick='selectAccident(100000)' style='text-decoration: underline;'>100 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(200000)' style='text-decoration: underline;'>200 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(300000)' style='text-decoration: underline;'>300 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(400000)' style='text-decoration: underline;'>400 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(500000)' style='text-decoration: underline;'>500 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(750000)' style='text-decoration: underline;'>750 000 руб.</a></li>
+        <li><a href='#' onclick='selectAccident(1000000)' style='text-decoration: underline;'>1 000 000 руб.</a></li>
+    </ul>
+</div>
 <script>
     $(function () {
         $("#selectFranchise").dialog({

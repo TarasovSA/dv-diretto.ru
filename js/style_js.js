@@ -197,4 +197,31 @@ function selectFranchise(id, value)
     document.getElementById('bellissimo[FranchiseId]').value = id;
     document.getElementById('bellissimo[Franchise]').value = value;
     $("#selectFranchise").dialog('close');
+    bellissimoSecondPage();
+}
+
+
+function selectLiabilityList()
+{
+    $("#selectLiability").dialog('open');
+}
+
+function selectLiability(value)
+{
+    document.getElementById('bellissimoAdditional[liability]').value = value;
+    $("#selectLiability").dialog('close');
+    bellissimoSecondPage();
+}
+
+
+function selectAccidentList()
+{
+    $("#selectAccident").dialog('open');
+}
+
+function selectAccident(value)
+{
+    document.getElementById('bellissimoAdditional[accident]').value = value;
+    $("#selectAccident").dialog('close');
+    bellissimoSecondPage();
 }

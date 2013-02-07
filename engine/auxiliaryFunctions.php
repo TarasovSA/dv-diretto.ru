@@ -221,7 +221,7 @@ function sendBellissimoCourierLetters ()
     $message = "Уважаемый/ая ".$_SESSION['calc']['contactInfo']['name']."!\n\n";
     $message .= "Ваша заявка на расчет полиса КАСКО принята.\n";
     $message .= "В ближайшее время наш сотрудник свяжется с Вами.\n\n";
-    $message .= "С наилучшими пожеланиями\n Итальянский Страховой Дом \"Dolce Vita\"\n";
+    $message .= "С наилучшими пожеланиями\nИтальянский Страховой Дом \"Dolce Vita\"\n";
     $message .= "Телефон (495) 649-02-49\nГрафик работы ежедневно с 10 до 19.";
     $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
