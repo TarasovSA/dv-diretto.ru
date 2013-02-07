@@ -32,7 +32,7 @@ function dbGetCoefficientsForCalc($structure)
     global $DBH;
     $coefficients = array();
     try {
-        $STH = $DBH->prepare("SELECT * FROM coefficient WHERE calc = :calc");
+        $STH = $DBH->prepare("SELECT * FROM coefficient WHERE calc = :calc ORDER BY name ASC");
         $STH->execute($structure);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
 

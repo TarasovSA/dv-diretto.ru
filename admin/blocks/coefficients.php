@@ -19,8 +19,6 @@ switch ($GLOBALS['calc']) {
 
 }
 
-print_r ($coefficients);
-
 
 if ($GLOBALS['calc'] == 'main')
 {
