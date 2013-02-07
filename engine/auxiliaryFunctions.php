@@ -26,8 +26,14 @@ function getBellissimoCoeff()
 {
     $coefficients = dbGetCoefficientsForCalc(array('calc' => 3));
     //calc k1 coefficient
-    $year = intval(date("Y")) - $_SESSION['calc']['bellissimo']['yearOfCar'] + 1;
-    $amountK['K1'] = $coefficients['K1Damage'][$year];
+    if ($_SESSION['calc']['bellissimo']['yearOfCar'] == "Новое ТС")
+        $amountK['K1'] = $coefficients['K1Damage'][1];
+    else
+    {
+        $year = intval(date("Y")) - $_SESSION['calc']['bellissimo']['yearId'] + 2;
+        $amountK['K1'] = $coefficients['K1Damage'][$year];
+    }
+
 
     //calc k2 coefficient
     $amountK['K2'] = $coefficients['K1Theft'][$year];
@@ -53,18 +59,40 @@ function getBellissimoCoeff()
             $minExperiance = '2-3';
             break;
         case 3:
+            $minExperiance = '3-4';
+            break;
         case 4:
-            $minExperiance = '3-5';
+            $minExperiance = '4-5';
             break;
         case 5:
+            $minExperiance = '5-6';
+            break;
         case 6:
+            $minExperiance = '6-7';
+            break;
         case 7:
+            $minExperiance = '7-8';
+            break;
         case 8:
+            $minExperiance = '8-9';
+            break;
         case 9:
-            $minExperiance = '5-10';
+            $minExperiance = '9-10';
+            break;
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+            $minExperiance = '10-19';
             break;
         default:
-            $minExperiance = '10plus';
+            $minExperiance = '20plus';
     }
     $amountK['K3'] = $coefficients['K3'][$minExperiance];//$cars[$carMark][$carModel][0]['damage'];
 
@@ -107,6 +135,7 @@ function getBellissimoCoeff()
 
 function sendBellissimoCourierLetters ()
 {
+    $trueFalse = array(0 => 'Нет', 1 => 'Да');
     $amountK = getBellissimoCoeff();
 
     $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
@@ -140,11 +169,51 @@ function sendBellissimoCourierLetters ()
 
     $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>';
     $subject = "Заказ полиса КАСКО";
-    $message = "Заказ полиса КАСКО для ".$_SESSION['calc']['bellissimo']['typeOfCarName']." ".$_SESSION['calc']['bellissimo']['modelOfCarName']." ".$_SESSION['calc']['bellissimo']['modificationOfCarName']." ".$_SESSION['calc']['bellissimo']['yearOfCar']."\n";
+    $message = "Заказ полиса КАСКО для\n";
+    $message .= "Марка ТС: ".$_SESSION['calc']['bellissimo']['typeOfCarName']."\n";
+    $message .= "Модель ТС:".$_SESSION['calc']['bellissimo']['modelOfCarName']."\n";
+    $message .= "Модификация ТС:".$_SESSION['calc']['bellissimo']['modificationOfCarName']."\n";
+    $message .= "Год выпуска ТС:".$_SESSION['calc']['bellissimo']['yearOfCar']."\n";
     $message .= "Стоимость авто = ".$_SESSION['calc']['bellissimo']['carAmount']."\n";
-    foreach ($_SESSION['calc']['driver'] as $id=>$driver)
-        $message .= "Водитель № = ".$id." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
+
+    foreach ($_SESSION['calc']['bellissimoDrivers']['driver'] as $id=>$driver)
+        $message .= "Водитель № = ".($id+1)." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
     //$message .= $_SESSION['calc'];
+    $message .= "Форма возмещения: ".$_SESSION['calc']['bellissimoOthers']['formOfCompensation']."\n";
+    $message .= "Штатная ПУС и/или иммобилайзер: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][0]?'Да':'Нет')."\n";
+    $message .= "Дополнительно установленная ЭПС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][1]?'Да':'Нет')."\n";
+    $message .= "Механическая ПУС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][2]?'Да':'Нет')."\n";
+    $message .= "Гидромеханическая система (Technoblock страховой): ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][3]?'Да':'Нет')."\n";
+    $message .= "С меткой присутствия: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет')."\n";
+    $message .= "Спутниковая система: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет')."\n";
+
+
+    $message .= "Гражданская ответственность (ГО):".$_SESSION['calc']['bellissimoAdditional']['liability']."\n";
+    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n";
+
+    foreach ($_SESSION['calc']['bellissimoAdditional']['equipment'] as $equipment)
+        $message .= "Дополнительное оборудование:".$equipment['name']." Стоимость: ".$equipment['cost']."\n";
+
+    $message .= "Аварком: ".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."\n";
+    $message .= "Сбор справок ГИБДД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][1]?'Да':'Нет')."\n";
+    $message .= "Сбор справок ОВД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."\n";
+
+
+    if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
+        $message .= "Переход из страховой ".$_SESSION['calc']['bellissimoDiscount']['transition']." Полис номер: ".$_SESSION['calc']['bellissimoDiscount']['polis']."\n";
+    if ($_SESSION['calc']['bellissimoDiscount']['isPolicyNC']);
+    $message .= "Дополнительно заказан полис НС\n";
+    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
+    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
+    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
+
+    $message .= "ФИО: ".$_SESSION['calc']['contactInfo']['name']."\n";
+    $message .= "Email: ".$_SESSION['calc']['contactInfo']['email']."\n";
+    $message .= "Телефон: ".$_SESSION['calc']['contactInfo']['phone']."\n";
+
+
+
+
     $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
 
@@ -156,4 +225,6 @@ function sendBellissimoCourierLetters ()
     $message .= "Телефон (495) 649-02-49\nГрафик работы ежедневно с 10 до 19.";
     $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
+
+    $_SESSION = null;
 }

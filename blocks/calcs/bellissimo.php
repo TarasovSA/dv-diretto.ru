@@ -96,8 +96,8 @@ switch ($step)
         $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
         $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
 
-        $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $coefficients['K1'] * $coefficients['K3'] * $coefficients['K4'] * $coefficients['K5'] * $coefficients['K6'] * $coefficients['K7'] * $coefficients['K8'])/100);
-        $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $coefficients['K2'] * $coefficients['K4'] * $coefficients['K7'] * $coefficients['K8'])/100);;
+        $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $coefficients['K1'] * $coefficients['K3'] * $coefficients['K4'] * $coefficients['K5'] * $coefficients['K6'] * $coefficients['K7'])/100);
+        $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $coefficients['K2'] * $coefficients['K4'] * $coefficients['K7'] * $coefficients['K8'])/100);
         $amountSummary = ceil ($damage+$theft);
 
         echo "<input type='hidden' id='carAmount' name='carAmount' value='{$_SESSION['calc']['bellissimo']['carAmount']}'>";
@@ -118,8 +118,11 @@ switch ($step)
 
         $bellissimoForm->putNewBlock('Дополнительное страхование','grid');
 
-        $bellissimoForm->addInput(new input('bellissimoAdditional[liability]', 'slider', 'Гражданская ответственность', $formData['liability'], 'text_input short', 3));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[accident]', 'slider', 'Несчастный случай', $formData['accident'], 'text_input short', 3));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[liability]', 'slider', 'Гражданская ответственность (ГО)', $formData['liability'], 'text_input short', 1));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[liabilityAmount]', 'custom', 'Страховая премия за ГО:', '<span id="liabilityAmount" style="font-family: Georgia; font-size: 17pt"></span>', '', 1));
+        $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[accident]', 'slider', 'Несчастный случай (НС):', $formData['accident'], 'text_input short', 1));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[accidentAmount]', 'custom', 'Страховая премия за НС:', '<span id="accidentAmount" style="font-family: Georgia; font-size: 17pt"></span>', '', 1));
 		
 		$custom_table = '
 		<div class="r2">
@@ -153,7 +156,7 @@ switch ($step)
 
 		
         $bellissimoForm->addInput(new input('bellissimoAdditional[optionalEquipment]', 'custom', 'Дополнительное оборудование:', $custom_table));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentAmount]', 'text', 'Страховая премия за дополнительное оборудование:', '', 'text_input short', 3));
+        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentAmount]', 'custom', 'Страховая премия за дополнительное оборудование:', '<span id="equipmentAmount" style="font-family: Georgia; font-size: 17pt"></span>', 'text_input short', 3));
 
 
 
@@ -189,7 +192,7 @@ switch ($step)
         //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
         $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
 
-        $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Доставка курьером', 'btn next', 2));
+        $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Отправить заявку', 'btn next', 2));
         $bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Онлайн', 'btn next', 2));
         $bellissimoForm->printForm();
 		
@@ -219,7 +222,7 @@ switch ($step)
         </tr>
         <tr>
         <td class="t_lable">Итоговая страховая премия:</td>
-        <td class="t_input"><input type="text" id="amount[amountSummary]"  name="amount[amountSummary]" class="text_input double" value="" ></td>
+        <td class="t_input"><span id="amount[amountSummary]" style="font-family: Georgia; font-size: 17pt"></span></td> <!--<input type="text" id="amount[amountSummary]"  name="amount[amountSummary]" class="text_input double" value="" >-->
         </tr>
 
         <tr>
@@ -278,7 +281,7 @@ switch ($step)
         </table>';
         break;
     case 'Courier':
-        echo '<div class="grid"><div class="grid_title">Спасибо!</div><div><div class="grid_label">Ваша заявка принята и будет рассмотрена в ближайшее время</div></div></div><div style="clear:both;"></div></div>';
+        echo '<div class="grid"><div class="grid_title">Ваша заявка принята</div><div><div class="grid_label">В ближайшее время наш сотрудник свяжется с Вами.</div></div></div><div style="clear:both;"></div></div>';
         break;
 
 };
