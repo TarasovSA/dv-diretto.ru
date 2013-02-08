@@ -28,6 +28,7 @@ include_once ('engine/buttonReaction.php');
     <script type="text/javascript" language="javascript" src="/js/calcs.js"></script>
     <script src="js/formValidation/languages/jquery.validationEngine-ru.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/formValidation/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/masks/jquery.maskedinput-1.2.2.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -108,5 +109,51 @@ include_once ('engine/buttonReaction.php');
     });
 
 </script>
+<script>
+    jQuery(function($){
+        $("#contactInfo\\[phone\\]").mask("+9 (999) 999-9999");
+    });
+
+</script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38352947-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter19968205 = new Ya.Metrika({id:19968205,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/19968205" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>

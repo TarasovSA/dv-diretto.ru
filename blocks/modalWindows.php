@@ -194,16 +194,16 @@ elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step
 <div id="selectLiability" title='Выберите размер компенсации по страховому случаю "Гражданская ответственность"'>
     <h3 class='orange inline'>Франшиза</h3>
     <ul>
-        <li><a href='#' onclick='selectLiability(300000)' style='text-decoration: underline;'>300 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(500000)' style='text-decoration: underline;'>500 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(750000)' style='text-decoration: underline;'>750 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(1000000)' style='text-decoration: underline;'>1 000 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(1250000)' style='text-decoration: underline;'>1 250 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(1500000)' style='text-decoration: underline;'>1 500 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(1750000)' style='text-decoration: underline;'>1 750 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(2000000)' style='text-decoration: underline;'>2 000 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(2500000)' style='text-decoration: underline;'>2 500 000 руб.</a></li>
-        <li><a href='#' onclick='selectLiability(3000000)' style='text-decoration: underline;'>3 000 000 руб.</a></li>
+        <li><a onclick='selectLiability(300000)' style='text-decoration: underline; cursor: pointer'>300 000 руб.</a></li>
+        <li><a onclick='selectLiability(500000)' style='text-decoration: underline; cursor: pointer'>500 000 руб.</a></li>
+        <li><a onclick='selectLiability(750000)' style='text-decoration: underline; cursor: pointer'>750 000 руб.</a></li>
+        <li><a onclick='selectLiability(1000000)' style='text-decoration: underline; cursor: pointer'>1 000 000 руб.</a></li>
+        <li><a onclick='selectLiability(1250000)' style='text-decoration: underline; cursor: pointer'>1 250 000 руб.</a></li>
+        <li><a onclick='selectLiability(1500000)' style='text-decoration: underline; cursor: pointer'>1 500 000 руб.</a></li>
+        <li><a onclick='selectLiability(1750000)' style='text-decoration: underline; cursor: pointer'>1 750 000 руб.</a></li>
+        <li><a onclick='selectLiability(2000000)' style='text-decoration: underline; cursor: pointer'>2 000 000 руб.</a></li>
+        <li><a onclick='selectLiability(2500000)' style='text-decoration: underline; cursor: pointer'>2 500 000 руб.</a></li>
+        <li><a onclick='selectLiability(3000000)' style='text-decoration: underline; cursor: pointer'>3 000 000 руб.</a></li>
     </ul>
 </div>
 
@@ -243,10 +243,10 @@ elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step
 <div id="selectFranchise" title="Выберите франшизу">
 <h3 class='orange inline'>Франшиза</h3>
     <ul>
-        <li><a href='#' onclick='selectFranchise(6000, "6,000 руб.")' style='text-decoration: underline;'>6,000 руб.</a></li>
-        <li><a href='#' onclick='selectFranchise(9000, "9,000 руб.")' style='text-decoration: underline;'>9,000 руб.</a></li>
-        <li><a href='#' onclick='selectFranchise(15000, "15,000 руб.")' style='text-decoration: underline;'>15,000 руб.</a></li>
-        <li><a href='#' onclick='selectFranchise(30000, "30,000 руб.")' style='text-decoration: underline;'>30,000 руб.</a></li>
+        <li><a onclick='selectFranchise(6000, "6,000 руб.")' style='text-decoration: underline; cursor: pointer'>6,000 руб.</a></li>
+        <li><a onclick='selectFranchise(9000, "9,000 руб.")' style='text-decoration: underline; cursor: pointer'>9,000 руб.</a></li>
+        <li><a onclick='selectFranchise(15000, "15,000 руб.")' style='text-decoration: underline; cursor: pointer'>15,000 руб.</a></li>
+        <li><a onclick='selectFranchise(30000, "30,000 руб.")' style='text-decoration: underline; cursor: pointer'>30,000 руб.</a></li>
     </ul>
 </div>
     <?php

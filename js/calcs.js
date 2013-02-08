@@ -202,7 +202,7 @@ function bellissimoUpdateSecondPage(k1, k7)
             // Поменять стиль "обертки" в зависимости от состояния переключателя
             document.getElementById('bellissimoMaintenance[information][2]').parentNode.className='boxChecked';
         }
-        vipSumm = 0;
+        vipSumm = 'Бесплатно';
     }
 
 
@@ -215,7 +215,18 @@ function bellissimoUpdateSecondPage(k1, k7)
     document.getElementById('equipmentAmount').appendChild(document.createTextNode(Math.ceil(summaryTdo/100) + '.00 руб'));
     //document.getElementById('bellissimoAdditional[EquipmentAmount]').value = Math.ceil(summaryTdo/100);
 
-    document.getElementById('bellissimoMaintenance[VIPPackAmount]').value = Math.ceil(vipSumm);
+
+    if (document.getElementById('bellissimoMaintenance[VIPPackAmount]').hasChildNodes()){
+        document.getElementById('bellissimoMaintenance[VIPPackAmount]').removeChild(document.getElementById('bellissimoMaintenance[VIPPackAmount]').lastChild);
+    }
+
+    if (vipSumm == 'Бесплатно'){
+        document.getElementById('bellissimoMaintenance[VIPPackAmount]').appendChild(document.createTextNode(vipSumm));
+    }
+    else{
+        document.getElementById('bellissimoMaintenance[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
+    }
+
 
     var discount = {};
     discount.transition = 1;
@@ -230,10 +241,15 @@ function bellissimoUpdateSecondPage(k1, k7)
     if (document.getElementById('bellissimoDiscount[isFranchise]').checked)
     {
         var c = document.getElementById('bellissimo[FranchiseId]').value/document.getElementById('carAmount').value*100;
-        discount.franchise = Math.pow(90, -0.0953*c);
-        //if (discount.franchise == 0){
-        //    discount.franchise = 1;
-        //}
+        if (c == 0){
+            discount.franchise = 1;
+        }
+        else{
+            discount.franchise = (90*Math.pow(2.71, (-0.0953*c))/100);
+        }
+
+
+
     }
     if (document.getElementById('bellissimoDiscount[isPolicyNC]').checked)
     {
@@ -246,7 +262,14 @@ function bellissimoUpdateSecondPage(k1, k7)
     document.getElementById('amount[kasko]').value = Math.ceil(document.getElementById('bellissimo[kasko]').value * discount.transition * discount.franchise * discount.polisNC * 0.95) + polisNCAmount + '.00';
 
     document.getElementById('amount[EquipmentAmount]').value = Math.ceil(summaryTdo/100) + '.00';
-    document.getElementById('amount[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
+    if (vipSumm == 'Бесплатно'){
+        document.getElementById('amount[VIPPackAmount]').value = vipSumm;
+        vipSumm = 0;
+    }
+    else{
+        document.getElementById('amount[VIPPackAmount]').value = Math.ceil(vipSumm) + '.00';
+    }
+
 
     if (document.getElementById('liabilityAmount').hasChildNodes()){
         document.getElementById('liabilityAmount').removeChild(document.getElementById('liabilityAmount').lastChild);

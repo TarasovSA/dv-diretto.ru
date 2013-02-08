@@ -167,8 +167,8 @@ function sendBellissimoCourierLetters ()
 
     $amount = ceil(($amountSummary + $amountLiability + $amountAccident + $amountVIP) * $discount['transition'] * $discount['transition']);
 
-    $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>';
-    $subject = "Заказ полиса КАСКО";
+    $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>, <ermaxx@mail.ru>, <hermes-67@mail.ru>, <garikpv@mail.ru>, Кочешков Герман <KocheshkovG@dv-diretto.ru >';
+    $subject = "Заказ полиса КАСКО от ".$_SESSION['calc']['contactInfo']['name'];
     $message = "Заказ полиса КАСКО для\n";
     $message .= "Марка ТС: ".$_SESSION['calc']['bellissimo']['typeOfCarName']."\n";
     $message .= "Модель ТС:".$_SESSION['calc']['bellissimo']['modelOfCarName']."\n";
@@ -179,24 +179,24 @@ function sendBellissimoCourierLetters ()
     foreach ($_SESSION['calc']['bellissimoDrivers']['driver'] as $id=>$driver)
         $message .= "Водитель № = ".($id+1)." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
     //$message .= $_SESSION['calc'];
-    $message .= "Форма возмещения: ".$_SESSION['calc']['bellissimoOthers']['formOfCompensation']."\n";
-    $message .= "Штатная ПУС и/или иммобилайзер: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][0]?'Да':'Нет')."\n";
-    $message .= "Дополнительно установленная ЭПС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][1]?'Да':'Нет')."\n";
-    $message .= "Механическая ПУС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][2]?'Да':'Нет')."\n";
-    $message .= "Гидромеханическая система (Technoblock страховой): ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][3]?'Да':'Нет')."\n";
-    $message .= "С меткой присутствия: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет')."\n";
-    $message .= "Спутниковая система: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет')."\n";
+    $message .= "\n\nФорма возмещения: ".$_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
+    $message .= "\nШтатная ПУС и/или иммобилайзер: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][0]?'Да':'Нет');
+    $message .= "\nДополнительно установленная ЭПС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][1]?'Да':'Нет');
+    $message .= "\nМеханическая ПУС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][2]?'Да':'Нет');
+    $message .= "\nГидромеханическая система (Technoblock страховой): ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][3]?'Да':'Нет');
+    $message .= "\nС меткой присутствия: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет');
+    $message .= "\nСпутниковая система: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет');
 
 
-    $message .= "Гражданская ответственность (ГО):".$_SESSION['calc']['bellissimoAdditional']['liability']."\n";
-    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n";
+    $message .= "\n\n\nГражданская ответственность (ГО):".$_SESSION['calc']['bellissimoAdditional']['liability']."\n";
+    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n\n\n";
 
     foreach ($_SESSION['calc']['bellissimoAdditional']['equipment'] as $equipment)
         $message .= "Дополнительное оборудование:".$equipment['name']." Стоимость: ".$equipment['cost']."\n";
 
-    $message .= "Аварком: ".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."\n";
+    $message .= "\n\n\nАварком: ".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."\n";
     $message .= "Сбор справок ГИБДД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][1]?'Да':'Нет')."\n";
-    $message .= "Сбор справок ОВД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."\n";
+    $message .= "Сбор справок ОВД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."\n\n\n\n";
 
 
     if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
@@ -205,7 +205,7 @@ function sendBellissimoCourierLetters ()
     $message .= "Дополнительно заказан полис НС\n";
     $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
     $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
-    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
+    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n\n\n\n";
 
     $message .= "ФИО: ".$_SESSION['calc']['contactInfo']['name']."\n";
     $message .= "Email: ".$_SESSION['calc']['contactInfo']['email']."\n";

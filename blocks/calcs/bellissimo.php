@@ -173,7 +173,8 @@ switch ($step)
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][0]', 'checkbox', 'Аварком', $formData['information'][0], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][1]', 'checkbox', 'Сбор справок ГИБДД', $formData['information'][1], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][2]', 'checkbox', 'Сбор справок ОВД', $formData['information'][2], 'boxCheckbox',4));
-        $bellissimoForm->addInput(new input('bellissimoMaintenance[VIPPackAmount]', 'text', 'Итоговая стоимость ВИП пакета:', '', 'text_input short', 3));
+        $bellissimoForm->addInput(new input('', 'custom', 'Итоговая стоимость ВИП пакета:', '<span id="bellissimoMaintenance[VIPPackAmount]" style="font-family: Georgia; font-size: 17pt; margin-left: -20px; line-height: 10px"></span>', '', 1));
+        //$bellissimoForm->addInput(new input('bellissimoMaintenance[VIPPackAmount]', 'text', 'Итоговая стоимость ВИП пакета:', '', 'text_input short', 3));
 
 
         if (isset($_SESSION['calc']['bellissimoDiscount']))
@@ -194,7 +195,7 @@ switch ($step)
         //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
         $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
 
-        $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Отправить заявку', 'btn next', 2));
+        $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Отправить заявку', 'btn next', 4));
         //$bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Онлайн', 'btn next', 2));
         $bellissimoForm->printForm();
 		
