@@ -18,6 +18,7 @@ include_once ('engine/buttonReaction.php');
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="wot-verification" content="ed402a3db8279a6a2b70"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/themes/custom-theme/jquery-ui-1.9.0.custom.min.css">
     <link rel="stylesheet" href="css/formValidation/validationEngine.jquery.css" type="text/css"/>
@@ -62,7 +63,7 @@ include_once ('engine/buttonReaction.php');
         <td id="logo_td" valign="top"><a href="/"><img src="images/logo.png" width="165" height="69" border="0"/></a>
         </td>
         <td id="top_menu_td" valign="top">
-
+            <span class="phone">+7 (495) 649-02-49</span>
             <ul id="top_menu">
                 <li><a href="/?action=calc&type=0">Villagio</a></li>
                 <li><a href="/?action=calc&type=1">Felice Citta</a></li>
