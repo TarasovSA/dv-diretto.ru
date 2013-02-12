@@ -104,6 +104,7 @@ switch ($step)
         $bellissimoForm->addInput(new input('', 'custom', 'Гражданская ответственность (ГО):', '<input type="text" class="text_input short" name="bellissimoAdditional[liability]" id="bellissimoAdditional[liability]" onclick="selectLiabilityList()">', '', 1));
         $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
         $bellissimoForm->addInput(new input('', 'custom', 'Несчастный случай (НС):', '<input type="text" class="text_input short" name="bellissimoAdditional[accident]" id="bellissimoAdditional[accident]" onclick="selectAccidentList()">', '', 1));
+        $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
 
 		$custom_table = '
 		<div class="r2">
