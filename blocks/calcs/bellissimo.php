@@ -89,20 +89,6 @@ switch ($step)
 
     case 2:
 
-        $coefficients = getBellissimoCoeff();
-
-        $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
-        $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
-        $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
-        $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
-
-        $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $coefficients['K1'] * $coefficients['K3'] * $coefficients['K4'] * $coefficients['K5'] * $coefficients['K6'] * $coefficients['K7'])/100);
-        $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $coefficients['K2'] * $coefficients['K4'] * $coefficients['K7'] * $coefficients['K8'])/100);
-        $amountSummary = ceil ($damage+$theft);
-
-        echo "<input type='hidden' id='carAmount' name='carAmount' value='{$_SESSION['calc']['bellissimo']['carAmount']}'>";
-        echo "<input type='hidden' id='bellissimo[kasko]' name='bellissimo[kasko]' value='".$amountSummary."'>";
-
         $bellissimoForm = new form('bellissimoSecond');
         $bellissimoForm->setAction("index.php?action=calc&type=3&step=3");
         $bellissimoForm->setMethod("POST");
@@ -235,7 +221,7 @@ switch ($step)
 
 
         echo "<script type=\"text/javascript\">
-                    var bellissimoSecondPage = function(){bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']})};
+                    var bellissimoSecondPage = function(){bellissimoUpdateSecondPage()};
                     $('#bellissimoSecond').click(bellissimoSecondPage).change(bellissimoSecondPage);
                     bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']});
                 </script>";
@@ -437,6 +423,8 @@ $bellissimoForm->addInput(new input('bellissimoRulesCheck', 'isCheckbox', ' ', '
 
 function step3Courier()
 {
+    $amount = calcBellissimoAmount();
+    print_r ($amount);
     $bellissimoForm = new form('bellissimoCourier');
     $bellissimoForm->setAction("index.php?action=calc&type=3&step=Courier");
     $bellissimoForm->setMethod("POST");

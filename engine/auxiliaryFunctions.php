@@ -133,39 +133,83 @@ function getBellissimoCoeff()
 
 }
 
-function sendBellissimoCourierLetters ()
+function calcBellissimoAmount()
 {
-    $trueFalse = array(0 => 'Нет', 1 => 'Да');
-    $amountK = getBellissimoCoeff();
+    $coefficients = getBellissimoCoeff();
 
     $carMark = $_SESSION['calc']['bellissimo']['typeOfCarId'];
     $carModel = $_SESSION['calc']['bellissimo']['modelOfCarId'];
     $carModification = $_SESSION['calc']['bellissimo']['modificationOfCarId'];
     $carInfo = dbGetCarInfo(array('carMarkId' => $carMark, 'carModelId' => $carModel, 'carModificationId' => $carModification));
 
-    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $amountK['K1'] * $amountK['K3'] * $amountK['K4'] * $amountK['K5'] * $amountK['K6'] * $amountK['K7'] * $amountK['K8'])/100);
-    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $amountK['K2'] * $amountK['K4'] * $amountK['K7'] * $amountK['K8'])/100);;
+    $damage = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['damage'] * $coefficients['K1'] * $coefficients['K3'] * $coefficients['K4'] * $coefficients['K5'] * $coefficients['K6'] * $coefficients['K7'])/100);
+    $theft = $_SESSION['calc']['bellissimo']['carAmount'] * (($carInfo['theft'] * $coefficients['K2'] * $coefficients['K4'] * $coefficients['K7'] * $coefficients['K8'])/100);
+
     $amountSummary = ceil ($damage+$theft);
 
-    $amountLiability = ceil($_SESSION['calc']['bellissimoAdditional']['liability']/100);
-    $amountAccident = ceil($_SESSION['calc']['bellissimoAdditional']['accident']/100);
+    $Tdo = 7.9 * $coefficients['K1'] * $coefficients['K1'];
+    $Tgo = 0.099 * $coefficients['K1'];
+    $Tns = 0.24 * $coefficients['K1'];
+    $summaryTdo = 0;
 
-    $amountAccident = $_SESSION['calc']['bellissimoAdditional']['EquipmentAmount'];
+    foreach ($_SESSION['calc']['bellissimoAdditional']['equipment'] as $equipment)
+        $summaryTdo += $equipment['cost'] * $Tdo;
 
-    $amountVIP = $_SESSION['calc']['bellissimoMaintenance']['VIPPackAmount'];
+    $amount['vipSumm'] = 0;
+    if ($_SESSION['calc']['bellissimoMaintenance']['information'][0])
+        $amount['vipSumm'] += 1500;
+    if ($_SESSION['calc']['bellissimoMaintenance']['information'][1])
+        $amount['vipSumm'] += 1000;
+    if ($_SESSION['calc']['bellissimoMaintenance']['information'][2])
+        $amount['vipSumm'] += 2000;
 
-    $discount['transition'] = 1;
-    $discount['franchise'] = 1;
-    $discount['policyNC'] = 1;
+    if ($_SESSION['calc']['bellissimo']['carAmount']>750000)
+        $amount['vipSumm'] = 'Бесплатно';
+
+    $amount['liability'] = $_SESSION['calc']['bellissimoAdditional']['liability'] * $Tgo * 0.95; //0.95 - payment coefficient
+    $amount['accident'] = $_SESSION['calc']['bellissimoAdditional']['accident'] * $Tns * 0.95; //0.95 - payment coefficient
+
+    $discount = array('transition' => 1, 'franchise' => 1, 'polisNC' => 1.0);
+    $amount['polisNCAmount'] = 0;
 
     if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
         $discount['transition'] = 0.9;
-    //if ($_SESSION['calc']['bellissimoDiscount']['isFranchise'])
-        //$discount['franchise'] = 0.9;
-    if ($_SESSION['calc']['bellissimoDiscount']['isPolicyNC'])
-        $discount['policyNC'] = 0.9;
 
-    $amount = ceil(($amountSummary + $amountLiability + $amountAccident + $amountVIP) * $discount['transition'] * $discount['transition']);
+    if ($_SESSION['calc']['bellissimoDiscount']['isFranchise'])
+    {
+        $c = ($_SESSION['calc']['bellissimoDiscount']['FranchiseId']/$_SESSION['calc']['bellissimo']['carAmount'])*100;
+        if ($c == 0){
+            $discount['franchise'] = 1;
+        }
+        else{
+            $discount['franchise'] = (90*pow(2.71, (-0.0953*$c))/100);
+        }
+    }
+    if ($_SESSION['calc']['bellissimoDiscount']['isPolicyNC']){
+        $discount['polisNC'] = 0.9;
+        $amount['polisNCAmount'] = 1000;
+    }
+
+    $amount['kasko'] = ceil($amountSummary * $discount['transition'] * $discount['franchise'] * $discount['polisNC'] * 0.95) + $amount['polisNCAmount']; //0.95 - payment coefficient
+
+    $amount['EquipmentAmount'] = ceil(($summaryTdo/100)*0.95);
+    if ($amount['vipSumm'] == 'Бесплатно'){
+        $amount['VIPPackAmount'] = $amount['vipSumm'];
+        $amount['vipSumm'] = 0;
+    }
+    else{
+        $amount['VIPPackAmount'] = ceil($amount['vipSumm']);
+    }
+
+    $amount['amountSummary'] = ceil($amountSummary * $discount['transition'] * $discount['polisNC'] * $discount['franchise'] * 0.95) + $amount['EquipmentAmount'] + $amount['liability'] + $amount['accident'] + $amount['vipSumm'] + $amount['polisNCAmount'];
+
+    return $amount;
+}
+
+function sendBellissimoCourierLetters ()
+{
+    $amount = calcBellissimoAmount();
+
 
     $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>, <ermaxx@mail.ru>, <hermes-67@mail.ru>, <garikpv@mail.ru>, Кочешков Герман <KocheshkovG@dv-diretto.ru >';
     $subject = "Заказ полиса КАСКО от ".$_SESSION['calc']['contactInfo']['name'];
@@ -187,16 +231,26 @@ function sendBellissimoCourierLetters ()
     $message .= "\nС меткой присутствия: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет');
     $message .= "\nСпутниковая система: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет');
 
+    $message .= "Стоимость КАСКО = ".$amount['kasko']."\n";
+
 
     $message .= "\n\n\nГражданская ответственность (ГО):".$_SESSION['calc']['bellissimoAdditional']['liability']."\n";
-    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n\n\n";
+    $message .= "Стоимость страхования ГО = ".$amount['liability']."\n\n\n";
+    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n";
+    $message .= "Стоимость страхования НС = ".$amount['accident']."\n\n\n";
 
     foreach ($_SESSION['calc']['bellissimoAdditional']['equipment'] as $equipment)
         $message .= "Дополнительное оборудование:".$equipment['name']." Стоимость: ".$equipment['cost']."\n";
 
+    $message .= "Стоимость страхования доп. оборудования = ".$amount['EquipmentAmount']."\n\n\n";
+
+
     $message .= "\n\n\nАварком: ".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."\n";
     $message .= "Сбор справок ГИБДД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][1]?'Да':'Нет')."\n";
     $message .= "Сбор справок ОВД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."\n\n\n\n";
+
+    $message .= "VIP пакет = ".$amount['VIPPackAmount']."\n";
+    $message .= "Стоимость VIP пакет = ".$amount['vipSumm']."\n";
 
 
     if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
@@ -206,6 +260,8 @@ function sendBellissimoCourierLetters ()
     $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
     $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
     $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n\n\n\n";
+
+    $message .= "Общая стоимость страхования = ".$amount['amountSummary']."\n";
 
     $message .= "ФИО: ".$_SESSION['calc']['contactInfo']['name']."\n";
     $message .= "Email: ".$_SESSION['calc']['contactInfo']['email']."\n";
@@ -228,3 +284,4 @@ function sendBellissimoCourierLetters ()
 
     $_SESSION = null;
 }
+
