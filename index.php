@@ -65,10 +65,10 @@ include_once ('engine/buttonReaction.php');
         <td id="top_menu_td" valign="top">
             <span class="phone">+7 (495) 649-02-49</span>
             <ul id="top_menu">
-                <li><a href="/?action=calc&type=0">Villagio</a></li>
-                <li><a href="/?action=calc&type=1">Felice Citta</a></li>
-                <li><a href="/?action=calc&type=2">Bella Vita</a></li>
-                <li><a href="/?action=calc&type=3">Bellissimo</a></li>
+                <li><a href="/?action=calc&type=0" <?php if($_GET['action']=='calc' AND $_GET['type']==0) echo 'class="activ"';?>>Villagio</a></li>
+                <li><a href="/?action=calc&type=1" <?php if($_GET['action']=='calc' AND $_GET['type']==1) echo 'class="activ"';?>>Felice Citta</a></li>
+                <li><a href="/?action=calc&type=2" <?php if($_GET['action']=='calc' AND $_GET['type']==2) echo 'class="activ"';?>>Bella Vita</a></li>
+                <li><a href="/?action=calc&type=3" <?php if($_GET['action']=='calc' AND $_GET['type']==3) echo 'class="activ"';?>>Bellissimo</a></li>
                 <?php
                 if (isset($_SESSION['idUser']))
                     echo "<li class=\"activ\"><a href=\"/?action=reg\">Регистрация</a></li>";

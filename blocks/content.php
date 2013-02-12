@@ -9,11 +9,11 @@ if (!isset($_REQUEST['zone']))
 
 <table class="select_table" align="center" border="0" cellspacing="0" cellpadding="0">
     <tr>
-        <td><!--<a href="/index.php?action=calc&type=0">--><img src="/images/viillagio_grey.png" width="396" height="250" border="0" alt="Villagio - Страхование загородных строений" title="Villagio - Страхование загородных строений"/></td>
-        <td><!--<a href="/index.php?action=calc&type=1">--><img src="/images/felice_citta_grey.png" width="396" height="250" border="0" alt="Felice Cita - Страхование квартиры" title="Felice Cita - Страхование квартиры"/></td>
+        <td><a href="/index.php?action=calc&type=0"><img src="/images/viillagio.png" width="396" height="250" border="0" alt="Villagio - Страхование загородных строений" title="Villagio - Страхование загородных строений"/></a></td>
+        <td><a href="/index.php?action=calc&type=1"><img src="/images/felice_citta.png" width="396" height="250" border="0" alt="Felice Cita - Страхование квартиры" title="Felice Cita - Страхование квартиры"/></a></td>
     </tr>
     <tr>
-        <td><!--<a href="/index.php?action=calc&type=2">--><img src="/images/bella_vita_grey.png" width="396" height="250" border="0" alt="Bella Vita - Страхование жизни" title="Bella Vita - Страхование жизни"/></td>
+        <td><a href="/index.php?action=calc&type=2"><img src="/images/bella_vita.png" width="396" height="250" border="0" alt="Bella Vita - Страхование жизни" title="Bella Vita - Страхование жизни"/></a></td>
         <td><a href="/index.php?action=calc&type=3"><img src="/images/bellissimo.png" width="396" height="250" border="0" alt="Belissimo - Страхование КАСКО" title="Belissimo - Страхование КАСКО"/></a></td>
     </tr>
 </table>
