@@ -98,20 +98,13 @@ switch ($step)
             $formData = $_SESSION['calc']['bellissimoAdditional'];
         else
             $formData = $defaultValues['calc']['bellissimoAdditional'];
-		
-		//$bellissimoForm->putNewBlock('Cтрахование КАСКО','grid');
-		//$bellissimoForm->addInput(new input('bellissimo[kasko]', 'text', 'Итоговая премия:', $amountSummary, 'text_input short', 3));
 
         $bellissimoForm->putNewBlock('Дополнительное страхование','grid');
 
         $bellissimoForm->addInput(new input('', 'custom', 'Гражданская ответственность (ГО):', '<input type="text" class="text_input short" name="bellissimoAdditional[liability]" id="bellissimoAdditional[liability]" onclick="selectLiabilityList()">', '', 1));
-        //$bellissimoForm->addInput(new input('bellissimoAdditional[liability]', 'text', 'Гражданская ответственность (ГО)', $formData['liability'], 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[liabilityAmount]', 'custom', 'Страховая премия за ГО:', '<span id="liabilityAmount" style="font-family: Georgia; font-size: 17pt; margin-left: -50px; line-height: 10px"></span>', '', 1));
         $bellissimoForm->addInput(new input('', 'newLine', '', '', '', ''));
         $bellissimoForm->addInput(new input('', 'custom', 'Несчастный случай (НС):', '<input type="text" class="text_input short" name="bellissimoAdditional[accident]" id="bellissimoAdditional[accident]" onclick="selectAccidentList()">', '', 1));
-        //$bellissimoForm->addInput(new input('bellissimoAdditional[accident]', 'text', 'Несчастный случай (НС):', $formData['accident'], 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[accidentAmount]', 'custom', 'Страховая премия за НС:', '<span id="accidentAmount" style="font-family: Georgia; font-size: 17pt; margin-left: -50px; line-height: 10px"></span>', '', 1));
-		
+
 		$custom_table = '
 		<div class="r2">
 		<table class="info_table" border="0" cellspacing="2" cellpadding="2" width="400" id="additionalEquipment">
@@ -144,9 +137,6 @@ switch ($step)
 
 		
         $bellissimoForm->addInput(new input('bellissimoAdditional[optionalEquipment]', 'custom', 'Дополнительное оборудование:', $custom_table));
-        $bellissimoForm->addInput(new input('bellissimoAdditional[EquipmentAmount]', 'custom', 'Страховая премия за дополнительное оборудование:', '<span id="equipmentAmount" style="font-family: Georgia; font-size: 17pt"></span>', 'text_input short', 3));
-
-
 
         if (isset($_SESSION['calc']['bellissimoMaintenance']))
             $formData = $_SESSION['calc']['bellissimoMaintenance'];
@@ -159,9 +149,6 @@ switch ($step)
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][0]', 'checkbox', 'Аварком', $formData['information'][0], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][1]', 'checkbox', 'Сбор справок ГИБДД', $formData['information'][1], 'boxCheckbox',4));
         $bellissimoForm->addInput(new input('bellissimoMaintenance[information][2]', 'checkbox', 'Сбор справок ОВД', $formData['information'][2], 'boxCheckbox',4));
-        $bellissimoForm->addInput(new input('', 'custom', 'Итоговая стоимость ВИП пакета:', '<span id="bellissimoMaintenance[VIPPackAmount]" style="font-family: Georgia; font-size: 17pt; margin-left: -20px; line-height: 10px"></span>', '', 1));
-        //$bellissimoForm->addInput(new input('bellissimoMaintenance[VIPPackAmount]', 'text', 'Итоговая стоимость ВИП пакета:', '', 'text_input short', 3));
-
 
         if (isset($_SESSION['calc']['bellissimoDiscount']))
             $formData = $_SESSION['calc']['bellissimoDiscount'];
@@ -175,56 +162,11 @@ switch ($step)
 		$bellissimoForm->addInput(new input('bellissimoDiscount[polis]', 'text', 'Номер полиса/договора:', '', 'text_input double', 3));
 		$bellissimoForm->addInput(new input('bellissimoDiscount[isFranchise]', 'checkbox', 'Вариант франшизы:', $formData['isFranchise'], 'boxCheckbox', '2_5'));
         $bellissimoForm->addInput(new input('', 'custom', '', '<input type="text" class="text_input double" name="bellissimo[Franchise]" id="bellissimo[Franchise]" onclick="selectFranchiseList()"><input type="hidden" name="bellissimo[FranchiseId]" id="bellissimo[FranchiseId]">', '', 3));
-		//$bellissimoForm->addInput(new input('bellissimo[Franchise]', 'select', null, array('select' => $defaultValues['select']['franchiseCar'], 'chose' => $formData['franchiseCar']), 'select', 3));
-		
-        //$bellissimoForm->addInput(new input('bellissimoDiscount[isPromo]', 'checkbox', 'ПромоКод для скидки:', '', 'boxCheckbox','2_5'));
-        //$bellissimoForm->addInput(new input('bellissimoDiscount[promo]', 'text', null, '', 'text_input short', 1));
-        $bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
+		$bellissimoForm->addInput(new input('bellissimoDiscount[isPolicyNC]', 'checkbox', 'Оформить полис НС за 1000 рублей и получить скидку по КАСКО 10%', $formData['isPolicyNC'], 'boxCheckbox',4));
 
         $bellissimoForm->addInput(new input('sendBellissimoCourier', 'submit', null, 'Отправить заявку', 'btn next', 4));
         //$bellissimoForm->addInput(new input('sendBellissimo', 'submit', null, 'Онлайн', 'btn next', 2));
         $bellissimoForm->printForm();
-		
-        echo '<table class="total_table" border="0" cellspacing="3" cellpadding="3">
-        <caption>
-        <span>Итоговая страховая премия</span>
-        </caption>
-        <tr>
-        <td class="t_lable">Страховая премия КАСКО:</td>
-        <td class="t_input"><input type="text" id="amount[kasko]" name="amount[kasko]" class="text_input double" value="" ></td>
-        </tr>
-        <tr>
-        <td class="t_lable">Стоимость VIP пакета:</td>
-        <td class="t_input"><input type="text" id="amount[VIPPackAmount]"  name="amount[VIPPackAmount]" class="text_input double" value="" ></td>
-        </tr>
-        <tr>
-        <td class="t_lable">Страховая премия по гражданской ответственности:</td>
-        <td class="t_input"><input type="text" id="amount[liability]" name="amount[liability]" class="text_input double" value="" ></td>
-        </tr>
-        <tr>
-        <td class="t_lable">Страховая премия от несчастного случая:</td>
-        <td class="t_input"><input type="text" id="amount[accident]"  name="amount[accident]" class="text_input double" value="" ></td>
-        </tr>
-        <tr>
-        <td class="t_lable">Страховая премия по дополнительному оборудованию:</td>
-        <td class="t_input"><input type="text" id="amount[EquipmentAmount]"  name="amount[EquipmentAmount]" class="text_input double" value="" ></td>
-        </tr>
-        <tr>
-        <td class="t_lable">Итоговая страховая премия:</td>
-        <td class="t_input"><span id="amount[amountSummary]" style="font-family: Georgia; font-size: 17pt"></span></td> <!--<input type="text" id="amount[amountSummary]"  name="amount[amountSummary]" class="text_input double" value="" >-->
-        </tr>
-
-        <tr>
-        <td class="t_last" colspan="2"></td>
-        </tr>
-        </table>';
-
-
-        echo "<script type=\"text/javascript\">
-                    var bellissimoSecondPage = function(){bellissimoUpdateSecondPage()};
-                    $('#bellissimoSecond').click(bellissimoSecondPage).change(bellissimoSecondPage);
-                    bellissimoUpdateSecondPage({$coefficients['K1']}, {$coefficients['K7']});
-                </script>";
 
         break;
 
@@ -424,7 +366,6 @@ $bellissimoForm->addInput(new input('bellissimoRulesCheck', 'isCheckbox', ' ', '
 function step3Courier()
 {
     $amount = calcBellissimoAmount();
-    print_r ($amount);
     $bellissimoForm = new form('bellissimoCourier');
     $bellissimoForm->setAction("index.php?action=calc&type=3&step=Courier");
     $bellissimoForm->setMethod("POST");
