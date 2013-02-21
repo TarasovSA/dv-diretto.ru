@@ -137,8 +137,8 @@ if ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step']) 
         });
     });
 </script>
-<div id="selectStartYear" title="Выберите год начала эксплуатации автомобиля">
-<h3 class='orange inline'>Год начала эксплуатации автомобиля</h3>
+<div id="selectStartYear" title="Выберите год выпуска ТС">
+<h3 class='orange inline'>Год начала выпуска ТС</h3>
     <ul>
         <li><a href='#' onclick='selectStartYear(<?=intval(date("Y"))?>, "Новое ТС")' style='text-decoration: underline;'>Новое ТС</a></li>
 
@@ -185,14 +185,14 @@ elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step
     $(function () {
         $("#selectLiability").dialog({
             autoOpen:false,
-            width:700,
+            width:750,
             height:500,
             modal:true
         });
     });
 </script>
 <div id="selectLiability" title='Выберите размер компенсации по страховому случаю "Гражданская ответственность"'>
-    <h3 class='orange inline'>Франшиза</h3>
+    <h3 class='orange inline'>Выберите размер компенсации по страховому случаю "Гражданская ответственность"</h3>
     <ul>
         <li><a onclick='selectLiability(300000)' style='text-decoration: underline; cursor: pointer'>300 000 руб.</a></li>
         <li><a onclick='selectLiability(500000)' style='text-decoration: underline; cursor: pointer'>500 000 руб.</a></li>
@@ -219,7 +219,7 @@ elseif ($_GET['action'] == 'calc' AND $_GET['type'] == 3 AND (!isset($_GET['step
     });
 </script>
 <div id="selectAccident" title='Выберите размер компенсации по страховому случаю "Несчастный случай"'>
-    <h3 class='orange inline'>Франшиза</h3>
+    <h3 class='orange inline'>Выберите размер компенсации по страховому случаю "Несчастный случай"</h3>
     <ul>
         <li><a href='#' onclick='selectAccident(100000)' style='text-decoration: underline;'>100 000 руб.</a></li>
         <li><a href='#' onclick='selectAccident(200000)' style='text-decoration: underline;'>200 000 руб.</a></li>
