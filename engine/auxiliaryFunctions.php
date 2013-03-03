@@ -211,66 +211,72 @@ function sendBellissimoCourierLetters ()
     $amount = calcBellissimoAmount();
 
 
-    $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>, <ermaxx@mail.ru>, <hermes-67@mail.ru>, <garikpv@mail.ru>, Кочешков Герман <KocheshkovG@dv-diretto.ru >';
+    $to = 'Info <info@dv-diretto.ru>, Sergey Tarasov<tarasovsr@gmail.com>, <ermaxx@mail.ru>, <hermes-67@mail.ru>, <garikpv@mail.ru>, Кочешков Герман <KocheshkovG@dv-diretto.ru >, selesta20@list.ru';
+    //$to = 'Sergey Tarasov<tarasovsr@gmail.com>';
     $subject = "Заказ полиса КАСКО от ".$_SESSION['calc']['contactInfo']['name'];
-    $message = "Заказ полиса КАСКО для\n";
-    $message .= "Марка ТС: ".$_SESSION['calc']['bellissimo']['typeOfCarName']."\n";
-    $message .= "Модель ТС:".$_SESSION['calc']['bellissimo']['modelOfCarName']."\n";
-    $message .= "Модификация ТС:".$_SESSION['calc']['bellissimo']['modificationOfCarName']."\n";
-    $message .= "Год выпуска ТС:".$_SESSION['calc']['bellissimo']['yearOfCar']."\n";
-    $message .= "Стоимость авто = ".$_SESSION['calc']['bellissimo']['carAmount']."\n";
 
+    $message = file_get_contents ('engine/mailHeader.html', 'r');
+    $message .= '<tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">Основная информация:</div></td></tr>';
+    $message .= "<tr><td style=\"width: 400px\">Марка ТС</td><td>".$_SESSION['calc']['bellissimo']['typeOfCarName']."</td></tr>";
+    $message .= "<tr><td>Модель ТС</td><td>".$_SESSION['calc']['bellissimo']['modelOfCarName']."</td></tr>";
+    $message .= "<tr><td>Модификация ТС</td><td>".$_SESSION['calc']['bellissimo']['modificationOfCarName']."</td></tr>";
+    $message .= "<tr><td>Год выпуска ТС</td><td>".$_SESSION['calc']['bellissimo']['yearOfCar']."</td></tr>";
+    $message .= "<tr><td>Стоимость авто</td><td>".$_SESSION['calc']['bellissimo']['carAmount']."</td></tr>";
+    $message .= '<tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">Водители:</div></td></tr>';
     foreach ($_SESSION['calc']['bellissimoDrivers']['driver'] as $id=>$driver)
-        $message .= "Водитель № = ".($id+1)." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."\n";
+        $message .= "<tr><td>Водитель № = ".($id+1)." Полных лет: ".$driver['birthDay']." Стаж: ".$driver['experience']."</td></tr>";
     //$message .= $_SESSION['calc'];
-    $message .= "\n\nФорма возмещения: ".$_SESSION['calc']['bellissimoOthers']['formOfCompensation'];
-    $message .= "\nШтатная ПУС и/или иммобилайзер: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][0]?'Да':'Нет');
-    $message .= "\nДополнительно установленная ЭПС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][1]?'Да':'Нет');
-    $message .= "\nМеханическая ПУС: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][2]?'Да':'Нет');
-    $message .= "\nГидромеханическая система (Technoblock страховой): ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][3]?'Да':'Нет');
-    $message .= "\nС меткой присутствия: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет');
-    $message .= "\nСпутниковая система: ".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет');
+    $message .= '<tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">Форма возмещения:</div></td></tr>';
+    $message .= "<tr><td>Форма возмещения: </td><td>".$_SESSION['calc']['bellissimoOthers']['formOfCompensation']."</td></tr>";
+    $message .= '<tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">ПУС:</div></td></tr>';
+    $message .= "<tr><td>Штатная ПУС и/или иммобилайзер</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][0]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Дополнительно установленная ЭПС</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][1]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Механическая ПУС</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][2]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Гидромеханическая система (Technoblock страховой)</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][3]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>С меткой присутствия</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][4]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Спутниковая система</td><td>".($_SESSION['calc']['bellissimoOthers']['antiStealing'][5]?'Да':'Нет')."</td></tr>";
 
-    $message .= "\n\nСтоимость КАСКО = ".$amount['kasko']." (Без учета стоимости полиса НС)\n";
-
-
-    $message .= "\n\n\nГражданская ответственность (ГО):".$_SESSION['calc']['bellissimoAdditional']['liability']."\n";
-    $message .= "Стоимость страхования ГО = ".$amount['liability']."\n\n\n";
-    $message .= "Несчастный случай (НС):".$_SESSION['calc']['bellissimoAdditional']['accident']."\n";
-    $message .= "Стоимость страхования НС = ".$amount['accident']."\n\n\n";
+    $message .= '<tr></tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">Дополнительное страхование:</div></td></tr>';
+    $message .= "<tr><td>Гражданская ответственность (ГО)</td><td>".$_SESSION['calc']['bellissimoAdditional']['liability']."</td></tr>";
+    $message .= "<tr><td>Стоимость страхования ГО</td><td>".$amount['liability']."</td></tr>";
+    $message .= "<tr><td>Несчастный случай (НС)</td><td>".$_SESSION['calc']['bellissimoAdditional']['accident']."</td></tr>";
+    $message .= "<tr><td>Стоимость страхования НС</td><td>".$amount['accident']."</td></tr>";
 
     foreach ($_SESSION['calc']['bellissimoAdditional']['equipment'] as $equipment)
-        $message .= "Дополнительное оборудование:".$equipment['name']." Стоимость: ".$equipment['cost']."\n";
+        $message .= "<tr><td>Дополнительное оборудование:".$equipment['name']."</td><td> Стоимость: ".$equipment['cost']."</td></tr>";
 
-    $message .= "Стоимость страхования доп. оборудования = ".$amount['EquipmentAmount']."\n\n\n";
+    $message .= "<tr><td>Стоимость страхования доп. оборудования</td><td>".$amount['EquipmentAmount']."</td></tr>";
 
+    $message .= '<tr><td colspan="2"><div style="width: 885px; font-weight: bold; font-size: 11pt; text-align: left; padding: 5px; margin: 2px; min-height: 24px; float: left;">VIP пакет (территория покрытия Москва+МО до 50 км от МКАД):</div></td></tr>';
+    $message .= "<tr><td>Аварком</td><td>".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Сбор справок ГИБДД</td><td>".($_SESSION['calc']['bellissimoMaintenance']['information'][1]?'Да':'Нет')."</td></tr>";
+    $message .= "<tr><td>Сбор справок ОВД</td><td>".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."</td></tr>";
 
-    $message .= "\n\n\nАварком: ".($_SESSION['calc']['bellissimoMaintenance']['information'][0]?'Да':'Нет')."\n";
-    $message .= "Сбор справок ГИБДД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][1]?'Да':'Нет')."\n";
-    $message .= "Сбор справок ОВД: ".($_SESSION['calc']['bellissimoMaintenance']['information'][2]?'Да':'Нет')."\n\n\n\n";
+    $message .= "<tr><td>VIP пакет</td><td>".$amount['VIPPackAmount']."</td></tr>";
 
-    $message .= "VIP пакет = ".$amount['VIPPackAmount']."\n";
-    $message .= "Стоимость VIP пакет = ".$amount['vipSumm']."\n";
 
 
     if ($_SESSION['calc']['bellissimoDiscount']['isTransition'])
-        $message .= "Переход из страховой ".$_SESSION['calc']['bellissimoDiscount']['transition']." Полис номер: ".$_SESSION['calc']['bellissimoDiscount']['polis']."\n";
+        $message .= "<tr><td>Переход из страховой ".$_SESSION['calc']['bellissimoDiscount']['transition']." Полис номер</td><td>".$_SESSION['calc']['bellissimoDiscount']['polis']."</td></tr>";
     if ($_SESSION['calc']['bellissimoDiscount']['isPolicyNC']);
-    $message .= "Дополнительно заказан полис НС\n";
-    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
-    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n";
-    $message .= "".$_SESSION['calc']['bellissimoDiscount']['antiStealing']."\n\n\n\n";
+    $message .= "<tr><td>Дополнительно заказан полис НС\n"."</td></tr>";
+    $message .= "<tr><td>".$_SESSION['calc']['bellissimoDiscount']['antiStealing'][0]."</td></tr>";
+    $message .= "<tr><td>".$_SESSION['calc']['bellissimoDiscount']['antiStealing'][1]."</td></tr>";
+    $message .= "<tr><td>".$_SESSION['calc']['bellissimoDiscount']['antiStealing'][2]."</td></tr>";
 
-    $message .= "Общая стоимость страхования = ".$amount['amountSummary']."\n";
+    $message .= "<tr><td>Стоимость VIP пакет</td><td>".$amount['vipSumm']."</td></tr>";
+    $message .= "<tr><td>Стоимость КАСКО</td><td>".$amount['kasko']." (Без учета стоимости полиса НС)</td></tr>";
+    $message .= "<tr><td>Общая стоимость страхования</td><td>".$amount['amountSummary']."</td></tr>";
 
-    $message .= "ФИО: ".$_SESSION['calc']['contactInfo']['name']."\n";
-    $message .= "Email: ".$_SESSION['calc']['contactInfo']['email']."\n";
-    $message .= "Телефон: ".$_SESSION['calc']['contactInfo']['phone']."\n";
+    $message .= "<tr><td>ФИО</td><td>".$_SESSION['calc']['contactInfo']['name']."</td></tr>";
+    $message .= "<tr><td>Email</td><td>".$_SESSION['calc']['contactInfo']['email']."</td></tr>";
+    $message .= "<tr><td>Телефон</td><td>".$_SESSION['calc']['contactInfo']['phone']."</td></tr>";
+    $message .= file_get_contents ('engine/mailFooter.html', 'r');
 
 
 
 
-    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
+    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/html; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
 
     $to = $_SESSION['calc']['contactInfo']['name']."<".$_SESSION['calc']['contactInfo']['email'].">";
@@ -279,7 +285,7 @@ function sendBellissimoCourierLetters ()
     $message .= "В ближайшее время наш сотрудник свяжется с Вами.\n\n";
     $message .= "С наилучшими пожеланиями\nИтальянский Страховой Дом \"Dolce Vita\"\n";
     $message .= "Телефон (495) 649-02-49\nГрафик работы ежедневно с 10 до 19.";
-    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/plain; charset=\"utf-8\"\n";
+    $headers = "From: Dolce Vita <info@dv-diretto.ru>\nContent-Type: text/html; charset=\"utf-8\"\n";
     mail($to, $subject, $message, $headers);
 
     $_SESSION = array();
